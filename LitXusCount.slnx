@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LitXusCount.API/LitXusCount.API.csproj" />
+    <Project Path="src/LitXusCount.Application/LitXusCount.Application.csproj" />
+    <Project Path="src/LitXusCount.Domain/LitXusCount.Domain.csproj" />
+    <Project Path="src/LitXusCount.Infrastructure/LitXusCount.Infrastructure.csproj" />
+  </Folder>
+</Solution>

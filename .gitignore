@@ -1,0 +1,23 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Node / frontend
+node_modules/
+dist/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (never commit real credentials)
+*.env
+.env.local
+appsettings.*.local.json
