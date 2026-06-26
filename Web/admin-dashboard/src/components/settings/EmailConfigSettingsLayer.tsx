@@ -2,9 +2,11 @@ import { useState, type FormEvent } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEmailConfigSettings } from "../../hook/useEmailConfigSettings";
 import { usePermissions } from "../../hook/usePermissions";
+import { useRole } from "../../hook/useRole";
 import { Permissions } from "../../api/permissions";
 import type { EmailConfigItem } from "../../api/settings/emailConfigs";
 import { extractErrorMessage } from "./extractErrorMessage";
+import IconifyIcon from "@/components/wrappers/IconifyIcon";
 import PaginatedTable from "./PaginatedTable";
 
 interface FormState {
@@ -28,13 +30,14 @@ const emptyForm: FormState = {
 const EmailConfigSettingsLayer = () => {
   const { pagedQuery, createMutation, editMutation, deleteMutation } = useEmailConfigSettings();
   const { hasPermission } = usePermissions();
+  const { isSuperAdmin } = useRole();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const canCreate = hasPermission(Permissions.Settings.EmailConfig.Create);
-  const canEdit = hasPermission(Permissions.Settings.EmailConfig.Edit);
-  const canDelete = hasPermission(Permissions.Settings.EmailConfig.Delete);
+  const canCreate = hasPermission(Permissions.Settings.EmailConfig.Create) && isSuperAdmin;
+  const canEdit = hasPermission(Permissions.Settings.EmailConfig.Edit) && isSuperAdmin;
+  const canDelete = hasPermission(Permissions.Settings.EmailConfig.Delete) && isSuperAdmin;
   const isSaving = createMutation.isPending || editMutation.isPending;
 
   const resetForm = () => {
@@ -109,7 +112,7 @@ const EmailConfigSettingsLayer = () => {
                 </div>
                 <div className='col-md-4'>
                   <label className='form-label'>
-                    Password {editingId !== null && <span className='text-secondary-light'>(re-enter to update)</span>}
+                    Password {editingId !== null && <span className='text-muted'>(re-enter to update)</span>}
                   </label>
                   <input
                     type='password'
@@ -149,7 +152,7 @@ const EmailConfigSettingsLayer = () => {
                   />
                 </div>
                 <div className='col-md-3 d-flex align-items-center'>
-                  <div className='form-check mt-24'>
+                  <div className='form-check mt-4'>
                     <input
                       type='checkbox'
                       className='form-check-input'
@@ -163,7 +166,7 @@ const EmailConfigSettingsLayer = () => {
                   </div>
                 </div>
               </div>
-              <div className='d-flex gap-2 mt-16'>
+              <div className='d-flex gap-2 mt-3'>
                 <button type='submit' className='btn btn-primary' disabled={isSaving}>
                   {editingId === null ? "Add" : "Save"}
                 </button>
@@ -173,7 +176,7 @@ const EmailConfigSettingsLayer = () => {
                   </button>
                 )}
               </div>
-              {error && <div className='text-danger-main text-sm mt-2'>{error}</div>}
+              {error && <div className='text-danger small mt-2'>{error}</div>}
             </form>
           </div>
         </div>
@@ -181,6 +184,12 @@ const EmailConfigSettingsLayer = () => {
       )}
 
       <div className='col-12'>
+        {!isSuperAdmin && (
+          <div className='alert alert-info d-flex align-items-center gap-2 mb-3'>
+            <IconifyIcon icon='solar:lock-keyhole-bold' className='fs-5 flex-shrink-0' />
+            Email configuration is managed by the platform Super Admin (LitXus Systems).
+          </div>
+        )}
         <PaginatedTable
           title='Email Config list'
           columns={[
@@ -196,6 +205,7 @@ const EmailConfigSettingsLayer = () => {
           page={pagedQuery.page}
           pageSize={pagedQuery.pageSize}
           isLoading={pagedQuery.result.isLoading}
+          isError={pagedQuery.result.isError}
           search={pagedQuery.search}
           onSearchChange={pagedQuery.setSearch}
           sortBy={pagedQuery.sortBy}
@@ -209,12 +219,12 @@ const EmailConfigSettingsLayer = () => {
               <td>{item.hostname}</td>
               <td>{item.port}</td>
               <td>{item.sslEnabled ? "Yes" : "No"}</td>
-              <td>{item.isDefault && <span className='badge bg-primary-50 text-primary-600'>Default</span>}</td>
+              <td>{item.isDefault && <span className='badge bg-primary bg-opacity-10 text-primary'>Default</span>}</td>
               <td className='text-center'>
                 {canEdit && (
                   <button
                     type='button'
-                    className='w-32-px h-32-px me-8 bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center border-0'
+                    className='btn btn-icon btn-soft-success me-1'
                     onClick={() => startEdit(item)}
                   >
                     <Icon icon='lucide:edit' />
@@ -223,7 +233,7 @@ const EmailConfigSettingsLayer = () => {
                 {canDelete && (
                   <button
                     type='button'
-                    className='w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center border-0'
+                    className='btn btn-icon btn-soft-danger'
                     onClick={() => deleteMutation.mutate(item.id)}
                   >
                     <Icon icon='mingcute:delete-2-line' />

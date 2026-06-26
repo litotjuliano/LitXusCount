@@ -1,0 +1,42 @@
+namespace LitXusCount.Application.Settings.Suppliers;
+
+public record SupplierDto(
+    long Id,
+    string Code,
+    string Name,
+    long GlAccountId,
+    string GlAccountName,
+    string GlAccountCode,
+    string? Address1,
+    string? Address2,
+    string? Address3,
+    string? AddressCode,
+    string? City,
+    string? State,
+    string? Country,
+    string? Phone,
+    string? Fax,
+    string? Email,
+    string? ContactPerson,
+    int PaymentTermsDays,
+    long? DefaultCurrencyId,
+    string? DefaultCurrencyCode,
+    bool IsActive);
+
+public record SupplierUpsertDto(
+    string Code,
+    string Name,
+    long GlAccountId,
+    string? Address1,
+    string? Address2,
+    string? Address3,
+    string? AddressCode,
+    string? City,
+    string? State,
+    string? Country,
+    string? Phone,
+    string? Fax,
+    string? Email,
+    string? ContactPerson,
+    int PaymentTermsDays,
+    long? DefaultCurrencyId);

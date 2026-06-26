@@ -27,49 +27,44 @@ interface DevCredentialsCheatsheetProps {
   onSelect: (credential: DevCredential) => void;
 }
 
-const roleBadgeClass: Record<DevCredential["roleVariant"], string> = {
-  danger: "bg-danger-focus text-danger-main border border-danger-main",
-  warning: "bg-warning-focus text-warning-main border border-warning-main",
-  primary: "bg-primary-50 text-primary-600 border border-primary-600",
+const badgeClass: Record<DevCredential["roleVariant"], string> = {
+  danger:  "bg-danger  bg-opacity-25 text-danger  border border-danger",
+  warning: "bg-warning bg-opacity-25 text-warning border border-warning",
+  primary: "bg-primary bg-opacity-10 text-primary border border-primary",
 };
 
 const DevCredentialsCheatsheet = ({ activeEmail, onSelect }: DevCredentialsCheatsheetProps) => {
-  if (!import.meta.env.DEV) {
-    return null;
-  }
+  if (!import.meta.env.DEV) return null;
 
   return (
-    <div className='mt-32 max-w-464-px mx-auto w-100 border radius-12 overflow-hidden'>
-      <div className='d-flex align-items-center justify-content-between px-16 py-12 bg-neutral-50 border-bottom'>
-        <div className='d-flex align-items-center gap-2'>
-          <Icon icon='solar:key-outline' className='text-warning-main' />
-          <span className='fw-semibold text-sm'>Dev Credentials</span>
+    <div className="mt-4 w-100 border rounded overflow-hidden">
+      <div className="d-flex align-items-center justify-content-between px-3 py-2 bg-light border-bottom">
+        <div className="d-flex align-items-center gap-2">
+          <Icon icon="solar:key-outline" className="text-warning" />
+          <span className="fw-semibold small">Dev Credentials</span>
         </div>
-        <span className='text-xs text-secondary-light'>click row to fill</span>
+        <span className="text-muted" style={{ fontSize: '0.75rem' }}>click row to fill</span>
       </div>
-      <table className='w-100 text-sm'>
+      <table className="w-100 small mb-0">
         <thead>
-          <tr className='text-secondary-light'>
-            <th className='text-start px-16 py-8 fw-medium'>Email</th>
-            <th className='text-start px-16 py-8 fw-medium'>Role</th>
+          <tr className="text-muted border-bottom">
+            <th className="px-3 py-2 fw-medium text-start">Email</th>
+            <th className="px-3 py-2 fw-medium text-start">Role</th>
           </tr>
         </thead>
         <tbody>
           {DEV_CREDENTIALS.map((credential) => (
             <tr
               key={credential.email}
-              role='button'
+              role="button"
               title={`Password: ${credential.password}`}
               onClick={() => onSelect(credential)}
-              className={
-                activeEmail === credential.email
-                  ? "bg-primary-50 cursor-pointer"
-                  : "cursor-pointer hover-bg-neutral-50"
-              }
+              style={{ cursor: 'pointer' }}
+              className={activeEmail === credential.email ? "bg-primary bg-opacity-10" : ""}
             >
-              <td className='px-16 py-10'>{credential.email}</td>
-              <td className='px-16 py-10'>
-                <span className={`px-8 py-2 radius-8 text-xs fw-medium ${roleBadgeClass[credential.roleVariant]}`}>
+              <td className="px-3 py-2">{credential.email}</td>
+              <td className="px-3 py-2">
+                <span className={`badge fw-medium ${badgeClass[credential.roleVariant]}`}>
                   {credential.role}
                 </span>
               </td>
@@ -77,7 +72,7 @@ const DevCredentialsCheatsheet = ({ activeEmail, onSelect }: DevCredentialsCheat
           ))}
         </tbody>
       </table>
-      <div className='px-16 py-8 bg-neutral-50 border-top text-xs text-secondary-light text-center'>
+      <div className="px-3 py-2 bg-light border-top text-center text-muted" style={{ fontSize: '0.75rem' }}>
         Password shown in tooltip · Row highlights when filled
       </div>
     </div>

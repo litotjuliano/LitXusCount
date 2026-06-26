@@ -34,4 +34,9 @@ export const companyInfoApi = {
   get: async (): Promise<CompanyInfo> => (await apiClient.get<CompanyInfo>(base)).data,
   edit: async (payload: CompanyInfoUpdate): Promise<CompanyInfo> =>
     (await apiClient.put<CompanyInfo>(base, payload)).data,
+  uploadLogo: async (file: File): Promise<{ url: string }> => {
+    const body = new FormData();
+    body.append('file', file);
+    return (await apiClient.post<{ url: string }>(`${base}/logo`, body)).data;
+  },
 };

@@ -20,7 +20,7 @@ const SalesStatisticOne = () => {
               <option value='Today'>Today</option>
             </select>
           </div>
-          <div className='d-flex flex-wrap align-items-center gap-2 mt-8'>
+          <div className='d-flex flex-wrap align-items-center gap-2 mt-2'>
             <h6 className='mb-0'>$27,200</h6>
             <span className='text-sm fw-semibold rounded-pill bg-success-focus text-success-main border br-success px-8 py-4 line-height-1 d-flex align-items-center gap-1'>
               10% <Icon icon='bxs:up-arrow' className='text-xs' />

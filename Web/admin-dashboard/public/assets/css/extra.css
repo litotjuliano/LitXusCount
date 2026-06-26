@@ -222,3 +222,7 @@ table.dataTable td.dt-type-date {
 .Check.complete{
   stroke-dashoffset: 65.9734px !important;
 }
+
+@media (min-width: 1650px) {
+  .sidebar { width: 17.1875rem; }
+}

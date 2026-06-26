@@ -1,124 +1,124 @@
-import { useState, type FormEvent } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { login } from "../api/auth";
-import { authStorage } from "../api/authStorage";
-import DevCredentialsCheatsheet from "./DevCredentialsCheatsheet";
+import { useState, type FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+import { Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import IconifyIcon from '@/components/wrappers/IconifyIcon'
+import LogoBox from '@/components/LogoBox'
+import { login } from '../api/auth'
+import { authStorage } from '../api/authStorage'
+import DevCredentialsCheatsheet from './DevCredentialsCheatsheet'
 
 const SignInLayer = () => {
-  const navigate = useNavigate();
-  const [userNameOrEmail, setUserNameOrEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
+  const navigate = useNavigate()
+  const [userNameOrEmail, setUserNameOrEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
 
   const loginMutation = useMutation({
     mutationFn: () => login(userNameOrEmail, password),
     onSuccess: (result) => {
-      authStorage.setTokens(result.accessToken, result.refreshToken, rememberMe);
-      navigate("/");
+      authStorage.setTokens(result.accessToken, result.refreshToken, rememberMe)
+      navigate('/')
     },
     onError: () => {
-      toast.error("Invalid username/email or password.");
+      toast.error('Invalid username/email or password.')
     },
-  });
+  })
 
   const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    loginMutation.mutate();
-  };
+    event.preventDefault()
+    loginMutation.mutate()
+  }
 
   return (
-    <section className='auth bg-base d-flex flex-wrap'>
-      <div className='auth-left d-lg-block d-none'>
-        <div className='d-flex align-items-center flex-column h-100 justify-content-center'>
-          <img src='assets/images/auth/auth-img.png' alt='' />
-        </div>
+    <div className="authentication-bg">
+      <div className="account-pages pt-sm-5 pb-sm-5 py-3">
+        <Container>
+          <Row className="justify-content-center">
+            <Col xl={5}>
+              <Card className="auth-card">
+                <CardBody className="px-3 py-5">
+                  <LogoBox containerClassName="mx-auto mb-4 text-center auth-logo" height={52} />
+                  <h2 className="fw-bold text-center fs-18">Sign In</h2>
+                  <p className="text-muted text-center mt-1 mb-4">Enter your credentials to access LitXusCount.</p>
+                  <div className="px-4">
+                    <form onSubmit={handleSubmit}>
+                      <div className="mb-3">
+                        <label className="form-label">Username or Email</label>
+                        <div className="input-group">
+                          <span className="input-group-text">
+                            <IconifyIcon icon="solar:user-outline" className="fs-18" />
+                          </span>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Username or Email"
+                            autoComplete="username"
+                            value={userNameOrEmail}
+                            onChange={(e) => setUserNameOrEmail(e.target.value)}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <div className="input-group">
+                          <span className="input-group-text">
+                            <IconifyIcon icon="solar:lock-password-outline" className="fs-18" />
+                          </span>
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            className="form-control"
+                            placeholder="Password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                          />
+                          <button type="button" className="input-group-text" onClick={() => setShowPassword(!showPassword)}>
+                            <IconifyIcon icon={showPassword ? 'solar:eye-closed-outline' : 'solar:eye-outline'} className="fs-18" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="remember-me"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                          />
+                          <label className="form-check-label" htmlFor="remember-me">Remember me</label>
+                        </div>
+                        <Link to="/forgot-password" className="text-primary fw-medium small">Forgot Password?</Link>
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100"
+                        disabled={loginMutation.isPending}
+                      >
+                        {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
+                      </button>
+                    </form>
+                    <DevCredentialsCheatsheet
+                      activeEmail={userNameOrEmail}
+                      onSelect={(credential) => {
+                        setUserNameOrEmail(credential.email)
+                        setPassword(credential.password)
+                      }}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
-      <div className='auth-right py-32 px-24 d-flex flex-column justify-content-center'>
-        <div className='max-w-464-px mx-auto w-100'>
-          <div>
-            <Link to='/' className='mb-40 max-w-290-px'>
-              <img src='assets/images/logo.png' alt='' />
-            </Link>
-            <h4 className='mb-12'>Sign In to your Account</h4>
-            <p className='mb-32 text-secondary-light text-lg'>
-              Welcome back! please enter your detail
-            </p>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className='icon-field mb-16'>
-              <span className='icon top-50 translate-middle-y'>
-                <Icon icon='mage:email' />
-              </span>
-              <input
-                type='text'
-                className='form-control h-56-px bg-neutral-50 radius-12'
-                placeholder='Username or Email'
-                autoComplete='username'
-                value={userNameOrEmail}
-                onChange={(e) => setUserNameOrEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className='position-relative mb-20'>
-              <div className='icon-field'>
-                <span className='icon top-50 translate-middle-y'>
-                  <Icon icon='solar:lock-password-outline' />
-                </span>
-                <input
-                  type='password'
-                  className='form-control h-56-px bg-neutral-50 radius-12'
-                  id='your-password'
-                  placeholder='Password'
-                  autoComplete='current-password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <span
-                className='toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light'
-                data-toggle='#your-password'
-              />
-            </div>
-            <div className='d-flex justify-content-between gap-2 mb-20'>
-              <div className='form-check style-check d-flex align-items-center'>
-                <input
-                  className='form-check-input border border-neutral-300'
-                  type='checkbox'
-                  id='remember-me'
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                <label className='form-check-label' htmlFor='remember-me'>
-                  Remember me
-                </label>
-              </div>
-              <Link to='/forgot-password' className='text-primary-600 fw-medium'>
-                Forgot Password?
-              </Link>
-            </div>
-            <button
-              type='submit'
-              className='btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32'
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? "Signing in..." : "Sign In"}
-            </button>
-          </form>
-          <DevCredentialsCheatsheet
-            activeEmail={userNameOrEmail}
-            onSelect={(credential) => {
-              setUserNameOrEmail(credential.email);
-              setPassword(credential.password);
-            }}
-          />
-        </div>
-      </div>
-    </section>
-  );
-};
+    </div>
+  )
+}
 
-export default SignInLayer;
+export default SignInLayer

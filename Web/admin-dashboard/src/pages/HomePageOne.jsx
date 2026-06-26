@@ -1,5 +1,4 @@
 import MasterLayout from "../masterLayout/MasterLayout";
-import Breadcrumb from "../components/Breadcrumb";
 import DashBoardLayerOne from "../components/DashBoardLayerOne";
 
 const HomePageOne = () => {
@@ -7,9 +6,6 @@ const HomePageOne = () => {
     <>
       {/* MasterLayout */}
       <MasterLayout>
-        {/* Breadcrumb */}
-        <Breadcrumb title='Dashboard' />
-
         {/* DashBoardLayerOne */}
         <DashBoardLayerOne />
       </MasterLayout>

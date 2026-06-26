@@ -1,14 +1,24 @@
+using LitXusCount.Application.Accounts;
 using LitXusCount.Application.Auth;
+using LitXusCount.Application.Tenants;
+using LitXusCount.Application.Sales;
 using LitXusCount.Application.Settings.Company;
 using LitXusCount.Application.Settings.Currencies;
 using LitXusCount.Application.Settings.EmailConfigs;
 using LitXusCount.Application.Settings.Lookups;
 using LitXusCount.Application.Settings.VatPercentages;
+using LitXusCount.Application.Settings.GlAccounts;
+using LitXusCount.Application.Settings.Customers;
+using LitXusCount.Application.Settings.Suppliers;
+using LitXusCount.Application.Settings.Products;
 using LitXusCount.Application.Admin.Roles;
 using LitXusCount.Application.Admin.Users;
+using LitXusCount.Infrastructure.Accounts;
+using LitXusCount.Infrastructure.Sales;
 using LitXusCount.Infrastructure.Admin.Roles;
 using LitXusCount.Infrastructure.Admin.Users;
 using LitXusCount.Infrastructure.Authorization;
+using LitXusCount.Infrastructure.Tenants;
 using LitXusCount.Infrastructure.Identity;
 using LitXusCount.Infrastructure.Persistence;
 using LitXusCount.Infrastructure.Settings.Company;
@@ -16,9 +26,14 @@ using LitXusCount.Infrastructure.Settings.Currencies;
 using LitXusCount.Infrastructure.Settings.EmailConfigs;
 using LitXusCount.Infrastructure.Settings.Lookups;
 using LitXusCount.Infrastructure.Settings.VatPercentages;
+using LitXusCount.Infrastructure.Settings.GlAccounts;
+using LitXusCount.Infrastructure.Settings.Customers;
+using LitXusCount.Infrastructure.Settings.Suppliers;
+using LitXusCount.Infrastructure.Settings.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,9 +43,36 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        // ── Master Database (Identity + Tenant registry) ──────────────────────
+        services.AddDbContext<MasterDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+        // ── Tenant Connection Cache (singleton — used to invalidate cached CS) ──
+        services.AddMemoryCache();
+        services.AddSingleton<ITenantConnectionCache, TenantConnectionCache>();
+
+        // ── Tenant Context (scoped per request, resolves from JWT + MasterDbContext) ─
+        services.AddHttpContextAccessor();
+        services.AddScoped<ITenantContext, TenantContext>();
+
+        // ── Tenant-Scoped Operational Database ────────────────────────────────
+        // Each request resolves the ApplicationDbContext using the tenant's
+        // connection string from ITenantContext. An empty options object is used
+        // when no tenant is available (SuperAdmin platform-level requests).
+        services.AddScoped<ApplicationDbContext>(sp =>
+        {
+            var tenantCtx = sp.GetRequiredService<ITenantContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+            if (tenantCtx.ConnectionString is { } cs)
+                optionsBuilder.UseNpgsql(cs);
+            else
+                optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+
+            return new ApplicationDbContext(optionsBuilder.Options);
+        });
+
+        // ── Identity (backed by MasterDbContext) ──────────────────────────────
         services
             .AddIdentityCore<ApplicationUser>(options =>
             {
@@ -41,15 +83,22 @@ public static class DependencyInjection
                 options.User.RequireUniqueEmail = true;
             })
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<MasterDbContext>()
             .AddDefaultTokenProviders();
 
+        // ── Auth ──────────────────────────────────────────────────────────────
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddScoped<IAuthService, AuthService>();
 
+        // ── Tenant Management ─────────────────────────────────────────────────
+        services.AddScoped<ITenantService, TenantService>();
+        services.Configure<DeploymentOptions>(configuration.GetSection(DeploymentOptions.SectionName));
+
+        // ── Data Protection / Encryption ──────────────────────────────────────
         services.AddDataProtection();
         services.AddScoped<IEmailConfigEncryptor, EmailConfigEncryptor>();
 
+        // ── Settings Services ─────────────────────────────────────────────────
         services.AddScoped<ICompanyInfoService, CompanyInfoService>();
         services.AddScoped<ICurrencyService, CurrencyService>();
         services.AddScoped<IVatPercentageService, VatPercentageService>();
@@ -59,10 +108,27 @@ public static class DependencyInjection
         services.AddScoped<ICustomerTypeService, CustomerTypeService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IUnitOfMeasureService, UnitOfMeasureService>();
+        services.AddScoped<IGlAccountService, GlAccountService>();
+        services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<ISupplierService, SupplierService>();
+        services.AddScoped<IProductService, ProductService>();
 
+        // ── Authorization Policies ────────────────────────────────────────────
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
+        // ── Accounting & Sales ────────────────────────────────────────────────
+        services.AddScoped<IAccAccountService, AccAccountService>();
+        services.AddScoped<IAccDepositService, AccDepositService>();
+        services.AddScoped<IAccExpenseService, AccExpenseService>();
+        services.AddScoped<IAccTransferService, AccTransferService>();
+
+        services.AddScoped<IStockService, StockService>();
+        services.AddScoped<ISalesInvoiceService, SalesInvoiceService>();
+        services.AddScoped<ISalesInvoiceLineService, SalesInvoiceLineService>();
+        services.AddScoped<ISalesPaymentService, SalesPaymentService>();
+
+        // ── Admin ─────────────────────────────────────────────────────────────
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserManagementService, UserManagementService>();
 

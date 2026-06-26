@@ -1,25 +1,17 @@
 using LitXusCount.Application.Settings.EmailConfigs;
 using LitXusCount.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace LitXusCount.Infrastructure.Persistence.Seeding;
 
-/// <summary>
-/// Dev-only reference data ported from InventoryMSNV's SeedData.cs, adapted to LitXusCount's
-/// schema (IsActive audit flag, encrypted EmailConfig password). Skips entirely if Currencies
-/// already has rows, so it only ever runs once against a fresh database.
-/// </summary>
 public static class SystemSettingsSeeder
 {
-    public static async Task SeedAsync(IServiceProvider services, CancellationToken ct = default)
+    public static async Task SeedAsync(
+        ApplicationDbContext db,
+        IEmailConfigEncryptor encryptor,
+        CancellationToken ct = default)
     {
-        var db = services.GetRequiredService<ApplicationDbContext>();
-
-        if (await db.Currencies.AnyAsync(ct))
-        {
-            return;
-        }
+        if (await db.Currencies.AnyAsync(ct)) return;
 
         var now = DateTime.UtcNow;
 
@@ -69,7 +61,6 @@ public static class SystemSettingsSeeder
             ("Foot", "Foot"), ("Inch", "Inch"), ("Piece", "Piece"),
         }.Select(u => new UnitOfMeasure { Name = u.Item1, Description = u.Item2, IsActive = true, CreatedAt = now }));
 
-        var encryptor = services.GetRequiredService<IEmailConfigEncryptor>();
         var primaryEmailConfig = new EmailConfig
         {
             Email = "dev01@gmail.com",
@@ -116,5 +107,70 @@ public static class SystemSettingsSeeder
         companyInfo.ModifiedAt = now;
 
         await db.SaveChangesAsync(ct);
+
+        var glAccounts = new[]
+        {
+            new GlAccount { Code = "11000", Name = "Accounts Receivable", AccountType = GlAccountType.Asset, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "21000", Name = "Accounts Payable", AccountType = GlAccountType.Liability, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "41000", Name = "Sales Revenue", AccountType = GlAccountType.Revenue, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "51000", Name = "Cost of Goods Sold", AccountType = GlAccountType.Cogs, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "52000", Name = "Purchase Cost Account", AccountType = GlAccountType.Expense, IsActive = true, CreatedAt = now }
+        };
+        db.GlAccounts.AddRange(glAccounts);
+        await db.SaveChangesAsync(ct);
+
+        var arAcc = glAccounts.First(a => a.Code == "11000");
+        var apAcc = glAccounts.First(a => a.Code == "21000");
+        var revenueAcc = glAccounts.First(a => a.Code == "41000");
+        var cogsAcc = glAccounts.First(a => a.Code == "51000");
+        var purchaseCostAcc = glAccounts.First(a => a.Code == "52000");
+
+        var customers = new[]
+        {
+            new Customer { Code = "CUST001", Name = "Apex Retailers Ltd", GlAccountId = arAcc.Id, PaymentTermsDays = 30, CreditLimit = 50000, IsLocked = false, Address1 = "12 Main St", City = "Ipoh", Country = "Malaysia", IsActive = true, CreatedAt = now },
+            new Customer { Code = "CUST002", Name = "Global Distributors", GlAccountId = arAcc.Id, PaymentTermsDays = 60, CreditLimit = 100000, IsLocked = false, Address1 = "45 Industrial Ave", City = "Kuala Lumpur", Country = "Malaysia", IsActive = true, CreatedAt = now }
+        };
+        db.Customers.AddRange(customers);
+
+        var suppliers = new[]
+        {
+            new Supplier { Code = "SUPP001", Name = "Prime Tech Wholesalers", GlAccountId = apAcc.Id, PaymentTermsDays = 30, DefaultCurrencyId = myr.Id, Address1 = "88 Trade Center", City = "Penang", Country = "Malaysia", IsActive = true, CreatedAt = now },
+            new Supplier { Code = "SUPP002", Name = "Euro Supply Corp", GlAccountId = apAcc.Id, PaymentTermsDays = 45, DefaultCurrencyId = usd.Id, Address1 = "5 Avenue Du Port", City = "Brussels", Country = "Belgium", IsActive = true, CreatedAt = now }
+        };
+        db.Suppliers.AddRange(suppliers);
+        await db.SaveChangesAsync(ct);
+
+        var fruitCat = await db.Categories.FirstAsync(c => c.Name == "Fruits", ct);
+        var commonCat = await db.Categories.FirstAsync(c => c.Name == "Common", ct);
+        var pieceUom = await db.UnitsOfMeasure.FirstAsync(u => u.Name == "Piece", ct);
+        var kgUom = await db.UnitsOfMeasure.FirstAsync(u => u.Name == "Kg", ct);
+        var primeSupp = suppliers.First(s => s.Code == "SUPP001");
+
+        db.Products.AddRange(
+            new Product
+            {
+                Code = "PROD-APPLE-01", Code2 = "501234567890", Description = "Fresh Red Apples",
+                CategoryId = fruitCat.Id, SalesCogsAccountId = cogsAcc.Id, SalesRevenueAccountId = revenueAcc.Id,
+                PurchaseCostAccountId = purchaseCostAcc.Id, PurchaseAccountId = apAcc.Id,
+                DefaultSupplierId = primeSupp.Id, MainUnitOfMeasureId = kgUom.Id, ConversionFactor = 1,
+                UnitCostPrice = 2.50m, UnitSellingPrice = 5.00m, IsActive = true, CreatedAt = now
+            },
+            new Product
+            {
+                Code = "PROD-WIDGET-02", Code2 = "501234567891", Description = "Common Steel Widget",
+                CategoryId = commonCat.Id, SalesCogsAccountId = cogsAcc.Id, SalesRevenueAccountId = revenueAcc.Id,
+                PurchaseCostAccountId = purchaseCostAcc.Id, PurchaseAccountId = apAcc.Id,
+                DefaultSupplierId = primeSupp.Id, MainUnitOfMeasureId = pieceUom.Id, ConversionFactor = 1,
+                UnitCostPrice = 10.00m, UnitSellingPrice = 22.50m, IsActive = true, CreatedAt = now
+            });
+        await db.SaveChangesAsync(ct);
+
+        if (!await db.AccAccounts.AnyAsync(ct))
+        {
+            db.AccAccounts.AddRange(
+                new AccAccount { Code = "CASH", AccountName = "Cash", AccountNumber = "001", Description = "Default cash account", Credit = 0, Debit = 0, Balance = 0, IsActive = true, CreatedAt = now },
+                new AccAccount { Code = "BANK", AccountName = "Bank", AccountNumber = "002", Description = "Default bank account", Credit = 0, Debit = 0, Balance = 0, IsActive = true, CreatedAt = now });
+            await db.SaveChangesAsync(ct);
+        }
     }
 }

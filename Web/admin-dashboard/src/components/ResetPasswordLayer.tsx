@@ -1,111 +1,118 @@
-import { useState, type FormEvent } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { resetPassword } from "../api/auth";
+import { useState, type FormEvent } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+import { Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import IconifyIcon from '@/components/wrappers/IconifyIcon'
+import LogoBox from '@/components/LogoBox'
+import { resetPassword } from '../api/auth'
 
 const ResetPasswordLayer = () => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get("email") ?? "";
-  const token = searchParams.get("token") ?? "";
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const email = searchParams.get('email') ?? ''
+  const token = searchParams.get('token') ?? ''
 
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const resetMutation = useMutation({
     mutationFn: () => resetPassword(email, token, newPassword),
     onSuccess: () => {
-      toast.success("Password reset successfully. Please sign in.");
-      navigate("/sign-in");
+      toast.success('Password reset successfully. Please sign in.')
+      navigate('/sign-in')
     },
     onError: () => {
-      toast.error("Reset failed. The link may be invalid or expired.");
+      toast.error('Reset failed. The link may be invalid or expired.')
     },
-  });
+  })
 
   const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
     if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      return;
+      toast.error('Passwords do not match.')
+      return
     }
-    resetMutation.mutate();
-  };
+    resetMutation.mutate()
+  }
 
-  const linkIsValid = Boolean(email && token);
+  const linkIsValid = Boolean(email && token)
 
   return (
-    <section className='auth bg-base d-flex flex-wrap'>
-      <div className='auth-left d-lg-block d-none'>
-        <div className='d-flex align-items-center flex-column h-100 justify-content-center'>
-          <img src='assets/images/auth/forgot-pass-img.png' alt='' />
-        </div>
+    <div className="authentication-bg">
+      <div className="account-pages pt-sm-5 pb-sm-5 py-3">
+        <Container>
+          <Row className="justify-content-center">
+            <Col xl={5}>
+              <Card className="auth-card">
+                <CardBody className="px-3 py-5">
+                  <LogoBox containerClassName="mx-auto mb-4 text-center auth-logo" height={52} />
+                  <h2 className="fw-bold text-center fs-18">Reset Password</h2>
+                  <p className="text-muted text-center mt-1 mb-4">
+                    {linkIsValid
+                      ? `Choose a new password for ${email}.`
+                      : 'This reset link is missing required information. Please request a new one.'}
+                  </p>
+                  <div className="px-4">
+                    {linkIsValid && (
+                      <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                          <label className="form-label">New Password</label>
+                          <div className="input-group">
+                            <span className="input-group-text">
+                              <IconifyIcon icon="solar:lock-password-outline" className="fs-18" />
+                            </span>
+                            <input
+                              type="password"
+                              className="form-control"
+                              placeholder="New password"
+                              autoComplete="new-password"
+                              value={newPassword}
+                              onChange={(e) => setNewPassword(e.target.value)}
+                              required
+                              minLength={8}
+                            />
+                          </div>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">Confirm Password</label>
+                          <div className="input-group">
+                            <span className="input-group-text">
+                              <IconifyIcon icon="solar:lock-password-outline" className="fs-18" />
+                            </span>
+                            <input
+                              type="password"
+                              className="form-control"
+                              placeholder="Confirm new password"
+                              autoComplete="new-password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              required
+                              minLength={8}
+                            />
+                          </div>
+                        </div>
+                        <button
+                          type="submit"
+                          className="btn btn-primary w-100"
+                          disabled={resetMutation.isPending}
+                        >
+                          {resetMutation.isPending ? 'Resetting...' : 'Reset Password'}
+                        </button>
+                      </form>
+                    )}
+                    <div className="text-center mt-3">
+                      <Link to="/forgot-password" className="text-primary fw-semibold small">← Request a new link</Link>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
-      <div className='auth-right py-32 px-24 d-flex flex-column justify-content-center'>
-        <div className='max-w-464-px mx-auto w-100'>
-          <div>
-            <Link to='/' className='mb-40 max-w-290-px'>
-              <img src='assets/images/logo.png' alt='' />
-            </Link>
-            <h4 className='mb-12'>Reset Password</h4>
-            <p className='mb-32 text-secondary-light text-lg'>
-              {linkIsValid
-                ? `Choose a new password for ${email}.`
-                : "This reset link is missing required information. Request a new one."}
-            </p>
-          </div>
-          {linkIsValid && (
-            <form onSubmit={handleSubmit}>
-              <div className='icon-field mb-16'>
-                <span className='icon top-50 translate-middle-y'>
-                  <Icon icon='solar:lock-password-outline' />
-                </span>
-                <input
-                  type='password'
-                  className='form-control h-56-px bg-neutral-50 radius-12'
-                  placeholder='New password'
-                  autoComplete='new-password'
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                  minLength={8}
-                />
-              </div>
-              <div className='icon-field mb-20'>
-                <span className='icon top-50 translate-middle-y'>
-                  <Icon icon='solar:lock-password-outline' />
-                </span>
-                <input
-                  type='password'
-                  className='form-control h-56-px bg-neutral-50 radius-12'
-                  placeholder='Confirm new password'
-                  autoComplete='new-password'
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  minLength={8}
-                />
-              </div>
-              <button
-                type='submit'
-                className='btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12'
-                disabled={resetMutation.isPending}
-              >
-                {resetMutation.isPending ? "Resetting..." : "Reset Password"}
-              </button>
-            </form>
-          )}
-          <div className='mt-32 text-center text-sm'>
-            <Link to='/forgot-password' className='text-primary-600 fw-semibold'>
-              Request a new link
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+    </div>
+  )
+}
 
-export default ResetPasswordLayer;
+export default ResetPasswordLayer

@@ -20,7 +20,7 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly ApplicationDbContext _db;
+    private readonly MasterDbContext _masterDb;
     private readonly JwtSettings _jwtSettings;
     private readonly IConfiguration _configuration;
     private readonly IHostEnvironment _environment;
@@ -29,7 +29,7 @@ public class AuthService : IAuthService
     public AuthService(
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        ApplicationDbContext db,
+        MasterDbContext masterDb,
         IOptions<JwtSettings> jwtSettings,
         IConfiguration configuration,
         IHostEnvironment environment,
@@ -37,7 +37,7 @@ public class AuthService : IAuthService
     {
         _userManager = userManager;
         _roleManager = roleManager;
-        _db = db;
+        _masterDb = masterDb;
         _jwtSettings = jwtSettings.Value;
         _configuration = configuration;
         _environment = environment;
@@ -49,15 +49,8 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByNameAsync(userNameOrEmail)
                    ?? await _userManager.FindByEmailAsync(userNameOrEmail);
 
-        if (user is null)
-        {
-            return null;
-        }
-
-        if (await _userManager.IsLockedOutAsync(user))
-        {
-            return null;
-        }
+        if (user is null) return null;
+        if (await _userManager.IsLockedOutAsync(user)) return null;
 
         var passwordValid = await _userManager.CheckPasswordAsync(user, password);
         if (!passwordValid)
@@ -67,43 +60,30 @@ public class AuthService : IAuthService
         }
 
         await _userManager.ResetAccessFailedCountAsync(user);
-
         return await IssueTokensAsync(user, ct);
     }
 
     public async Task<AuthResult?> RefreshAsync(string refreshToken, CancellationToken ct = default)
     {
-        var existing = await _db.RefreshTokens.FirstOrDefaultAsync(x => x.Token == refreshToken, ct);
-        if (existing is null || !existing.IsActive)
-        {
-            return null;
-        }
+        var existing = await _masterDb.RefreshTokens.FirstOrDefaultAsync(x => x.Token == refreshToken, ct);
+        if (existing is null || !existing.IsActive) return null;
 
         var user = await _userManager.FindByIdAsync(existing.UserId);
-        if (user is null)
-        {
-            return null;
-        }
+        if (user is null) return null;
 
         existing.RevokedAt = DateTime.UtcNow;
-
         return await IssueTokensAsync(user, ct);
     }
 
     public async Task<string?> RequestPasswordResetAsync(string email, CancellationToken ct = default)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        if (user is null)
-        {
-            // Do not reveal whether the email exists.
-            return null;
-        }
+        if (user is null) return null;
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
         var frontendBaseUrl = _configuration["Frontend:BaseUrl"] ?? "http://localhost:5173";
         var resetLink = $"{frontendBaseUrl}/reset-password?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}";
 
-        // No real email sender is wired up yet — log the link so the flow is testable end-to-end.
         _logger.LogInformation("Password reset requested for {Email}. Reset link: {ResetLink}", email, resetLink);
 
         return _environment.IsDevelopment() ? resetLink : null;
@@ -112,10 +92,7 @@ public class AuthService : IAuthService
     public async Task<bool> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken ct = default)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        if (user is null)
-        {
-            return false;
-        }
+        if (user is null) return false;
 
         var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
         return result.Succeeded;
@@ -132,6 +109,9 @@ public class AuthService : IAuthService
             new(ClaimTypes.Name, user.UserName ?? user.Id),
         };
 
+        if (user.TenantId.HasValue)
+            claims.Add(new Claim("tenant_id", user.TenantId.Value.ToString()));
+
         var roles = await _userManager.GetRolesAsync(user);
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
@@ -139,16 +119,11 @@ public class AuthService : IAuthService
         foreach (var roleName in roles)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
-            if (role is null)
-            {
-                continue;
-            }
+            if (role is null) continue;
 
             var roleClaims = await _roleManager.GetClaimsAsync(role);
             foreach (var roleClaim in roleClaims.Where(c => c.Type == Permissions.ClaimType))
-            {
                 permissions.Add(roleClaim.Value);
-            }
         }
 
         claims.AddRange(permissions.Select(permission => new Claim(Permissions.ClaimType, permission)));
@@ -156,14 +131,14 @@ public class AuthService : IAuthService
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SigningKey));
         var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(
+        var jwtToken = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
             expires: accessTokenExpiresAt,
             signingCredentials: credentials);
 
-        var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+        var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
 
         var refreshToken = new RefreshToken
         {
@@ -173,8 +148,8 @@ public class AuthService : IAuthService
             ExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenDays),
         };
 
-        _db.RefreshTokens.Add(refreshToken);
-        await _db.SaveChangesAsync(ct);
+        _masterDb.RefreshTokens.Add(refreshToken);
+        await _masterDb.SaveChangesAsync(ct);
 
         return new AuthResult
         {

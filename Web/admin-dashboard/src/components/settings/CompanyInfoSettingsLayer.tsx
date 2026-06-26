@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useCompanyInfo } from "../../hook/useCompanyInfo";
 import { useCurrencySettings } from "../../hook/useCurrencySettings";
 import { useVatPercentageSettings } from "../../hook/useVatPercentageSettings";
@@ -6,6 +6,7 @@ import { useEmailConfigSettings } from "../../hook/useEmailConfigSettings";
 import { usePermissions } from "../../hook/usePermissions";
 import { Permissions } from "../../api/permissions";
 import type { CompanyInfoUpdate } from "../../api/settings/companyInfo";
+import { companyInfoApi } from "../../api/settings/companyInfo";
 import { extractErrorMessage } from "./extractErrorMessage";
 
 const emptyForm: CompanyInfoUpdate = {
@@ -45,9 +46,28 @@ const CompanyInfoSettingsLayer = () => {
   const { allActiveQuery: vatPercentages } = useVatPercentageSettings();
   const { allActiveQuery: emailConfigs } = useEmailConfigSettings();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState<CompanyInfoUpdate>(emptyForm);
   const [error, setError] = useState<string | null>(null);
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoUploadError, setLogoUploadError] = useState<string | null>(null);
+
+  const handleLogoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoUploading(true);
+    setLogoUploadError(null);
+    try {
+      const { url } = await companyInfoApi.uploadLogo(file);
+      setForm((prev) => ({ ...prev, logoUrl: url }));
+    } catch (err: unknown) {
+      setLogoUploadError(extractErrorMessage(err as Error));
+    } finally {
+      setLogoUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   useEffect(() => {
     if (query.data) {
@@ -136,13 +156,51 @@ const CompanyInfoSettingsLayer = () => {
                   />
                 </div>
                 <div className='col-md-6'>
-                  <label className='form-label'>Logo URL</label>
+                  <label className='form-label'>Company logo</label>
                   <input
-                    type='text'
-                    className='form-control'
-                    value={toText(form.logoUrl)}
-                    onChange={(e) => setForm({ ...form, logoUrl: toNullable(e.target.value) })}
+                    ref={fileInputRef}
+                    type='file'
+                    accept='image/png,image/jpeg,image/gif,image/webp'
+                    className='d-none'
+                    onChange={handleLogoFileChange}
+                    disabled={!canEdit}
                   />
+                  <div className='d-flex align-items-center gap-3'>
+                    {form.logoUrl ? (
+                      <img
+                        src={form.logoUrl}
+                        alt='Company logo'
+                        style={{ height: 48, maxWidth: 160, objectFit: 'contain', border: '1px solid var(--bs-border-color)', borderRadius: 6, padding: 4, background: '#fff' }}
+                      />
+                    ) : (
+                      <div style={{ height: 48, width: 100, border: '1px dashed var(--bs-border-color)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className='text-muted small'>No logo</span>
+                      </div>
+                    )}
+                    {canEdit && (
+                      <div className='d-flex flex-column gap-1'>
+                        <button
+                          type='button'
+                          className='btn btn-sm btn-outline-primary'
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={logoUploading}
+                        >
+                          {logoUploading ? 'Uploading…' : form.logoUrl ? 'Change' : 'Upload'}
+                        </button>
+                        {form.logoUrl && !logoUploading && (
+                          <button
+                            type='button'
+                            className='btn btn-sm btn-outline-danger'
+                            onClick={() => setForm((prev) => ({ ...prev, logoUrl: null }))}
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {logoUploadError && <div className='text-danger small mt-1'>{logoUploadError}</div>}
+                  <div className='form-text'>PNG, JPG, GIF or WEBP · max 5 MB</div>
                 </div>
               </div>
             </div>
@@ -250,7 +308,7 @@ const CompanyInfoSettingsLayer = () => {
                   />
                 </div>
                 <div className='col-md-4 d-flex align-items-center'>
-                  <div className='form-check mt-24'>
+                  <div className='form-check mt-4'>
                     <input
                       type='checkbox'
                       className='form-check-input'
@@ -264,7 +322,7 @@ const CompanyInfoSettingsLayer = () => {
                   </div>
                 </div>
                 <div className='col-md-4 d-flex align-items-center'>
-                  <div className='form-check mt-24'>
+                  <div className='form-check mt-4'>
                     <input
                       type='checkbox'
                       className='form-check-input'
@@ -353,8 +411,8 @@ const CompanyInfoSettingsLayer = () => {
             <button type='submit' className='btn btn-primary' disabled={editMutation.isPending}>
               {editMutation.isPending ? "Saving..." : "Save changes"}
             </button>
-            {savedMessage && <span className='text-success-main ms-12'>{savedMessage}</span>}
-            {error && <div className='text-danger-main text-sm mt-2'>{error}</div>}
+            {savedMessage && <span className='text-success ms-12'>{savedMessage}</span>}
+            {error && <div className='text-danger small mt-2'>{error}</div>}
           </div>
         )}
       </div>

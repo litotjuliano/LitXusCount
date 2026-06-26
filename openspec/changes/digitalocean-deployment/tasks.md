@@ -12,8 +12,8 @@
 
 - [x] 2.1 `git init`, set default branch to `main` (repository had no prior git history)
 - [x] 2.2 `git add -A` and verify via `git status --short` that no `bin/`, `obj/`, `node_modules/`, or `dist/` directories were accidentally staged
-- [ ] 2.3 Create the first commit
-- [ ] 2.4 Add the GitHub remote (`https://github.com/litotjuliano/LitXusCount`) and push `main`
+- [x] 2.3 Create the first commit
+- [x] 2.4 Add the GitHub remote (`https://github.com/litotjuliano/LitXusCount`) and push `main`
 
 ## 3. DigitalOcean App Platform setup
 

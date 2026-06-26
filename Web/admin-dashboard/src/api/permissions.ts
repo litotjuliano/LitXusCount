@@ -62,5 +62,71 @@ export const Permissions = {
       Edit: "Settings.UnitOfMeasure.Edit",
       Delete: "Settings.UnitOfMeasure.Delete",
     },
+    GlAccount: {
+      View: "Settings.GlAccount.View",
+      Create: "Settings.GlAccount.Create",
+      Edit: "Settings.GlAccount.Edit",
+      Delete: "Settings.GlAccount.Delete",
+    },
+    Customer: {
+      View: "Settings.Customer.View",
+      Create: "Settings.Customer.Create",
+      Edit: "Settings.Customer.Edit",
+      Delete: "Settings.Customer.Delete",
+    },
+    Supplier: {
+      View: "Settings.Supplier.View",
+      Create: "Settings.Supplier.Create",
+      Edit: "Settings.Supplier.Edit",
+      Delete: "Settings.Supplier.Delete",
+    },
+    Product: {
+      View: "Settings.Product.View",
+      Create: "Settings.Product.Create",
+      Edit: "Settings.Product.Edit",
+      Delete: "Settings.Product.Delete",
+    },
+  },
+  Accounts: {
+    Account: {
+      View: "Accounts.Account.View",
+      Create: "Accounts.Account.Create",
+      Edit: "Accounts.Account.Edit",
+      Delete: "Accounts.Account.Delete",
+    },
+    Deposit: {
+      View: "Accounts.Deposit.View",
+      Create: "Accounts.Deposit.Create",
+      Delete: "Accounts.Deposit.Delete",
+    },
+    Expense: {
+      View: "Accounts.Expense.View",
+      Create: "Accounts.Expense.Create",
+      Delete: "Accounts.Expense.Delete",
+    },
+    Transfer: {
+      View: "Accounts.Transfer.View",
+      Create: "Accounts.Transfer.Create",
+      Delete: "Accounts.Transfer.Delete",
+    },
+  },
+  License: {
+    View: "License.View",
+    Manage: "License.Manage",
+  },
+  Tenants: {
+    View: "Tenants.View",
+    Create: "Tenants.Create",
+    Edit: "Tenants.Edit",
+    Delete: "Tenants.Delete",
+  },
+  Sales: {
+    Invoice: {
+      View: "Sales.Invoice.View",
+      Create: "Sales.Invoice.Create",
+      Edit: "Sales.Invoice.Edit",
+      Delete: "Sales.Invoice.Delete",
+      Manage: "Sales.Invoice.Manage",
+    },
   },
 } as const;

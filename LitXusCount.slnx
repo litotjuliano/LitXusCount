@@ -5,4 +5,7 @@
     <Project Path="src/LitXusCount.Domain/LitXusCount.Domain.csproj" />
     <Project Path="src/LitXusCount.Infrastructure/LitXusCount.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LitXusCount.Tests/LitXusCount.Tests.csproj" />
+  </Folder>
 </Solution>

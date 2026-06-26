@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Modal } from "react-bootstrap";
 import { useRoleManagement } from "../../hook/useRoleManagement";
 import { usePermissions } from "../../hook/usePermissions";
+import { useRole } from "../../hook/useRole";
 import { Permissions } from "../../api/permissions";
 import { rolesApi, type RoleListItem } from "../../api/admin/roles";
 import { extractErrorMessage } from "../settings/extractErrorMessage";
@@ -28,22 +30,34 @@ function groupCatalog(catalog: string[]): Map<string, string[]> {
 
 const RoleManagementLayer = () => {
   const { hasPermission } = usePermissions();
+  const { isSuperAdmin } = useRole();
   const { pagedQuery, catalogQuery, createMutation, editMutation, deleteMutation } = useRoleManagement();
 
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const canCreate = hasPermission(Permissions.Roles.Create);
   const canEdit = hasPermission(Permissions.Roles.Edit);
   const canDelete = hasPermission(Permissions.Roles.Delete);
   const isSaving = createMutation.isPending || editMutation.isPending;
 
-  const resetForm = () => {
-    setForm(emptyForm);
-    setEditingId(null);
+  const openAdd = () => { setForm(emptyForm); setEditingId(null); setError(null); setShowModal(true); };
+
+  const startEdit = async (role: RoleListItem) => {
     setError(null);
+    try {
+      const detail = await rolesApi.get(role.id);
+      setEditingId(detail.id);
+      setForm({ name: detail.name, permissions: detail.permissions });
+      setShowModal(true);
+    } catch (err) {
+      setError(extractErrorMessage(err));
+    }
   };
+
+  const closeModal = () => { setForm(emptyForm); setEditingId(null); setError(null); setShowModal(false); };
 
   const togglePermission = (permission: string) => {
     setForm((prev) => ({
@@ -55,153 +69,126 @@ const RoleManagementLayer = () => {
   };
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setError(null);
+    e.preventDefault(); setError(null);
     const payload = { name: form.name, permissions: form.permissions };
-
     if (editingId === null) {
-      createMutation.mutate(payload, { onSuccess: resetForm, onError: (err) => setError(extractErrorMessage(err)) });
+      createMutation.mutate(payload, { onSuccess: closeModal, onError: (err) => setError(extractErrorMessage(err)) });
     } else {
-      editMutation.mutate(
-        { id: editingId, payload },
-        { onSuccess: resetForm, onError: (err) => setError(extractErrorMessage(err)) },
-      );
-    }
-  };
-
-  const startEdit = async (role: RoleListItem) => {
-    setError(null);
-    try {
-      const detail = await rolesApi.get(role.id);
-      setEditingId(detail.id);
-      setForm({ name: detail.name, permissions: detail.permissions });
-    } catch (err) {
-      setError(extractErrorMessage(err));
+      editMutation.mutate({ id: editingId, payload }, { onSuccess: closeModal, onError: (err) => setError(extractErrorMessage(err)) });
     }
   };
 
   const groups = catalogQuery.data ? groupCatalog(catalogQuery.data) : new Map<string, string[]>();
 
   return (
-    <div className='row gy-4'>
-      {(canCreate || editingId !== null) && (
-        <div className='col-12'>
-          <div className='card'>
-            <div className='card-header'>
-              <h6 className='card-title mb-0'>{editingId === null ? "Add Role" : "Edit Role"}</h6>
+    <>
+      <Modal show={showModal} onHide={closeModal} centered size='xl' scrollable>
+        <Modal.Header closeButton>
+          <Modal.Title className='h6'>{editingId === null ? "Add Role" : "Edit Role"}</Modal.Title>
+        </Modal.Header>
+        <form id='role-form' onSubmit={handleSubmit}>
+          <Modal.Body>
+            <div className='row gy-3'>
+              <div className='col-md-6'>
+                <label className='form-label'>Name <span className='text-danger'>*</span></label>
+                <input type='text' className='form-control' value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required autoFocus />
+              </div>
             </div>
-            <div className='card-body'>
-              <form onSubmit={handleSubmit}>
-                <div className='row gy-3'>
-                  <div className='col-md-6'>
-                    <label className='form-label'>Name</label>
-                    <input
-                      type='text'
-                      className='form-control'
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      required
-                    />
+            <div className='mt-3'>
+              <label className='form-label'>Permissions</label>
+              <div className='row gy-3'>
+                {[...groups.entries()].map(([groupKey, permissions]) => (
+                  <div className='col-md-4' key={groupKey}>
+                    <div className='border rounded p-2'>
+                      <div className='fw-semibold mb-2 small'>{groupKey}</div>
+                      {permissions.map((permission) => {
+                        const action = permission.split(".").pop();
+                        return (
+                          <div className='form-check' key={permission}>
+                            <input
+                              type='checkbox'
+                              className='form-check-input'
+                              id={`perm-${permission}`}
+                              checked={form.permissions.includes(permission)}
+                              onChange={() => togglePermission(permission)}
+                            />
+                            <label className='form-check-label small' htmlFor={`perm-${permission}`}>{action}</label>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+            {error && <div className='text-danger small mt-3'>{error}</div>}
+          </Modal.Body>
+          <Modal.Footer>
+            <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>
+            <button type='submit' form='role-form' className='btn btn-primary' disabled={isSaving}>
+              {editingId === null ? "Add" : "Save"}
+            </button>
+          </Modal.Footer>
+        </form>
+      </Modal>
 
-                <div className='mt-16'>
-                  <label className='form-label'>Permissions</label>
-                  <div className='row gy-3'>
-                    {[...groups.entries()].map(([groupKey, permissions]) => (
-                      <div className='col-md-4' key={groupKey}>
-                        <div className='border rounded p-12'>
-                          <div className='fw-semibold mb-8'>{groupKey}</div>
-                          {permissions.map((permission) => {
-                            const action = permission.split(".").pop();
-                            return (
-                              <div className='form-check' key={permission}>
-                                <input
-                                  type='checkbox'
-                                  className='form-check-input'
-                                  id={`perm-${permission}`}
-                                  checked={form.permissions.includes(permission)}
-                                  onChange={() => togglePermission(permission)}
-                                />
-                                <label className='form-check-label' htmlFor={`perm-${permission}`}>
-                                  {action}
-                                </label>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className='d-flex gap-2 mt-16'>
-                  <button type='submit' className='btn btn-primary' disabled={isSaving}>
-                    {editingId === null ? "Add" : "Save"}
-                  </button>
-                  {editingId !== null && (
-                    <button type='button' className='btn btn-outline-secondary' onClick={resetForm}>
-                      Cancel
+      <div className='row'>
+        <div className='col-12'>
+          <PaginatedTable
+            title='Role list'
+            columns={[
+              { key: "name", label: "Name", sortable: true },
+              { key: "actions", label: "Action" },
+            ]}
+            items={(() => {
+              const raw = pagedQuery.result.data?.items ?? [];
+              return isSuperAdmin ? raw : raw.filter(r => r.name !== 'SuperAdmin');
+            })()}
+            totalCount={(() => {
+              const raw = pagedQuery.result.data?.items ?? [];
+              const hidden = isSuperAdmin ? 0 : raw.filter(r => r.name === 'SuperAdmin').length;
+              return Math.max(0, (pagedQuery.result.data?.totalCount ?? 0) - hidden);
+            })()}
+            page={pagedQuery.page}
+            pageSize={pagedQuery.pageSize}
+            isLoading={pagedQuery.result.isLoading}
+            isError={pagedQuery.result.isError}
+            search={pagedQuery.search}
+            onSearchChange={pagedQuery.setSearch}
+            sortBy={pagedQuery.sortBy}
+            sortDescending={pagedQuery.sortDescending}
+            onSortChange={pagedQuery.toggleSort}
+            onPageChange={pagedQuery.setPage}
+            onPageSizeChange={pagedQuery.setPageSize}
+            headerAction={canCreate ? (
+              <button type='button' className='btn btn-sm btn-primary d-flex align-items-center gap-1' onClick={openAdd}>
+                <Icon icon='lucide:plus' width={14} />Add
+              </button>
+            ) : undefined}
+            renderRow={(role) => (
+              <tr key={role.id}>
+                <td>
+                  {role.name}
+                  {role.isProtected && <span className='badge bg-primary bg-opacity-10 text-primary ms-2'>Protected</span>}
+                </td>
+                <td className='text-center'>
+                  {canEdit && !role.isProtected && (
+                    <button type='button' className='btn btn-icon btn-soft-success me-1' onClick={() => startEdit(role)}>
+                      <Icon icon='lucide:edit' />
                     </button>
                   )}
-                </div>
-                {error && <div className='text-danger-main text-sm mt-2'>{error}</div>}
-              </form>
-            </div>
-          </div>
+                  {canDelete && !role.isProtected && (
+                    <button type='button' className='btn btn-icon btn-soft-danger' onClick={() => deleteMutation.mutate(role.id)}>
+                      <Icon icon='mingcute:delete-2-line' />
+                    </button>
+                  )}
+                </td>
+              </tr>
+            )}
+          />
         </div>
-      )}
-
-      <div className='col-12'>
-        <PaginatedTable
-          title='Role list'
-          columns={[
-            { key: "name", label: "Name", sortable: true },
-            { key: "actions", label: "Action" },
-          ]}
-          items={pagedQuery.result.data?.items ?? []}
-          totalCount={pagedQuery.result.data?.totalCount ?? 0}
-          page={pagedQuery.page}
-          pageSize={pagedQuery.pageSize}
-          isLoading={pagedQuery.result.isLoading}
-          search={pagedQuery.search}
-          onSearchChange={pagedQuery.setSearch}
-          sortBy={pagedQuery.sortBy}
-          sortDescending={pagedQuery.sortDescending}
-          onSortChange={pagedQuery.toggleSort}
-          onPageChange={pagedQuery.setPage}
-          onPageSizeChange={pagedQuery.setPageSize}
-          renderRow={(role) => (
-            <tr key={role.id}>
-              <td>
-                {role.name}
-                {role.isProtected && <span className='badge bg-primary-50 text-primary-600 ms-8'>Protected</span>}
-              </td>
-              <td className='text-center'>
-                {canEdit && !role.isProtected && (
-                  <button
-                    type='button'
-                    className='w-32-px h-32-px me-8 bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center border-0'
-                    onClick={() => startEdit(role)}
-                  >
-                    <Icon icon='lucide:edit' />
-                  </button>
-                )}
-                {canDelete && !role.isProtected && (
-                  <button
-                    type='button'
-                    className='w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center border-0'
-                    onClick={() => deleteMutation.mutate(role.id)}
-                  >
-                    <Icon icon='mingcute:delete-2-line' />
-                  </button>
-                )}
-              </td>
-            </tr>
-          )}
-        />
       </div>
-    </div>
+    </>
   );
 };
 
