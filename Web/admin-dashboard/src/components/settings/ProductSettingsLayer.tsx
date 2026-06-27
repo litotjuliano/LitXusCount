@@ -123,8 +123,8 @@ const ProductSettingsLayer = () => {
         <Modal.Header closeButton>
           <Modal.Title className='h6'>{editingId === null ? "Add Product" : "Edit Product"}</Modal.Title>
         </Modal.Header>
-        <form id='product-form' onSubmit={handleSubmit}>
-          <Modal.Body>
+        <Modal.Body>
+          <form id='product-form' onSubmit={handleSubmit}>
             <div className='row gy-3'>
               <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>General</p></div>
               <div className='col-md-3'><label className='form-label'>Code <span className='text-danger'>*</span></label><input type='text' className='form-control' value={form.code} onChange={(e) => f("code", e.target.value)} required autoFocus /></div>
@@ -195,14 +195,14 @@ const ProductSettingsLayer = () => {
               <div className='col-md-4'><label className='form-label'>Image Ref</label><input type='text' className='form-control' value={form.imageRef} onChange={(e) => f("imageRef", e.target.value)} /></div>
             </div>
             {error && <div className='text-danger small mt-3'>{error}</div>}
-          </Modal.Body>
-          <Modal.Footer>
-            <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>
-            <button type='submit' form='product-form' className='btn btn-primary' disabled={isSaving}>
-              {editingId === null ? "Add" : "Save"}
-            </button>
-          </Modal.Footer>
-        </form>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>
+          <button type='submit' form='product-form' className='btn btn-primary' disabled={isSaving}>
+            {editingId === null ? "Add" : "Save"}
+          </button>
+        </Modal.Footer>
       </Modal>
 
       <div className='row'>

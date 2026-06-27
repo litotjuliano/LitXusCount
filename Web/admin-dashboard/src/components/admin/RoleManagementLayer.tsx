@@ -86,8 +86,8 @@ const RoleManagementLayer = () => {
         <Modal.Header closeButton>
           <Modal.Title className='h6'>{editingId === null ? "Add Role" : "Edit Role"}</Modal.Title>
         </Modal.Header>
-        <form id='role-form' onSubmit={handleSubmit}>
-          <Modal.Body>
+        <Modal.Body>
+          <form id='role-form' onSubmit={handleSubmit}>
             <div className='row gy-3'>
               <div className='col-md-6'>
                 <label className='form-label'>Name <span className='text-danger'>*</span></label>
@@ -122,14 +122,14 @@ const RoleManagementLayer = () => {
               </div>
             </div>
             {error && <div className='text-danger small mt-3'>{error}</div>}
-          </Modal.Body>
-          <Modal.Footer>
-            <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>
-            <button type='submit' form='role-form' className='btn btn-primary' disabled={isSaving}>
-              {editingId === null ? "Add" : "Save"}
-            </button>
-          </Modal.Footer>
-        </form>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>
+          <button type='submit' form='role-form' className='btn btn-primary' disabled={isSaving}>
+            {editingId === null ? "Add" : "Save"}
+          </button>
+        </Modal.Footer>
       </Modal>
 
       <div className='row'>

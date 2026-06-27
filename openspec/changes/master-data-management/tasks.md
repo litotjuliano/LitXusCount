@@ -67,7 +67,7 @@
 
 ## 9. Verification
 
-- [ ] 9.1 Confirm `dotnet build` passes with no errors
+- [x] 9.1 Confirm `dotnet build` passes with no errors
 - [ ] 9.2 Confirm EF Core migration applies cleanly against a fresh database
 - [ ] 9.3 Test GL Account CRUD via Swagger — create, list, edit, soft-delete, verify duplicate Code rejected
 - [ ] 9.4 Test Customer CRUD via Swagger — verify GL Account FK validated, Code uniqueness enforced
