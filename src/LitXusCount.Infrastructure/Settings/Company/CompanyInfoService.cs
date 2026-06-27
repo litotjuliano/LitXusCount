@@ -56,6 +56,11 @@ internal sealed class CompanyInfoService(ApplicationDbContext db) : ICompanyInfo
         entity.CurrencyId = request.CurrencyId;
         entity.VatPercentageId = request.VatPercentageId;
         entity.EmailConfigId = request.EmailConfigId;
+        entity.TIN = request.Tin;
+        entity.RegistrationType = request.RegistrationType;
+        entity.SSTRegistrationNumber = request.SSTRegistrationNumber;
+        entity.MSICCode = request.MSICCode;
+        entity.MSICDescription = request.MSICDescription;
         entity.ModifiedAt = DateTime.UtcNow;
 
         await db.SaveChangesAsync(ct);
@@ -120,5 +125,10 @@ internal sealed class CompanyInfoService(ApplicationDbContext db) : ICompanyInfo
         entity.IsItemDiscountPercentage,
         entity.CurrencyId,
         entity.VatPercentageId,
-        entity.EmailConfigId);
+        entity.EmailConfigId,
+        entity.TIN,
+        entity.RegistrationType,
+        entity.SSTRegistrationNumber,
+        entity.MSICCode,
+        entity.MSICDescription);
 }

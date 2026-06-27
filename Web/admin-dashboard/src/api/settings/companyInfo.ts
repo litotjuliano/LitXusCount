@@ -24,6 +24,11 @@ export interface CompanyInfo {
   currencyId: number | null;
   vatPercentageId: number | null;
   emailConfigId: number | null;
+  tin: string | null;
+  registrationType: string | null;
+  sSTRegistrationNumber: string | null;
+  mSICCode: string | null;
+  mSICDescription: string | null;
 }
 
 export type CompanyInfoUpdate = Omit<CompanyInfo, "id">;

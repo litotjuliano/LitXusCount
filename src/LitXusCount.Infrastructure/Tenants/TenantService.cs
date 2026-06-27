@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using LitXusCount.Application.Authorization;
 using LitXusCount.Application.Common;
 using LitXusCount.Application.Settings.EmailConfigs;
@@ -21,6 +22,23 @@ internal sealed class TenantService(
     RoleManager<IdentityRole> roleManager,
     IEmailConfigEncryptor emailConfigEncryptor) : ITenantService
 {
+    private static readonly Regex SlugPattern =
+        new(@"^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$", RegexOptions.Compiled);
+
+    private static readonly HashSet<string> ReservedSlugs =
+        new(["default", "master", "public", "template0", "template1"], StringComparer.OrdinalIgnoreCase);
+
+    private static ServiceResult<TenantDto>? ValidateSlug(string slug)
+    {
+        if (slug.Length < 3 || slug.Length > 50)
+            return ServiceResult<TenantDto>.Failure("Slug must be between 3 and 50 characters.");
+        if (!SlugPattern.IsMatch(slug))
+            return ServiceResult<TenantDto>.Failure("Slug may only contain lowercase letters, numbers, and hyphens, and must start and end with a letter or number.");
+        if (ReservedSlugs.Contains(slug))
+            return ServiceResult<TenantDto>.Failure($"'{slug}' is a reserved name and cannot be used as a slug.");
+        return null;
+    }
+
     public async Task<PagedResult<TenantDto>> ListAsync(PagedQuery query, CancellationToken ct = default)
     {
         var filtered = masterDb.Tenants.AsQueryable();
@@ -59,10 +77,15 @@ internal sealed class TenantService(
     {
         var slug = request.Slug.Trim().ToLowerInvariant();
 
+        var slugValidation = ValidateSlug(slug);
+        if (slugValidation is not null) return slugValidation;
+
         if (await masterDb.Tenants.AnyAsync(x => x.Slug == slug, ct))
             return ServiceResult<TenantDto>.Failure($"Slug '{slug}' is already in use.");
 
-        var connectionString = BuildTenantConnectionString(slug);
+        // Hyphens are unsafe in PostgreSQL identifiers — use underscores for the DB name only.
+        var dbSlug = slug.Replace('-', '_');
+        var connectionString = BuildTenantConnectionString(dbSlug);
 
         var tenant = new Tenant
         {
@@ -78,13 +101,22 @@ internal sealed class TenantService(
         masterDb.Tenants.Add(tenant);
         await masterDb.SaveChangesAsync(ct);
 
-        await ProvisionTenantDatabaseAsync(connectionString, ct);
+        try
+        {
+            await ProvisionTenantDatabaseAsync(connectionString, ct);
+        }
+        catch (Exception ex)
+        {
+            masterDb.Tenants.Remove(tenant);
+            await masterDb.SaveChangesAsync(ct);
+            return ServiceResult<TenantDto>.Failure($"Database provisioning failed: {ex.Message}");
+        }
 
         if (!string.IsNullOrWhiteSpace(request.AdminEmail) && !string.IsNullOrWhiteSpace(request.AdminPassword))
         {
             var identityResult = await ProvisionAdminUserAsync(tenant.Id, request.AdminEmail.Trim(), request.AdminPassword, ct);
             if (!identityResult.Succeeded)
-                return ServiceResult<TenantDto>.Failure(string.Join(" ", identityResult.Errors.Select(e => e.Description)));
+                return ServiceResult<TenantDto>.Failure("Admin account error: " + string.Join(" ", identityResult.Errors.Select(e => e.Description)));
         }
 
         return ServiceResult<TenantDto>.Success(ToDto(tenant));
@@ -97,6 +129,10 @@ internal sealed class TenantService(
             return ServiceResult<TenantDto>.Failure("Tenant not found.");
 
         var slug = request.Slug.Trim().ToLowerInvariant();
+
+        var slugValidation = ValidateSlug(slug);
+        if (slugValidation is not null) return slugValidation;
+
         if (await masterDb.Tenants.AnyAsync(x => x.Slug == slug && x.Id != id, ct))
             return ServiceResult<TenantDto>.Failure($"Slug '{slug}' is already in use.");
 
@@ -172,7 +208,7 @@ internal sealed class TenantService(
             .Options;
         await using var tenantDb = new ApplicationDbContext(options);
         await tenantDb.Database.MigrateAsync(ct);
-        await SystemSettingsSeeder.SeedAsync(tenantDb, emailConfigEncryptor, ct);
+        await SystemSettingsSeeder.SeedReferenceDataAsync(tenantDb, ct);
     }
 
     private string BuildTenantConnectionString(string slug)

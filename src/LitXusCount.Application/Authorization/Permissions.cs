@@ -59,12 +59,9 @@ public static class Permissions
             public const string Delete = "Settings.EmailConfig.Delete";
         }
 
-        public static class PaymentType
+        public static class PaymentCode
         {
-            public const string View = "Settings.PaymentType.View";
-            public const string Create = "Settings.PaymentType.Create";
-            public const string Edit = "Settings.PaymentType.Edit";
-            public const string Delete = "Settings.PaymentType.Delete";
+            public const string View = "Settings.PaymentCode.View";
         }
 
         public static class PaymentStatus
@@ -94,9 +91,6 @@ public static class Permissions
         public static class UnitOfMeasure
         {
             public const string View = "Settings.UnitOfMeasure.View";
-            public const string Create = "Settings.UnitOfMeasure.Create";
-            public const string Edit = "Settings.UnitOfMeasure.Edit";
-            public const string Delete = "Settings.UnitOfMeasure.Delete";
         }
 
         public static class GlAccount
@@ -130,6 +124,41 @@ public static class Permissions
             public const string Edit = "Settings.Product.Edit";
             public const string Delete = "Settings.Product.Delete";
         }
+
+        public static class LhdnClassificationCode
+        {
+            public const string View = "Settings.LhdnClassificationCode.View";
+        }
+
+        public static class LhdnCountry
+        {
+            public const string View = "Settings.LhdnCountry.View";
+        }
+
+        public static class LhdnStateCode
+        {
+            public const string View = "Settings.LhdnStateCode.View";
+        }
+
+        public static class LhdnTaxType
+        {
+            public const string View = "Settings.LhdnTaxType.View";
+        }
+
+        public static class LhdnMsicCode
+        {
+            public const string View = "Settings.LhdnMsicCode.View";
+        }
+
+        public static class LhdnCurrencyCode
+        {
+            public const string View = "Settings.LhdnCurrencyCode.View";
+        }
+
+        public static class LhdnEInvoiceType
+        {
+            public const string View = "Settings.LhdnEInvoiceType.View";
+        }
     }
 
     public static class License
@@ -144,6 +173,18 @@ public static class Permissions
         public const string Create = "Tenants.Create";
         public const string Edit   = "Tenants.Edit";
         public const string Delete = "Tenants.Delete";
+    }
+
+    public static class Purchasing
+    {
+        public static class Invoice
+        {
+            public const string View   = "Purchasing.Invoice.View";
+            public const string Create = "Purchasing.Invoice.Create";
+            public const string Edit   = "Purchasing.Invoice.Edit";
+            public const string Delete = "Purchasing.Invoice.Delete";
+            public const string Manage = "Purchasing.Invoice.Manage";
+        }
     }
 
     public static class Sales

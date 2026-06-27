@@ -68,6 +68,8 @@ internal sealed class ProductService(ApplicationDbContext db) : IProductService
                 x.PurchaseAccount != null ? x.PurchaseAccount.Name : null,
                 x.SalesTaxCode,
                 x.PurchaseTaxCode,
+                x.DefaultLhdnClassificationCode,
+                x.DefaultLhdnTaxTypeCode,
                 x.DefaultSupplierId,
                 x.DefaultSupplier != null ? x.DefaultSupplier.Name : null,
                 x.MainUnitOfMeasureId,
@@ -129,6 +131,8 @@ internal sealed class ProductService(ApplicationDbContext db) : IProductService
                 x.PurchaseAccount != null ? x.PurchaseAccount.Name : null,
                 x.SalesTaxCode,
                 x.PurchaseTaxCode,
+                x.DefaultLhdnClassificationCode,
+                x.DefaultLhdnTaxTypeCode,
                 x.DefaultSupplierId,
                 x.DefaultSupplier != null ? x.DefaultSupplier.Name : null,
                 x.MainUnitOfMeasureId,
@@ -191,6 +195,8 @@ internal sealed class ProductService(ApplicationDbContext db) : IProductService
             PurchaseAccountId = request.PurchaseAccountId,
             SalesTaxCode = request.SalesTaxCode,
             PurchaseTaxCode = request.PurchaseTaxCode,
+            DefaultLhdnClassificationCode = request.DefaultLhdnClassificationCode,
+            DefaultLhdnTaxTypeCode = request.DefaultLhdnTaxTypeCode,
             DefaultSupplierId = request.DefaultSupplierId,
             MainUnitOfMeasureId = request.MainUnitOfMeasureId,
             AltUnitOfMeasureId = request.AltUnitOfMeasureId,
@@ -258,6 +264,8 @@ internal sealed class ProductService(ApplicationDbContext db) : IProductService
         entity.PurchaseAccountId = request.PurchaseAccountId;
         entity.SalesTaxCode = request.SalesTaxCode;
         entity.PurchaseTaxCode = request.PurchaseTaxCode;
+        entity.DefaultLhdnClassificationCode = request.DefaultLhdnClassificationCode;
+        entity.DefaultLhdnTaxTypeCode = request.DefaultLhdnTaxTypeCode;
         entity.DefaultSupplierId = request.DefaultSupplierId;
         entity.MainUnitOfMeasureId = request.MainUnitOfMeasureId;
         entity.AltUnitOfMeasureId = request.AltUnitOfMeasureId;
@@ -336,6 +344,8 @@ internal sealed class ProductService(ApplicationDbContext db) : IProductService
             x.PurchaseAccount != null ? x.PurchaseAccount.Name : null,
             x.SalesTaxCode,
             x.PurchaseTaxCode,
+            x.DefaultLhdnClassificationCode,
+            x.DefaultLhdnTaxTypeCode,
             x.DefaultSupplierId,
             x.DefaultSupplier != null ? x.DefaultSupplier.Name : null,
             x.MainUnitOfMeasureId,

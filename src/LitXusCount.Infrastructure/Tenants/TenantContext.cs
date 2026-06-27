@@ -25,7 +25,13 @@ internal sealed class TenantContext : ITenantContext
         IsSuperAdmin = user.IsInRole(RoleNames.SuperAdmin);
 
         var tidClaim = user.FindFirst("tenant_id");
-        if (!long.TryParse(tidClaim?.Value, out var tenantId)) return;
+        if (!long.TryParse(tidClaim?.Value, out var tenantId))
+        {
+            // SuperAdmin may impersonate a tenant via X-Tenant-Id request header.
+            if (!IsSuperAdmin) return;
+            var headerVal = accessor.HttpContext?.Request.Headers["X-Tenant-Id"].FirstOrDefault();
+            if (!long.TryParse(headerVal, out tenantId)) return;
+        }
 
         CurrentTenantId = tenantId;
 

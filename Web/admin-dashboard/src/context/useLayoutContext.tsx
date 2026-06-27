@@ -25,11 +25,12 @@ const LayoutProvider = ({ children }: ChildrenType) => {
     topbarTheme: params.topbar_theme ? (params.topbar_theme as ThemeType) : 'light',
     menu: {
       theme: params.menu_theme ? (params.menu_theme as MenuType['theme']) : 'dark',
-      size: params.menu_size ? (params.menu_size as MenuType['size']) : 'sm-hover-active',
+      size: params.menu_size ? (params.menu_size as MenuType['size']) : 'default',
     },
   }
 
-  const [settings, setSettings] = useLocalStorage<LayoutState>('__LITXUSCOUNT_CONFIG__', INIT_STATE, override)
+  const [settings, setSettings] = useLocalStorage<LayoutState>('__LITXUSCOUNT_CONFIG_V2__', INIT_STATE, override)
+
   const [offcanvasStates, setOffcanvasStates] = useState<LayoutOffcanvasStatesType>({
     showThemeCustomizer: false,
     showBackdrop: false,

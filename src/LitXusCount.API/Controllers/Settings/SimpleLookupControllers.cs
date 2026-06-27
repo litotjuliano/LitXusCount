@@ -5,12 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LitXusCount.API.Controllers.Settings;
 
-[Route("api/settings/payment-types")]
-public class PaymentTypesController(IPaymentTypeService service, IAuthorizationService authorizationService)
-    : LookupControllerBase<IPaymentTypeService>(service, authorizationService)
-{
-    protected override string ResourceName => nameof(Permissions.Settings.PaymentType);
-}
 
 [Route("api/settings/payment-statuses")]
 public class PaymentStatusesController(IPaymentStatusService service, IAuthorizationService authorizationService)
@@ -33,9 +27,3 @@ public class CategoriesController(ICategoryService service, IAuthorizationServic
     protected override string ResourceName => nameof(Permissions.Settings.Category);
 }
 
-[Route("api/settings/units-of-measure")]
-public class UnitsOfMeasureController(IUnitOfMeasureService service, IAuthorizationService authorizationService)
-    : LookupControllerBase<IUnitOfMeasureService>(service, authorizationService)
-{
-    protected override string ResourceName => nameof(Permissions.Settings.UnitOfMeasure);
-}

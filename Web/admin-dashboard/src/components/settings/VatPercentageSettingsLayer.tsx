@@ -65,7 +65,7 @@ const VatPercentageSettingsLayer = () => {
     <>
       <Modal show={showModal} onHide={closeModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title className='h6'>{editingId === null ? "Add VAT Percentage" : "Edit VAT Percentage"}</Modal.Title>
+          <Modal.Title className='h6'>{editingId === null ? "Add Tax Rate" : "Edit Tax Rate"}</Modal.Title>
         </Modal.Header>
         <form id='vat-form' onSubmit={handleSubmit}>
           <Modal.Body>
@@ -93,7 +93,7 @@ const VatPercentageSettingsLayer = () => {
       <div className='row'>
         <div className='col-12'>
           <PaginatedTable
-            title='VAT Percentage list'
+            title='Tax Rates (SST)'
             columns={[
               { key: "name", label: "Name", sortable: true },
               { key: "percentage", label: "Percentage", sortable: true },

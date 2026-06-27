@@ -58,7 +58,7 @@
 
 - [x] 9.1 Create `SalesInvoicesPage.tsx` — lists invoices filtered by category (Invoices/Quotes/Drafts) with columns: InvoiceNo, Customer, Date, GrandTotal, Status; Create button opens new invoice form
 - [x] 9.2 Create `SalesInvoiceEditorPage.tsx` — invoice header form (Customer, Date, Notes, PO number) + line item table (product dropdown, qty, price, discount, VAT) + payment recording section; auto-creates draft on mount; Save/Promote/Cancel actions
-- [ ] 9.3 Create `SalesInvoiceDetailPage.tsx` — read-only view of a finalized invoice with print-friendly layout
+- [x] 9.3 Create `SalesInvoiceDetailPage.tsx` — read-only view of a finalized invoice with print-friendly layout
 
 ## Section 10: Frontend — Sidebar Navigation
 
@@ -76,3 +76,11 @@
 - [ ] 11.8 Delete payment — verify AccAccount.Balance reversed
 - [ ] 11.9 Delete invoice — verify all stock and payment movements reversed
 - [ ] 11.10 Frontend invoice list shows correct category filtering
+
+---
+
+## Bug Fixes & Hardening (post-LHDN session)
+
+- [x] BF-1 **Dropdown data empty for new tenants** — removed `[Authorize(Policy = "Permission.X")]` from `all-active` endpoints on `CurrenciesController`, `VatPercentagesController`, `EmailConfigsController`; reference/lookup data is now accessible to any authenticated user
+- [x] BF-2 **Seeder silently skips Currencies and VatPercentages** — root cause: `LhdnClassificationCodes.Description` was `varchar(256)` but LHDN code 038 description exceeds 256 chars; fixed by removing `HasMaxLength(256)` (maps to `text`); migration `FixLhdnClassificationCodeDescriptionLength` applied to all tenant DBs on startup
+- [x] BF-3 **Tenant slug used as DB name — no validation** — added backend validation in `TenantService.CreateAsync/EditAsync`: 3–50 char limit (keeps `litxuscount_{slug}` under PostgreSQL's 63-char identifier limit), pattern `^[a-z0-9]([a-z0-9-]*[a-z0-9])?$`, reserved slug block (`default`, `master`, `public`, `template0`, `template1`); `MasterDbContext.Tenants.Slug` column narrowed from `varchar(64)` to `varchar(50)` via migration `FixTenantSlugMaxLength`; frontend `slugify` now caps at 50 chars, input shows remaining-chars counter

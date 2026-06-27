@@ -88,13 +88,24 @@ export function useAppMenuItems(): MenuItemType[] {
     const settingsChildren: MenuItemType[] = []
     if (hasPermission(Permissions.Settings.CompanyInfo.View)) settingsChildren.push({ key: 'company-info', label: 'Company Info', url: '/settings/company-info', parentKey: 'system-settings' })
     if (hasPermission(Permissions.Settings.EmailConfig.View)) settingsChildren.push({ key: 'email-config', label: 'Email Config', url: '/settings/email-config', parentKey: 'system-settings' })
-    if (hasPermission(Permissions.Settings.Currency.View)) settingsChildren.push({ key: 'currencies', label: 'Manage Currency', url: '/settings/currencies', parentKey: 'system-settings' })
-    if (hasPermission(Permissions.Settings.PaymentType.View)) settingsChildren.push({ key: 'payment-types', label: 'Payment Type', url: '/settings/payment-types', parentKey: 'system-settings' })
     if (hasPermission(Permissions.Settings.PaymentStatus.View)) settingsChildren.push({ key: 'payment-statuses', label: 'Payment Status', url: '/settings/payment-statuses', parentKey: 'system-settings' })
     if (hasPermission(Permissions.Settings.CustomerType.View)) settingsChildren.push({ key: 'customer-types', label: 'Customer Type', url: '/settings/customer-types', parentKey: 'system-settings' })
-    if (hasPermission(Permissions.Settings.VatPercentage.View)) settingsChildren.push({ key: 'vat-percentages', label: 'VAT Percentage', url: '/settings/vat-percentages', parentKey: 'system-settings' })
+    if (hasPermission(Permissions.Settings.VatPercentage.View)) settingsChildren.push({ key: 'vat-percentages', label: 'Tax Rates (SST)', url: '/settings/vat-percentages', parentKey: 'system-settings' })
     if (hasPermission(Permissions.Settings.Category.View)) settingsChildren.push({ key: 'categories', label: 'Categories', url: '/settings/categories', parentKey: 'system-settings' })
-    if (hasPermission(Permissions.Settings.UnitOfMeasure.View)) settingsChildren.push({ key: 'uom', label: 'Units of Measure', url: '/settings/units-of-measure', parentKey: 'system-settings' })
+
+    // LHDN Codes sub-group
+    const lhdnChildren: MenuItemType[] = []
+    if (hasPermission(Permissions.Settings.LhdnClassificationCode.View)) lhdnChildren.push({ key: 'lhdn-classification-codes', label: 'Classification Codes', url: '/settings/lhdn-classification-codes', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnCountry.View)) lhdnChildren.push({ key: 'lhdn-countries', label: 'Country Codes', url: '/settings/lhdn-countries', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnCurrencyCode.View)) lhdnChildren.push({ key: 'lhdn-currency-codes', label: 'Currency Codes', url: '/settings/lhdn-currency-codes', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnEInvoiceType.View)) lhdnChildren.push({ key: 'lhdn-einvoice-types', label: 'e-Invoice Types', url: '/settings/lhdn-einvoice-types', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnMsicCode.View)) lhdnChildren.push({ key: 'lhdn-msic-codes', label: 'MSIC Codes', url: '/settings/lhdn-msic-codes', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.PaymentCode.View)) lhdnChildren.push({ key: 'payment-codes', label: 'Payment Modes', url: '/settings/payment-codes', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnStateCode.View)) lhdnChildren.push({ key: 'lhdn-state-codes', label: 'State Codes', url: '/settings/lhdn-state-codes', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.LhdnTaxType.View)) lhdnChildren.push({ key: 'lhdn-tax-types', label: 'Tax Types', url: '/settings/lhdn-tax-types', parentKey: 'lhdn-codes' })
+    if (hasPermission(Permissions.Settings.UnitOfMeasure.View)) lhdnChildren.push({ key: 'uom', label: 'Unit of Measurement', url: '/settings/units-of-measure', parentKey: 'lhdn-codes' })
+    if (lhdnChildren.length > 0) settingsChildren.push({ key: 'lhdn-codes', label: 'LHDN Codes', icon: 'solar:document-bold', children: lhdnChildren, parentKey: 'system-settings' })
+
     if (settingsChildren.length > 0) {
       items.push({ key: 'system-settings', icon: 'solar:settings-outline', label: 'System Settings', children: settingsChildren })
     }

@@ -16,6 +16,7 @@ interface FormState {
   consigneeName: string; consigneeAddress1: string; consigneeAddress2: string; consigneeAddress3: string;
   consigneeAddressCode: string; consigneeCity: string; consigneeState: string; consigneeCountry: string; consigneePhone: string;
   paymentTermsDays: number; creditLimit: number; isLocked: boolean;
+  tin: string; registrationType: string; registrationNumber: string; sSTRegistrationNumber: string;
 }
 
 const emptyForm: FormState = {
@@ -25,6 +26,7 @@ const emptyForm: FormState = {
   consigneeName: "", consigneeAddress1: "", consigneeAddress2: "", consigneeAddress3: "",
   consigneeAddressCode: "", consigneeCity: "", consigneeState: "", consigneeCountry: "", consigneePhone: "",
   paymentTermsDays: 0, creditLimit: 0, isLocked: false,
+  tin: "", registrationType: "", registrationNumber: "", sSTRegistrationNumber: "",
 };
 
 const CustomerSettingsLayer = () => {
@@ -57,6 +59,8 @@ const CustomerSettingsLayer = () => {
       consigneeAddressCode: item.consigneeAddressCode ?? "", consigneeCity: item.consigneeCity ?? "",
       consigneeState: item.consigneeState ?? "", consigneeCountry: item.consigneeCountry ?? "", consigneePhone: item.consigneePhone ?? "",
       paymentTermsDays: item.paymentTermsDays, creditLimit: item.creditLimit, isLocked: item.isLocked,
+      tin: item.tin ?? "", registrationType: item.registrationType ?? "",
+      registrationNumber: item.registrationNumber ?? "", sSTRegistrationNumber: item.sSTRegistrationNumber ?? "",
     });
     setError(null);
     setShowModal(true);
@@ -74,6 +78,8 @@ const CustomerSettingsLayer = () => {
     consigneeAddressCode: n(form.consigneeAddressCode), consigneeCity: n(form.consigneeCity),
     consigneeState: n(form.consigneeState), consigneeCountry: n(form.consigneeCountry), consigneePhone: n(form.consigneePhone),
     paymentTermsDays: form.paymentTermsDays, creditLimit: form.creditLimit, isLocked: form.isLocked,
+    tin: n(form.tin), registrationType: n(form.registrationType),
+    registrationNumber: n(form.registrationNumber), sSTRegistrationNumber: n(form.sSTRegistrationNumber),
   });
 
   const handleSubmit = (e: FormEvent) => {
@@ -139,6 +145,22 @@ const CustomerSettingsLayer = () => {
                   <label className='form-check-label' htmlFor='isLocked'>Locked</label>
                 </div>
               </div>
+
+              <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>LHDN / Tax Identity</p></div>
+              <div className='col-md-4'><label className='form-label'>TIN (Tax Identification Number)</label><input type='text' className='form-control' placeholder='e.g. C12345678900' value={form.tin} onChange={(e) => f("tin", e.target.value)} /></div>
+              <div className='col-md-3'>
+                <label className='form-label'>Registration Type</label>
+                <select className='form-select' value={form.registrationType} onChange={(e) => f("registrationType", e.target.value)}>
+                  <option value=''>— Select —</option>
+                  <option value='BRN'>BRN — Business Reg.</option>
+                  <option value='NRIC'>NRIC — MyKad / IC</option>
+                  <option value='PASSPORT'>PASSPORT</option>
+                  <option value='ARMY'>ARMY — Police/Army IC</option>
+                  <option value='TIN'>TIN</option>
+                </select>
+              </div>
+              <div className='col-md-3'><label className='form-label'>Registration Number</label><input type='text' className='form-control' placeholder='e.g. 202301012345' value={form.registrationNumber} onChange={(e) => f("registrationNumber", e.target.value)} /></div>
+              <div className='col-md-4'><label className='form-label'>SST Registration Number</label><input type='text' className='form-control' placeholder='e.g. W10-1234-12345678' value={form.sSTRegistrationNumber} onChange={(e) => f("sSTRegistrationNumber", e.target.value)} /></div>
             </div>
             {error && <div className='text-danger small mt-3'>{error}</div>}
           </form>

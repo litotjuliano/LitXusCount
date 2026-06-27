@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useCompanyInfo } from "../../hook/useCompanyInfo";
 import { useCurrencySettings } from "../../hook/useCurrencySettings";
 import { useVatPercentageSettings } from "../../hook/useVatPercentageSettings";
@@ -7,6 +8,7 @@ import { usePermissions } from "../../hook/usePermissions";
 import { Permissions } from "../../api/permissions";
 import type { CompanyInfoUpdate } from "../../api/settings/companyInfo";
 import { companyInfoApi } from "../../api/settings/companyInfo";
+import { lhdnMsicCodesApi } from "../../api/settings/lhdnMsicCodes";
 import { extractErrorMessage } from "./extractErrorMessage";
 
 const emptyForm: CompanyInfoUpdate = {
@@ -32,6 +34,11 @@ const emptyForm: CompanyInfoUpdate = {
   currencyId: null,
   vatPercentageId: null,
   emailConfigId: null,
+  tin: null,
+  registrationType: null,
+  sSTRegistrationNumber: null,
+  mSICCode: null,
+  mSICDescription: null,
 };
 
 const toText = (value: string | null) => value ?? "";
@@ -52,6 +59,14 @@ const CompanyInfoSettingsLayer = () => {
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
   const [logoUploading, setLogoUploading] = useState(false);
   const [logoUploadError, setLogoUploadError] = useState<string | null>(null);
+  const [msicSearch, setMsicSearch] = useState("");
+  const [showMsicDropdown, setShowMsicDropdown] = useState(false);
+
+  const msicQuery = useQuery({
+    queryKey: ["settings", "lhdn-msic-codes", "search", msicSearch],
+    queryFn: () => lhdnMsicCodesApi.list({ search: msicSearch, page: 1, pageSize: 10 }),
+    enabled: msicSearch.length >= 2,
+  });
 
   const handleLogoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -258,7 +273,75 @@ const CompanyInfoSettingsLayer = () => {
         <div className='col-12'>
           <div className='card'>
             <div className='card-header'>
-              <h6 className='card-title mb-0'>Invoicing &amp; VAT</h6>
+              <h6 className='card-title mb-0'>LHDN / MyInvois</h6>
+            </div>
+            <div className='card-body'>
+              <div className='row gy-3'>
+                <div className='col-md-4'>
+                  <label className='form-label'>TIN (Tax Identification Number)</label>
+                  <input type='text' className='form-control' placeholder='e.g. C12345678900'
+                    value={toText(form.tin)} onChange={(e) => setForm({ ...form, tin: toNullable(e.target.value) })} />
+                </div>
+                <div className='col-md-4'>
+                  <label className='form-label'>Registration Type</label>
+                  <select className='form-select' value={toText(form.registrationType)} onChange={(e) => setForm({ ...form, registrationType: toNullable(e.target.value) })}>
+                    <option value=''>— Select —</option>
+                    <option value='BRN'>BRN — Business Registration Number</option>
+                    <option value='NRIC'>NRIC — MyKad / IC Number</option>
+                    <option value='PASSPORT'>PASSPORT — Passport No.</option>
+                    <option value='ARMY'>ARMY — Army / Police IC</option>
+                    <option value='TIN'>TIN — Tax Identification Number</option>
+                  </select>
+                </div>
+                <div className='col-md-4'>
+                  <label className='form-label'>SST Registration Number</label>
+                  <input type='text' className='form-control' placeholder='e.g. W10-1234-12345678'
+                    value={toText(form.sSTRegistrationNumber)} onChange={(e) => setForm({ ...form, sSTRegistrationNumber: toNullable(e.target.value) })} />
+                </div>
+                <div className='col-md-5' style={{ position: 'relative' }}>
+                  <label className='form-label'>MSIC Code</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Type code or description to search…'
+                    value={msicSearch || toText(form.mSICCode)}
+                    onChange={(e) => {
+                      setMsicSearch(e.target.value);
+                      if (!e.target.value) { setForm(f => ({ ...f, mSICCode: null, mSICDescription: null })); }
+                      setShowMsicDropdown(true);
+                    }}
+                    onFocus={() => { if (msicSearch.length >= 2) setShowMsicDropdown(true); }}
+                    onBlur={() => setTimeout(() => setShowMsicDropdown(false), 200)}
+                    autoComplete='off'
+                  />
+                  {showMsicDropdown && msicQuery.data && msicQuery.data.items.length > 0 && (
+                    <div className='border rounded bg-white shadow-sm' style={{ position: 'absolute', zIndex: 1050, width: '100%', maxHeight: 220, overflowY: 'auto' }}>
+                      {msicQuery.data.items.map((item) => (
+                        <div key={item.id} className='px-3 py-2 cursor-pointer hover-bg' style={{ cursor: 'pointer', fontSize: 13 }}
+                          onMouseDown={() => {
+                            setForm(f => ({ ...f, mSICCode: item.code, mSICDescription: item.description }));
+                            setMsicSearch("");
+                            setShowMsicDropdown(false);
+                          }}>
+                          <strong>{item.code}</strong> — {item.description}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className='col-md-7'>
+                  <label className='form-label'>MSIC Description</label>
+                  <input type='text' className='form-control bg-light' readOnly value={toText(form.mSICDescription)} placeholder='Auto-filled from MSIC Code selection' />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='col-12'>
+          <div className='card'>
+            <div className='card-header'>
+              <h6 className='card-title mb-0'>Invoicing &amp; SST</h6>
             </div>
             <div className='card-body'>
               <div className='row gy-3'>
@@ -272,7 +355,7 @@ const CompanyInfoSettingsLayer = () => {
                   />
                 </div>
                 <div className='col-md-3'>
-                  <label className='form-label'>VAT reg. number</label>
+                  <label className='form-label'>SST Reg. Number</label>
                   <input
                     type='text'
                     className='form-control'
@@ -299,7 +382,7 @@ const CompanyInfoSettingsLayer = () => {
                   />
                 </div>
                 <div className='col-md-4'>
-                  <label className='form-label'>VAT title</label>
+                  <label className='form-label'>Tax label (prints on invoice)</label>
                   <input
                     type='text'
                     className='form-control'
@@ -317,7 +400,7 @@ const CompanyInfoSettingsLayer = () => {
                       onChange={(e) => setForm({ ...form, isVatEnabled: e.target.checked })}
                     />
                     <label className='form-check-label' htmlFor='isVatEnabled'>
-                      VAT enabled
+                      SST / Tax enabled
                     </label>
                   </div>
                 </div>
@@ -372,7 +455,7 @@ const CompanyInfoSettingsLayer = () => {
                   </select>
                 </div>
                 <div className='col-md-4'>
-                  <label className='form-label'>Default VAT percentage</label>
+                  <label className='form-label'>Default tax rate</label>
                   <select
                     className='form-select'
                     value={form.vatPercentageId ?? ""}

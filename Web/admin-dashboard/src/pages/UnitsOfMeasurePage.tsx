@@ -1,13 +1,10 @@
-import MasterLayout from "../masterLayout/MasterLayout";
-import LookupSettingsLayer from "../components/settings/LookupSettingsLayer";
-import { Permissions } from "../api/permissions";
+import MasterLayout from '../masterLayout/MasterLayout'
+import UnitsOfMeasureLayer from '../components/settings/UnitsOfMeasureLayer'
 
-const UnitsOfMeasurePage = () => {
-  return (
-    <MasterLayout>
-      <LookupSettingsLayer resourcePath='units-of-measure' title='Unit of Measure' permissions={Permissions.Settings.UnitOfMeasure} />
-    </MasterLayout>
-  );
-};
+const UnitsOfMeasurePage = () => (
+  <MasterLayout>
+    <UnitsOfMeasureLayer />
+  </MasterLayout>
+)
 
-export default UnitsOfMeasurePage;
+export default UnitsOfMeasurePage

@@ -17,7 +17,9 @@ internal sealed class SalesInvoiceLineService(ApplicationDbContext db, IStockSer
         if (invoice is null)
             return ServiceResult<SalesInvoiceLineDto>.Failure("Invoice not found.");
 
-        var product = await db.Products.FirstOrDefaultAsync(x => x.Id == request.ProductId && x.IsActive, ct);
+        var product = await db.Products
+            .Include(x => x.MainUnitOfMeasure)
+            .FirstOrDefaultAsync(x => x.Id == request.ProductId && x.IsActive, ct);
         if (product is null)
             return ServiceResult<SalesInvoiceLineDto>.Failure("Product not found.");
 
@@ -42,6 +44,9 @@ internal sealed class SalesInvoiceLineService(ApplicationDbContext db, IStockSer
             ItemDiscount = request.ItemDiscount,
             ItemDiscountAmount = discountAmount,
             TotalAmount = totalAmount,
+            ClassificationCode = request.ClassificationCode ?? product.DefaultLhdnClassificationCode,
+            TaxTypeCode = request.TaxTypeCode ?? product.DefaultLhdnTaxTypeCode,
+            UnitCode = product.MainUnitOfMeasure?.UnCefactCode,
             IsReturn = false,
             IsActive = true,
             CreatedAt = DateTime.UtcNow,
@@ -118,5 +123,6 @@ internal sealed class SalesInvoiceLineService(ApplicationDbContext db, IStockSer
         new(x.Id, x.SalesInvoiceId, x.ProductId, x.ItemName,
             x.Quantity, x.UnitPrice, x.ItemVAT, x.ItemVATAmount,
             x.ItemDiscount, x.ItemDiscountAmount, x.TotalAmount,
-            x.IsReturn, x.IsActive);
+            x.IsReturn, x.IsActive,
+            x.ClassificationCode, x.TaxTypeCode, x.UnitCode);
 }

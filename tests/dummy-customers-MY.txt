@@ -1,0 +1,214 @@
+DUMMY CUSTOMER DATA — MALAYSIA (10 Companies)
+Use this as reference when entering customers via the Customers form.
+All TINs, BRNs, and SST numbers follow Malaysian standard formats.
+================================================================================
+
+--- CUSTOMER 1 ---
+Code             : CUST001
+Name             : Selangor Tech Solutions Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Ahmad bin Razak
+Phone            : 03-7782 1234
+Email            : finance@selangortech.com.my
+Address 1        : No. 12, Jalan SS 21/37
+Address 2        : Damansara Utama
+Postcode         : 47400
+City             : Petaling Jaya
+State            : Selangor
+Country          : Malaysia
+Payment Terms    : 30 days
+Credit Limit     : 50,000.00
+TIN              : C23456789012
+Registration Type: BRN
+Registration No  : 202301234567
+SST Reg No       : B10-1234-12345678
+
+--- CUSTOMER 2 ---
+Code             : CUST002
+Name             : KL Digital Commerce Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Lim Wei Chong
+Phone            : 03-2145 1888
+Email            : accounts@kldigital.com.my
+Address 1        : Level 8, Menara IMC
+Address 2        : Jalan Sultan Ismail
+Postcode         : 50250
+City             : Kuala Lumpur
+State            : WP Kuala Lumpur
+Country          : Malaysia
+Payment Terms    : 60 days
+Credit Limit     : 150,000.00
+TIN              : C34567890123
+Registration Type: BRN
+Registration No  : 202201234568
+SST Reg No       : W10-5678-23456789
+
+--- CUSTOMER 3 ---
+Code             : CUST003
+Name             : Penang Precision Industries Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Tan Siew Ling
+Phone            : 04-643 1122
+Email            : billing@penangprecision.com.my
+Address 1        : Lot 45, Kawasan Perindustrian Bayan Lepas
+Address 2        :
+Postcode         : 11900
+City             : Bayan Lepas
+State            : Pulau Pinang
+Country          : Malaysia
+Payment Terms    : 45 days
+Credit Limit     : 200,000.00
+TIN              : C45678901234
+Registration Type: BRN
+Registration No  : 202101234569
+SST Reg No       : P10-9012-34567890
+
+--- CUSTOMER 4 ---
+Code             : CUST004
+Name             : Johor Bahru Shipping Lines Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Mohd Faizal Ibrahim
+Phone            : 07-224 5678
+Email            : ops@jbshipping.com.my
+Address 1        : No. 88, Jalan Tun Abdul Razak
+Address 2        :
+Postcode         : 80000
+City             : Johor Bahru
+State            : Johor
+Country          : Malaysia
+Payment Terms    : 30 days
+Credit Limit     : 300,000.00
+TIN              : C56789012345
+Registration Type: BRN
+Registration No  : 202001234570
+SST Reg No       : J10-3456-45678901
+
+--- CUSTOMER 5 ---
+Code             : CUST005
+Name             : Ipoh Medical Supplies Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Dr. Rajan Pillai
+Phone            : 05-253 1234
+Email            : procurement@ipohmedical.com.my
+Address 1        : No. 23, Jalan Sultan Azlan Shah
+Address 2        :
+Postcode         : 30300
+City             : Ipoh
+State            : Perak
+Country          : Malaysia
+Payment Terms    : 30 days
+Credit Limit     : 80,000.00
+TIN              : C67890123456
+Registration Type: BRN
+Registration No  : 201901234571
+SST Reg No       : A10-7890-56789012
+
+--- CUSTOMER 6 ---
+Code             : CUST006
+Name             : Kota Kinabalu Fresh Produce Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : James Ongkili
+Phone            : 088-221 567
+Email            : orders@kkfreshproduce.com.my
+Address 1        : Lot 12, Jalan Coastal Highway
+Address 2        :
+Postcode         : 88000
+City             : Kota Kinabalu
+State            : Sabah
+Country          : Malaysia
+Payment Terms    : 14 days
+Credit Limit     : 40,000.00
+TIN              : C78901234567
+Registration Type: BRN
+Registration No  : 201801234572
+SST Reg No       : (not registered — exempt)
+
+--- CUSTOMER 7 ---
+Code             : CUST007
+Name             : Kuching Construction & Engineering Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Awang Jefri Mahmud
+Phone            : 082-414 455
+Email            : accounts@kce-sarawak.com.my
+Address 1        : No. 5, Jalan Sekama
+Address 2        :
+Postcode         : 93300
+City             : Kuching
+State            : Sarawak
+Country          : Malaysia
+Payment Terms    : 60 days
+Credit Limit     : 500,000.00
+TIN              : C89012345678
+Registration Type: BRN
+Registration No  : 201701234573
+SST Reg No       : S10-2345-67890123
+
+--- CUSTOMER 8 ---
+Code             : CUST008
+Name             : Alor Setar Textile Trading Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Che Wan Noriza
+Phone            : 04-731 2233
+Email            : trade@asortextile.com.my
+Address 1        : No. 67, Jalan Tunku Ibrahim
+Address 2        :
+Postcode         : 05000
+City             : Alor Setar
+State            : Kedah
+Country          : Malaysia
+Payment Terms    : 30 days
+Credit Limit     : 60,000.00
+TIN              : C90123456789
+Registration Type: BRN
+Registration No  : 201601234574
+SST Reg No       : (not registered — exempt)
+
+--- CUSTOMER 9 ---
+Code             : CUST009
+Name             : Shah Alam Auto Parts Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Kevin Chong Boon Seng
+Phone            : 03-5522 3344
+Email            : finance@shalamauto.com.my
+Address 1        : No. 34, Jalan Perindustrian Bukit Raja
+Address 2        :
+Postcode         : 41050
+City             : Shah Alam
+State            : Selangor
+Country          : Malaysia
+Payment Terms    : 45 days
+Credit Limit     : 120,000.00
+TIN              : C01234567891
+Registration Type: BRN
+Registration No  : 202101234575
+SST Reg No       : B10-6789-78901234
+
+--- CUSTOMER 10 ---
+Code             : CUST010
+Name             : Subang Jaya Retail Management Sdn Bhd
+GL Account       : 11000 (Accounts Receivable)
+Contact Person   : Nurul Ain binti Hassan
+Phone            : 03-8023 8899
+Email            : accounts@sjretail.com.my
+Address 1        : No. 1, Jalan USJ 21/11
+Address 2        : USJ 21
+Postcode         : 47640
+City             : Subang Jaya
+State            : Selangor
+Country          : Malaysia
+Payment Terms    : 30 days
+Credit Limit     : 90,000.00
+TIN              : C12345678902
+Registration Type: BRN
+Registration No  : 202201234576
+SST Reg No       : B10-0123-89012345
+
+================================================================================
+NOTES
+- TIN format for companies: C + 11 digits (e.g. C12345678900)
+- Registration Type: BRN = Business Registration Number (SSM)
+- BRN format (MyCoID / new): 12 digits (e.g. 202301234567)
+- SST Reg No format: [State prefix][Tax type]-[4 digit]-[8 digit]
+  State prefixes: W=KL, B=Selangor, P=Penang, J=Johor, A=Perak,
+                  S=Sarawak, Q=Sabah, K=Kedah, N=N.Sembilan, M=Melaka
+================================================================================

@@ -3,7 +3,7 @@ using LitXusCount.Application.Common;
 namespace LitXusCount.Application.Settings.Lookups;
 
 /// <summary>
-/// Shared method shape for the five Name+Description lookup entities (PaymentType, PaymentStatus,
+/// Shared method shape for the five Name+Description lookup entities (PaymentCode, PaymentStatus,
 /// CustomerType, Category, UnitOfMeasure). Each entity gets its own marker interface below so DI
 /// registration and controller dependencies stay entity-specific rather than depending on a
 /// generic, type-parameterized repository/service.
@@ -18,7 +18,7 @@ public interface ILookupService
     Task<bool> DeleteAsync(long id, CancellationToken ct = default);
 }
 
-public interface IPaymentTypeService : ILookupService;
+public interface IPaymentCodeService : ILookupService;
 
 public interface IPaymentStatusService : ILookupService;
 

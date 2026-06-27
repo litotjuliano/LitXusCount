@@ -32,7 +32,11 @@ public record CustomerDto(
     int PaymentTermsDays,
     decimal CreditLimit,
     bool IsLocked,
-    bool IsActive);
+    bool IsActive,
+    string? Tin,
+    string? RegistrationType,
+    string? RegistrationNumber,
+    string? SSTRegistrationNumber);
 
 public record CustomerUpsertDto(
     string Code,
@@ -62,4 +66,8 @@ public record CustomerUpsertDto(
     string? ConsigneePhone,
     int PaymentTermsDays,
     decimal CreditLimit,
-    bool IsLocked);
+    bool IsLocked,
+    string? Tin,
+    string? RegistrationType,
+    string? RegistrationNumber,
+    string? SSTRegistrationNumber);

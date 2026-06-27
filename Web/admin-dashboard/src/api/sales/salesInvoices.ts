@@ -21,6 +21,7 @@ export interface SalesInvoiceItem {
   notes: string | null
   isActive: boolean
   createdAt: string
+  invoiceTypeCode: string
 }
 
 export interface SalesInvoiceCreateDto {
@@ -32,6 +33,7 @@ export interface SalesInvoiceHeaderUpdateDto {
   customerId: number
   currencyId: number | null
   notes: string | null
+  invoiceTypeCode: string | null
 }
 
 export interface PagedResult<T> {

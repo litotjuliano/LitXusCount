@@ -26,6 +26,8 @@ public class Product : AuditableEntity
     
     public string? SalesTaxCode { get; set; }
     public string? PurchaseTaxCode { get; set; }
+    public string? DefaultLhdnClassificationCode { get; set; }
+    public string? DefaultLhdnTaxTypeCode { get; set; }
     
     public long? DefaultSupplierId { get; set; }
     public Supplier? DefaultSupplier { get; set; }

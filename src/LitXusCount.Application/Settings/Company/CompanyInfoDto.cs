@@ -23,7 +23,12 @@ public record CompanyInfoDto(
     bool IsItemDiscountPercentage,
     long? CurrencyId,
     long? VatPercentageId,
-    long? EmailConfigId);
+    long? EmailConfigId,
+    string? Tin,
+    string? RegistrationType,
+    string? SSTRegistrationNumber,
+    string? MSICCode,
+    string? MSICDescription);
 
 public record CompanyInfoUpdateDto(
     string Name,
@@ -47,4 +52,9 @@ public record CompanyInfoUpdateDto(
     bool IsItemDiscountPercentage,
     long? CurrencyId,
     long? VatPercentageId,
-    long? EmailConfigId);
+    long? EmailConfigId,
+    string? Tin,
+    string? RegistrationType,
+    string? SSTRegistrationNumber,
+    string? MSICCode,
+    string? MSICDescription);

@@ -23,6 +23,10 @@ export interface SupplierItem {
   defaultCurrencyId: number | null;
   defaultCurrencyCode: string | null;
   isActive: boolean;
+  tin: string | null;
+  registrationType: string | null;
+  registrationNumber: string | null;
+  sSTRegistrationNumber: string | null;
 }
 
 export interface SupplierUpsert {
@@ -42,6 +46,10 @@ export interface SupplierUpsert {
   contactPerson: string | null;
   paymentTermsDays: number;
   defaultCurrencyId: number | null;
+  tin: string | null;
+  registrationType: string | null;
+  registrationNumber: string | null;
+  sSTRegistrationNumber: string | null;
 }
 
 const base = "/api/settings/suppliers";

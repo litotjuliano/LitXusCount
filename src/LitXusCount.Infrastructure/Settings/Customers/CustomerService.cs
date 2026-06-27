@@ -74,7 +74,11 @@ internal sealed class CustomerService(ApplicationDbContext db) : ICustomerServic
                 x.PaymentTermsDays,
                 x.CreditLimit,
                 x.IsLocked,
-                x.IsActive))
+                x.IsActive,
+                x.TIN,
+                x.RegistrationType,
+                x.RegistrationNumber,
+                x.SSTRegistrationNumber))
             .ToListAsync(ct);
 
         return new PagedResult<CustomerDto>(items, totalCount, query.EffectivePage, query.EffectivePageSize);
@@ -118,7 +122,11 @@ internal sealed class CustomerService(ApplicationDbContext db) : ICustomerServic
                 x.PaymentTermsDays,
                 x.CreditLimit,
                 x.IsLocked,
-                x.IsActive))
+                x.IsActive,
+                x.TIN,
+                x.RegistrationType,
+                x.RegistrationNumber,
+                x.SSTRegistrationNumber))
             .ToListAsync(ct);
 
     public async Task<CustomerDto?> GetAsync(long id, CancellationToken ct = default)
@@ -172,6 +180,10 @@ internal sealed class CustomerService(ApplicationDbContext db) : ICustomerServic
             PaymentTermsDays = request.PaymentTermsDays,
             CreditLimit = request.CreditLimit,
             IsLocked = request.IsLocked,
+            TIN = request.Tin,
+            RegistrationType = request.RegistrationType,
+            RegistrationNumber = request.RegistrationNumber,
+            SSTRegistrationNumber = request.SSTRegistrationNumber,
             IsActive = true,
             CreatedAt = DateTime.UtcNow,
         };
@@ -231,6 +243,10 @@ internal sealed class CustomerService(ApplicationDbContext db) : ICustomerServic
         entity.PaymentTermsDays = request.PaymentTermsDays;
         entity.CreditLimit = request.CreditLimit;
         entity.IsLocked = request.IsLocked;
+        entity.TIN = request.Tin;
+        entity.RegistrationType = request.RegistrationType;
+        entity.RegistrationNumber = request.RegistrationNumber;
+        entity.SSTRegistrationNumber = request.SSTRegistrationNumber;
         entity.ModifiedAt = DateTime.UtcNow;
 
         await db.SaveChangesAsync(ct);
@@ -291,5 +307,9 @@ internal sealed class CustomerService(ApplicationDbContext db) : ICustomerServic
             x.PaymentTermsDays,
             x.CreditLimit,
             x.IsLocked,
-            x.IsActive);
+            x.IsActive,
+            x.TIN,
+            x.RegistrationType,
+            x.RegistrationNumber,
+            x.SSTRegistrationNumber);
 }

@@ -17,7 +17,6 @@ public class EmailConfigsController(IEmailConfigService service) : ControllerBas
         Ok(await service.ListAsync(query, ct));
 
     [HttpGet("all-active")]
-    [Authorize(Policy = "Permission." + Permissions.Settings.EmailConfig.View)]
     public async Task<IActionResult> ListAllActive(CancellationToken ct) => Ok(await service.ListAllActiveAsync(ct));
 
     [HttpGet("{id:long}")]

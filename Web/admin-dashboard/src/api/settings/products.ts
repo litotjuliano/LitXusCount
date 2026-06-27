@@ -19,6 +19,8 @@ export interface ProductItem {
   purchaseAccountName: string | null;
   salesTaxCode: string | null;
   purchaseTaxCode: string | null;
+  defaultLhdnClassificationCode: string | null;
+  defaultLhdnTaxTypeCode: string | null;
   defaultSupplierId: number | null;
   defaultSupplierName: string | null;
   mainUnitOfMeasureId: number | null;
@@ -58,6 +60,8 @@ export interface ProductUpsert {
   purchaseAccountId: number | null;
   salesTaxCode: string | null;
   purchaseTaxCode: string | null;
+  defaultLhdnClassificationCode: string | null;
+  defaultLhdnTaxTypeCode: string | null;
   defaultSupplierId: number | null;
   mainUnitOfMeasureId: number | null;
   altUnitOfMeasureId: number | null;

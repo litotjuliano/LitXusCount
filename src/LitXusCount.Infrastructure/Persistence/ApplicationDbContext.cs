@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Currency> Currencies => Set<Currency>();
     public DbSet<VatPercentage> VatPercentages => Set<VatPercentage>();
     public DbSet<EmailConfig> EmailConfigs => Set<EmailConfig>();
-    public DbSet<PaymentType> PaymentTypes => Set<PaymentType>();
+    public DbSet<PaymentCode> PaymentCodes => Set<PaymentCode>();
     public DbSet<PaymentStatus> PaymentStatuses => Set<PaymentStatus>();
     public DbSet<CustomerType> CustomerTypes => Set<CustomerType>();
     public DbSet<Category> Categories => Set<Category>();
@@ -28,6 +28,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Product> Products => Set<Product>();
 
     public DbSet<TaxCode> TaxCodes => Set<TaxCode>();
+    public DbSet<LhdnClassificationCode> LhdnClassificationCodes => Set<LhdnClassificationCode>();
+    public DbSet<LhdnCountry> LhdnCountries => Set<LhdnCountry>();
+    public DbSet<LhdnStateCode> LhdnStateCodes => Set<LhdnStateCode>();
+    public DbSet<LhdnTaxType> LhdnTaxTypes => Set<LhdnTaxType>();
+    public DbSet<LhdnMsicCode> LhdnMsicCodes => Set<LhdnMsicCode>();
+    public DbSet<LhdnCurrencyCode> LhdnCurrencyCodes => Set<LhdnCurrencyCode>();
     public DbSet<EInvoiceSubmission> EInvoiceSubmissions => Set<EInvoiceSubmission>();
     public DbSet<EInvoiceValidationError> EInvoiceValidationErrors => Set<EInvoiceValidationError>();
     public DbSet<TenantReportTemplate> TenantReportTemplates => Set<TenantReportTemplate>();
@@ -60,9 +66,10 @@ public class ApplicationDbContext : DbContext
             entity.Property(x => x.Percentage).HasPrecision(8, 4);
         });
 
-        builder.Entity<PaymentType>(entity =>
+        builder.Entity<PaymentCode>(entity =>
         {
             entity.Property(x => x.Name).IsRequired();
+            entity.Property(x => x.Code).HasMaxLength(4);
             entity.HasIndex(x => x.Name).IsUnique().HasFilter("\"IsActive\" = true");
         });
 
@@ -87,6 +94,7 @@ public class ApplicationDbContext : DbContext
         builder.Entity<UnitOfMeasure>(entity =>
         {
             entity.Property(x => x.Name).IsRequired();
+            entity.Property(x => x.UnCefactCode).HasMaxLength(8);
             entity.HasIndex(x => x.Name).IsUnique().HasFilter("\"IsActive\" = true");
         });
 
@@ -139,6 +147,8 @@ public class ApplicationDbContext : DbContext
         {
             entity.Property(x => x.Code).HasMaxLength(64).IsRequired();
             entity.Property(x => x.Description).HasMaxLength(256);
+            entity.Property(x => x.DefaultLhdnClassificationCode).HasMaxLength(4);
+            entity.Property(x => x.DefaultLhdnTaxTypeCode).HasMaxLength(2);
             entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
             entity.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(x => x.SalesCogsAccount).WithMany().HasForeignKey(x => x.SalesCogsAccountId).OnDelete(DeleteBehavior.Restrict);
@@ -172,6 +182,55 @@ public class ApplicationDbContext : DbContext
             entity.Property(x => x.Code).HasMaxLength(2).IsRequired();
             entity.Property(x => x.Name).HasMaxLength(128).IsRequired();
             entity.Property(x => x.Rate).HasPrecision(8, 4);
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnClassificationCode (LHDN product/service classification 001–041) ──
+        builder.Entity<LhdnClassificationCode>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(4).IsRequired();
+            entity.Property(x => x.Description).IsRequired();
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnCountry (LHDN-recognised ISO country codes) ──────────────────
+        builder.Entity<LhdnCountry>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(3).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnCurrencyCode (LHDN ISO currency codes) ───────────────────────
+        builder.Entity<LhdnCurrencyCode>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(3).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(64).IsRequired();
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnMsicCode (Malaysia Standard Industrial Classification 2008) ────
+        builder.Entity<LhdnMsicCode>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(5).IsRequired();
+            entity.Property(x => x.Description).HasMaxLength(512).IsRequired();
+            entity.Property(x => x.Category).HasMaxLength(1);
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnTaxType (LHDN tax type codes, source: sdk.myinvois.hasil.gov.my/codes/tax-types/) ─
+        builder.Entity<LhdnTaxType>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(2).IsRequired();
+            entity.Property(x => x.Description).HasMaxLength(128).IsRequired();
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── LhdnStateCode (Malaysian state codes 01–16) ──────────────────────
+        builder.Entity<LhdnStateCode>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(2).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(64).IsRequired();
             entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
         });
 

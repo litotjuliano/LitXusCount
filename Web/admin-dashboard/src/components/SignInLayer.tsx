@@ -7,6 +7,8 @@ import IconifyIcon from '@/components/wrappers/IconifyIcon'
 import LogoBox from '@/components/LogoBox'
 import { login } from '../api/auth'
 import { authStorage } from '../api/authStorage'
+import { decodeJwtPayload } from '../api/jwt'
+import { tenantsApi } from '../api/tenants'
 import DevCredentialsCheatsheet from './DevCredentialsCheatsheet'
 
 const SignInLayer = () => {
@@ -18,8 +20,22 @@ const SignInLayer = () => {
 
   const loginMutation = useMutation({
     mutationFn: () => login(userNameOrEmail, password),
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
       authStorage.setTokens(result.accessToken, result.refreshToken, rememberMe)
+
+      // If the JWT has no tenant_id (SuperAdmin), auto-select the first active tenant
+      // so that tenant-scoped API calls succeed via X-Tenant-Id header.
+      const payload = decodeJwtPayload(result.accessToken)
+      if (!payload?.tenant_id) {
+        try {
+          const tenants = await tenantsApi.list({ page: 1, pageSize: 1, sortDescending: false })
+          const firstId = tenants.items?.[0]?.id
+          if (firstId) authStorage.setActiveTenantId(String(firstId))
+        } catch {
+          // If tenant list fails, SuperAdmin will still work for master-DB routes
+        }
+      }
+
       navigate('/')
     },
     onError: () => {

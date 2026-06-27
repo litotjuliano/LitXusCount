@@ -144,8 +144,8 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations.Master
 
                     b.Property<string>("Slug")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 

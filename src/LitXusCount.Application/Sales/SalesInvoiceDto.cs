@@ -19,7 +19,8 @@ public record SalesInvoiceDto(
     string? Notes,
     long? CurrencyId,
     bool IsActive,
-    DateTime CreatedAt
+    DateTime CreatedAt,
+    string InvoiceTypeCode
 );
 
 public record SalesInvoiceCreateDto(
@@ -31,7 +32,8 @@ public record SalesInvoiceHeaderUpdateDto(
     long CustomerId,
     string? PurchaseOrderNumber,
     string? Notes,
-    long? CurrencyId
+    long? CurrencyId,
+    string? InvoiceTypeCode
 );
 
 public record SalesInvoicePromoteDto(

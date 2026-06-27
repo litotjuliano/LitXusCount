@@ -34,6 +34,10 @@ export interface CustomerItem {
   creditLimit: number;
   isLocked: boolean;
   isActive: boolean;
+  tin: string | null;
+  registrationType: string | null;
+  registrationNumber: string | null;
+  sSTRegistrationNumber: string | null;
 }
 
 export interface CustomerUpsert {
@@ -65,6 +69,10 @@ export interface CustomerUpsert {
   paymentTermsDays: number;
   creditLimit: number;
   isLocked: boolean;
+  tin: string | null;
+  registrationType: string | null;
+  registrationNumber: string | null;
+  sSTRegistrationNumber: string | null;
 }
 
 const base = "/api/settings/customers";

@@ -1,0 +1,1175 @@
+00000|A|NOT APPLICABLE
+01111|A|Growing of maize
+01112|A|Growing of leguminous crops
+01113|A|Growing of oil seeds
+01119|A|Growing of other cereals n.e.c.
+01120|A|Growing of paddy
+01131|A|Growing of leafy or stem vegetables
+01132|A|Growing of fruits bearing vegetables
+01133|A|Growing of melons
+01134|A|Growing of mushrooms and truffles
+01135|A|Growing of vegetables seeds, except beet seeds
+01136|A|Growing of other vegetables
+01137|A|Growing of sugar beet
+01138|A|Growing of roots, tubers, bulb or tuberous vegetables
+01140|A|Growing of sugar cane
+01150|A|Growing of tobacco
+01160|A|Growing of fibre crops
+01191|A|Growing of flowers
+01192|A|Growing of flower seeds
+01193|A|Growing of sago (rumbia)
+01199|A|Growing of other non-perennial crops n.e.c.
+01210|A|Growing of grapes
+01221|A|Growing of banana
+01222|A|Growing of mango
+01223|A|Growing of durian
+01224|A|Growing of rambutan
+01225|A|Growing of star fruit
+01226|A|Growing of papaya
+01227|A|Growing of pineapple
+01228|A|Growing of pitaya (dragon fruit)
+01229|A|Growing of other tropical and subtropical fruits n.e.c.
+01231|A|Growing of pomelo
+01232|A|Growing of lemon and limes
+01233|A|Growing of tangerines and mandarin
+01239|A|Growing of other citrus fruits n.e.c.
+01241|A|Growing of guava
+01249|A|Growing of other pome fruits and stones fruits n.e.c.
+01251|A|Growing of berries
+01252|A|Growing of fruit seeds
+01253|A|Growing of edible nuts
+01259|A|Growing of other tree and bush fruits
+01261|A|Growing of oil palm (estate)
+01262|A|Growing of oil palm (smallholdings)
+01263|A|Growing of coconut (estate and smallholdings)
+01269|A|Growing of other oleaginous fruits n.e.c.
+01271|A|Growing of coffee
+01272|A|Growing of tea
+01273|A|Growing of cocoa
+01279|A|Growing of other beverage crops n.e.c.
+01281|A|Growing of pepper (piper nigrum)
+01282|A|Growing of chilies and pepper (capsicum spp.)
+01283|A|Growing of nutmeg
+01284|A|Growing of ginger
+01285|A|Growing of plants used primarily in perfumery, in pharmacy or for insecticidal, fungicidal or similar purposes
+01289|A|Growing of other spices and aromatic crops n.e.c.
+01291|A|Growing of rubber trees (estate)
+01292|A|Growing of rubber trees (smallholdings)
+01293|A|Growing of trees for extraction of sap
+01294|A|Growing of nipa palm
+01295|A|Growing of areca
+01296|A|Growing of roselle
+01299|A|Growing of other perennial crops n.e.c.
+01301|A|Growing of plants for planting
+01302|A|Growing of plants for ornamental purposes
+01303|A|Growing of live plants for bulbs, tubers and roots; cuttings and slips; mushroom spawn
+01304|A|Operation of tree nurseries
+01411|A|Raising, breeding and production of cattle or buffaloes
+01412|A|Production of raw milk from cows or buffaloes
+01413|A|Production of bovine semen
+01420|A|Raising and breeding of horses, asses, mules or hinnes
+01430|A|Raising and breeding of camels (dromedary) and camelids
+01441|A|Raising, breeding and production of sheep and goats
+01442|A|Production of raw sheep or goat's milk
+01443|A|Production of raw wool
+01450|A|Raising, breeding and production of swine/pigs
+01461|A|Raising, breeding and production of chicken, broiler
+01462|A|Raising, breeding and production of ducks
+01463|A|Raising, breeding and production of geese
+01464|A|Raising, breeding and production of quails
+01465|A|Raising and breeding of other poultry n.e.c.
+01466|A|Production of chicken eggs
+01467|A|Production of duck eggs
+01468|A|Production of other poultry eggs n.e.c.
+01469|A|Operation of poultry hatcheries
+01491|A|Raising, breeding and production of semi-domesticated
+01492|A|Production of fur skins, reptile or bird's skin from ranching operation
+01493|A|Operation of worm farms, land mollusc farms, snail farms
+01494|A|Raising of silk worms and production of silk worm cocoons
+01495|A|Bee keeping and production of honey and beeswax
+01496|A|Raising and breeding of pet animals
+01497|A|Raising and breeding of swiflet
+01499|A|Raising of diverse/other animals n.e.c.
+01500|A|Mixed Farming
+01610|A|Agricultural activities for crops production on a fee or contract basis
+01620|A|Agricultural activities for animal production on a fee or contract basis
+01631|A|Preparation of crops for primary markets
+01632|A|Preparation of tobacco leaves
+01633|A|Preparation of cocoa beans
+01634|A|Sun-drying of fruits and vegetables
+01640|A|Seed processing for propagation
+01701|A|Hunting and trapping on a commercial basis
+01702|A|Taking of animals (dead or alive)
+02101|A|Planting, replanting, transplanting, thinning and conserving of forests and timber tracts
+02102|A|Growing of coppice, pulpwood and fire wood
+02103|A|Operation of forest tree nurseries
+02104|A|Collection and raising of wildings (peat swamp forest tree species)
+02105|A|Forest plantation
+02201|A|Production of round wood for forest-based manufacturing industries
+02202|A|Production of round wood used in an unprocessed form
+02203|A|Production of charcoal in the forest (using traditional methods)
+02204|A|Rubber wood logging
+02301|A|Collection of rattan, bamboo
+02302|A|Bird's nest collection
+02303|A|Wild sago palm collection
+02309|A|Gathering of non-wood forest products n.e.c.
+02401|A|Carrying out part of the forestry and forest plantation operation on a fee or contract basis for forestry service activities
+02402|A|Carrying out part of the forestry operation on a fee or contract basis for logging service activities
+03111|A|Fishing on a commercial basis in ocean and coastal waters
+03112|A|Collection of marine crustaceans and molluscs
+03113|A|Taking of aquatic animals: sea squirts, tunicates, sea urchins
+03114|A|Activities of vessels engaged both in fishing and in processing and preserving of fish
+03115|A|Gathering of other marine organisms and materials (natural pearls, sponges, coral and algae)
+03119|A|Marine fishing n.e.c.
+03121|A|Fishing on a commercial basis in inland waters
+03122|A|Taking of freshwater crustaceans and molluscs
+03123|A|Taking of freshwater aquatic animals
+03124|A|Gathering of freshwater flora and fauna
+03129|A|Freshwater fishing n.e.c.
+03211|A|Fish farming in sea water
+03212|A|Production of bivalve spat (oyster, mussel), lobster lings, shrimp post-larvae, fish fry and fingerlings
+03213|A|Growing of laver and other edible seaweeds
+03214|A|Culture of crustaceans, bivalves, other molluscs and other aquatic animals in sea water
+03215|A|Aquaculture activities in brackish water
+03216|A|Aquaculture activities in salt water filled tanks or reservoirs
+03217|A|Operation of hatcheries (marine)
+03218|A|Operation of marine worm farms for fish feed
+03219|A|Marine aquaculture n.e.c.
+03221|A|Fish farming in freshwater
+03222|A|Shrimp farming in freshwater
+03223|A|Culture of freshwater crustaceans, bivalves, other molluscs and other aquatic animals
+03224|A|Operation of hatcheries (freshwater)
+03225|A|Farming of frogs
+03229|A|Freshwater aquaculture n.e.c.
+05100|B|Mining of hard coal
+05200|B|Mining of lignite (brown coal)
+06101|B|Extraction of crude petroleum oils
+06102|B|Extraction of bituminous or oil shale and tar sand
+06103|B|Production of crude petroleum from bituminous shale and sand
+06104|B|Processes to obtain crude oils
+06201|B|Production of crude gaseous hydrocarbon (natural gas)
+06202|B|Extraction of condensates
+06203|B|Draining and separation of liquid hydrocarbon fractions
+06204|B|Gas desulphurization
+06205|B|Mining of hydrocarbon liquids, obtain through liquefaction or pyrolysis
+07101|B|Mining of ores valued chiefly for iron content
+07102|B|Beneficiation and agglomeration of iron ores
+07210|B|Mining of uranium and thorium ores
+07291|B|Mining of tin ores
+07292|B|Mining of copper
+07293|B|Mining of bauxite (aluminium)
+07294|B|Mining of ilmenite
+07295|B|Mining of gold
+07296|B|Mining of silver
+07297|B|Mining of platinum
+07298|B|Amang retreatment
+07299|B|Mining of other non-ferrous metal ores n.e.c.
+08101|B|Quarrying, rough trimming and sawing of monumental and building stone such as marble, granite (dimension stone), sandstone
+08102|B|Quarrying, crushing and breaking of limestone
+08103|B|Mining of gypsum and anhydrite
+08104|B|Mining of chalk and uncalcined dolomite
+08105|B|Extraction and dredging of industrial sand, sand for construction and gravel
+08106|B|Breaking and crushing of stone and gravel
+08107|B|Quarrying of sand
+08108|B|Mining of clays, refractory clays and kaolin
+08109|B|Quarrying, crushing and breaking of granite
+08911|B|Mining of natural phosphates
+08912|B|Mining of natural potassium salts
+08913|B|Mining of native sulphur
+08914|B|Extraction and preparation of pyrites and pyrrhotite, except roasting
+08915|B|Mining of natural barium sulphate and carbonate (barytes and witherite)
+08916|B|Mining of natural borates, natural magnesium sulphates (kieserite)
+08917|B|Mining of earth colours, fluorspar and other minerals valued chiefly as a source of chemicals
+08918|B|Guano mining
+08921|B|Peat digging
+08922|B|Peat agglomeration
+08923|B|Preparation of peat to improve quality or facilitate transport or storage
+08931|B|Extraction of salt from underground
+08932|B|Salt production by evaporation of sea water or other saline waters
+08933|B|Crushing, purification and refining of salt by the producer
+08991|B|Mining and quarrying of abrasive materials
+08992|B|Mining and quarrying of asbestos
+08993|B|Mining and quarrying of siliceous fossil meals
+08994|B|Mining and quarrying of natural graphite
+08995|B|Mining and quarrying of steatite (talc)
+08996|B|Mining and quarrying of gemstones
+08999|B|Other mining and quarrying n.e.c.
+09101|B|Oil and gas extraction service activities provided on a fee or contract basis
+09102|B|Oil and gas field fire fighting services
+09900|B|Support activities for other mining and quarrying
+10101|C|Processing and preserving of meat and production of meat products
+10102|C|Processing and preserving of poultry and poultry products
+10103|C|Production of hides and skins originating from slaughterhouses
+10104|C|Operation of slaughterhouses engaged in killing, houses dressing or packing meat
+10109|C|Processing and preserving of meat n.e.c.
+10201|C|Canning of fish, crustaceans and mollusks
+10202|C|Processing, curing and preserving of fish, crustacean and molluscs
+10203|C|Production of fish meals for human consumption or animal feed
+10204|C|Production of keropok including keropok lekor
+10205|C|Processing of seaweed
+10301|C|Manufacture of fruits and vegetable food products
+10302|C|Manufacture of fruit and vegetable juices
+10303|C|Pineapple canning
+10304|C|Manufacture of jams, marmalades and table jellies
+10305|C|Manufacture of nuts and nut products
+10306|C|Manufacture of bean curd products
+10401|C|Manufacture of crude palm oil
+10402|C|Manufacture of refined palm oil
+10403|C|Manufacture of palm kernel oil
+10404|C|Manufacture of crude and refined vegetable oil
+10405|C|Manufacture of coconut oil
+10406|C|Manufacture of compound cooking fats
+10407|C|Manufacture of animal oils and fats
+10501|C|Manufacture of ice cream and other edible ice such as sorbet
+10502|C|Manufacture of condensed, powdered and evaporated milk
+10509|C|Manufacture of other dairy products n.e.c.
+10611|C|Rice milling
+10612|C|Provision of milling services
+10613|C|Flour milling
+10619|C|Manufacture of grain mill products n.e.c.
+10621|C|Manufacture of starches and starch products
+10622|C|Manufacture of glucose, glucose syrup, maltose, inulin
+10623|C|Manufacture of sago and tapioca flour/products
+10711|C|Manufacture of biscuits and cookies
+10712|C|Manufacture of bread, cakes and other bakery products
+10713|C|Manufacture of snack products
+10714|C|Manufacture of frozen bakery products
+10721|C|Manufacture of sugar
+10722|C|Manufacture of sugar products
+10731|C|Manufacture of cocoa products
+10732|C|Manufacture of chocolate and chocolate products
+10733|C|Manufacture of sugar confectionery
+10741|C|Manufacture of meehoon, noodles and other related products
+10742|C|Manufacture of pastas
+10750|C|Manufacture of prepared meals and dishes
+10791|C|Manufacture of coffee
+10792|C|Manufacture of tea
+10793|C|Manufacture of sauces and condiments
+10794|C|Manufacture of spices and curry powder
+10795|C|Manufacture of egg products
+10799|C|Manufacture of other food products n.e.c.
+10800|C|Manufacture of prepared animal feeds
+11010|C|Distilling, rectifying and blending of spirits
+11020|C|Manufacture of wines
+11030|C|Manufacture of malt liquors and malt
+11041|C|Manufacture of soft drinks
+11042|C|Production of natural mineral water and other bottled water
+12000|C|MANUFACTURE OF TOBACCO PRODUCTS
+13110|C|Preparation and spinning of textile fibres
+13120|C|Weaving of textiles
+13131|C|Batik making
+13132|C|Dyeing, bleaching, printing and finishing of yarns and fabrics
+13139|C|Other finishing textiles
+13910|C|Manufacture of knitted and crocheted fabrics
+13921|C|Manufacture of made-up articles of any textile materials, including of knitted or crocheted fabrics
+13922|C|Manufacture of made-up furnishing articles
+13930|C|Manufacture of carpets and rugs
+13940|C|Manufacture of cordage, rope, twine and netting
+13990|C|Manufacture of other textiles n.e.c.
+14101|C|Manufacture of specific wearing apparel
+14102|C|Manufacture of clothings
+14103|C|Custom tailoring
+14109|C|Manufacture of other clothing accessories
+14200|C|Manufacture of articles made of fur skins
+14300|C|Manufacture of knitted and crocheted apparel
+15110|C|Tanning and dressing of leather; dressing and dyeing of fur
+15120|C|Manufacture of luggage, handbags and the like, saddlery and harness
+15201|C|Manufacture of leather footwear
+15202|C|Manufacture of plastic footwear
+15203|C|Manufacture of rubber footwear
+15209|C|Manufacture of other footwear n.e.c.
+16100|C|Sawmilling and planning of wood
+16211|C|Manufacture of veneer sheets and plywood
+16212|C|Manufacture of particle board and fibreboard
+16221|C|Manufacture of builders' carpentry
+16222|C|Manufacture of joinery wood products
+16230|C|Manufacture of wooden containers
+16291|C|Manufacture of wood charcoal
+16292|C|Manufacture of other products of wood, cane, articles of cork, straw and plaiting materials
+17010|C|Manufacture of pulp, paper and paperboard
+17020|C|Manufacture of corrugated paper and paperboard and of containers of paper and paperboard
+17091|C|Manufacture of envelopes and letter-card
+17092|C|Manufacture of household and personal hygiene paper
+17093|C|Manufacture of gummed or adhesive paper in strips or rolls and labels and wall paper
+17094|C|Manufacture of effigies, funeral paper goods, joss paper
+17099|C|Manufacture of other articles of paper and paperboard n.e.c.
+18110|C|Printing
+18120|C|Service activities related to printing
+18200|C|Reproduction of recorded media
+19100|C|Manufacture of coke oven products
+19201|C|Manufacture of refined petroleum products
+19202|C|Manufacture of bio-diesel products
+20111|C|Manufacture of liquefied or compressed inorganic industrial or medical gases
+20112|C|Manufacture of basic organic chemicals
+20113|C|Manufacture of inorganic compounds
+20119|C|Manufacture of other basic chemicals n.e.c.
+20121|C|Manufacture of fertilizers
+20129|C|Manufacture of associated nitrogen products
+20131|C|Manufacture of plastic in primary forms
+20132|C|Manufacture of synthetic rubber in primary forms: synthetic rubber, factice
+20133|C|Manufacture of mixtures of synthetic rubber and natural rubber or rubber - like gums
+20210|C|Manufacture of pesticides and other agrochemical products
+20221|C|Manufacture of paints, varnishes and similar coatings ink and mastics
+20222|C|Manufacture of printing ink
+20231|C|Manufacture of soap and detergents, cleaning and polishing preparations
+20232|C|Manufacture of perfumes and toilet preparations
+20291|C|Manufacture of photographic plates, films, sensitized paper and other sensitized unexposed materials
+20292|C|Manufacture of writing and drawing ink
+20299|C|Manufacture of other chemical products n.e.c.
+20300|C|Manufacture of man-made fibres
+21001|C|Manufacture of medicinal active substances to be used for their pharmacological properties in the manufacture of medicaments
+21002|C|Processing of blood
+21003|C|Manufacture of medicaments
+21004|C|Manufacture of chemical contraceptive products
+21005|C|Manufacture of medical diagnostic preparation
+21006|C|Manufacture of radioactive in-vivo diagnostic substances
+21007|C|Manufacture of biotech pharmaceuticals
+21009|C|Manufacture of other pharmaceuticals, medicinal chemical and botanical products n.e.c.
+22111|C|Manufacture of rubber tyres for vehicles
+22112|C|Manufacture of interchangeable tyre treads and retreading rubber tyres
+22191|C|Manufacture of other products of natural or synthetic rubber, unvulcanized, vulcanized or hardened
+22192|C|Manufacture of rubber gloves
+22193|C|Rubber remilling and latex processing
+22199|C|Manufacture of other rubber products n.e.c
+22201|C|Manufacture of semi-manufactures of plastic products
+22202|C|Manufacture of finished plastic products
+22203|C|Manufacture of plastic articles for the packing of goods
+22204|C|Manufacture of builders' plastics ware
+22205|C|Manufacture of plastic tableware, kitchenware and toilet articles
+22209|C|Manufacture of diverse plastic products n.e.c.
+23101|C|Manufacture of flat glass, including wired, coloured or tinted flat glass
+23102|C|Manufacture of laboratory, hygienic or pharmaceutical glassware
+23109|C|Manufacture of other glass products n.e.c.
+23911|C|Manufacture of refractory mortars and concretes
+23912|C|Manufacture of refractory ceramic goods
+23921|C|Manufacture of non-refractory ceramic
+23929|C|Manufacture of other clay building materials
+23930|C|Manufacture of other porcelain and ceramic products
+23941|C|Manufacture of hydraulic cement
+23942|C|Manufacture of lime and plaster
+23951|C|Manufacture of ready-mix and dry-mix concrete and mortars
+23952|C|Manufacture of precast concrete, cement or artificial stone articles for use in construction
+23953|C|Manufacture of prefabricated structural components for building or civil engineering of cement, concrete or artificial stone
+23959|C|Manufacture of other articles of concrete, cement and plaster n.e.c.
+23960|C|Cutting, shaping and finishing of stone
+23990|C|Manufacture of other non-metallic mineral products n.e.c.
+24101|C|Production of pig iron and spiegeleisen in pigs, blocks or other primary forms
+24102|C|Production of bars and rods of stainless steel or other alloy steel
+24103|C|Manufacture of seamless tubes, by hot rolling, hot extrusion or hot drawing, or by cold drawing or cold rolling
+24104|C|Manufacture of steel tube fittings
+24109|C|Manufacture of other basic iron and steel products n.e.c.
+24201|C|Tin smelting
+24202|C|Production of aluminium from alumina
+24209|C|Manufacture of other basic precious and other non-ferrous metals n.e.c.
+24311|C|Casting of iron
+24312|C|Casting of steel
+24320|C|Casting of non-ferrous metals
+25111|C|Manufacture of industrial frameworks in metal
+25112|C|Manufacture of prefabricated buildings mainly of metal
+25113|C|Manufacture of metal doors, windows and their frames, shutters and gates
+25119|C|Manufacture of other structural metal products
+25120|C|Manufacture of tanks, reservoirs and containers of metal
+25130|C|Manufacture of steam generators, except central heating hot water boilers
+25200|C|Manufacture of weapons and ammunition
+25910|C|Forging, pressing, stamping and roll-forming of metal; powder metallurgy
+25920|C|Treatment and coating of metals; machining
+25930|C|Manufacture of cutlery, hand tools and general hardware
+25991|C|Manufacture of tins and cans for food products, collapsible tubes and boxes
+25992|C|Manufacture of metal cable, plaited bands and similar articles
+25993|C|Manufacture of bolts, screws, nuts and similar threaded products
+25994|C|Manufacture of metal household articles
+25999|C|Manufacture of any other fabricated metal products n.e.c.
+26101|C|Manufacture of diodes, transistors and similar semiconductor devices
+26102|C|Manufacture electronic integrated circuits micro assemblies
+26103|C|Manufacture of electrical capacitors and resistors
+26104|C|Manufacture of printed circuit boards
+26105|C|Manufacture of display components
+26109|C|Manufacture of other components for electronic applications
+26201|C|Manufacture of computers
+26202|C|Manufacture of peripheral equipment
+26300|C|Manufacture of communication equipment
+26400|C|Manufacture of consumer electronics
+26511|C|Manufacture of measuring, testing, navigating and control equipment
+26512|C|Manufacture of industrial process control equipment
+26520|C|Manufacture of watches and clocks and parts
+26600|C|Manufacture of irradiation, electro medical and electrotherapeutic equipment
+26701|C|Manufacture of optical instruments and equipment
+26702|C|Manufacture of photographic equipment
+26800|C|Manufacture of magnetic and optical recording media
+27101|C|Manufacture of electric motors, generators and transformers
+27102|C|Manufacture of electricity distribution and control apparatus
+27200|C|Manufacture of batteries and accumulators
+27310|C|Manufacture of fibre optic cables
+27320|C|Manufacture of other electronic and electric wires and cables
+27330|C|Manufacture of current-carrying and non current-carrying wiring devices for electrical circuits regardless of material
+27400|C|Manufacture of electric lighting equipment
+27500|C|Manufacture of domestic appliances
+27900|C|Manufacture of miscellaneous electrical equipment other than motors, generators and transformers, batteries and accumulators, wires and wiring devices, lighting equipment or domestic appliances
+28110|C|Manufacture of engines and turbines, except aircraft, vehicle and cycle engines
+28120|C|Manufacture of fluid power equipment
+28130|C|Manufacture of other pumps, compressors, taps and valves
+28140|C|Manufacture of bearings, gears, gearing and driving elements
+28150|C|Manufacture of ovens, furnaces and furnace burners
+28160|C|Manufacture of lifting and handling equipment
+28170|C|Manufacture of office machinery and equipment (except computers and peripheral equipment)
+28180|C|Manufacture of power-driven hand tools with self-contained electric or non-electric motor or pneumatic drives
+28191|C|Manufacture of refrigerating or freezing industrial equipment
+28192|C|Manufacture of air-conditioning machines, including for motor vehicles
+28199|C|Manufacture of other general-purpose machinery n.e.c.
+28210|C|Manufacture of agricultural and forestry machinery
+28220|C|Manufacture of metal-forming machinery and machine tools
+28230|C|Manufacture of machinery for metallurgy
+28240|C|Manufacture of machinery for mining, quarrying and construction
+28250|C|Manufacture of machinery for food, beverage and tobacco processing
+28260|C|Manufacture of machinery for textile, apparel and leather production
+28290|C|Manufacture of other special-purpose machinery n.e.c.
+29101|C|Manufacture of passenger cars
+29102|C|Manufacture of commercial vehicles
+29200|C|Manufacture of bodies (coachwork) for motor vehicles; manufacture of trailers and semi- trailers
+29300|C|Manufacture of parts and accessories for motor vehicles
+30110|C|Building of ships and floating structures
+30120|C|Building of pleasure and sporting boats
+30200|C|Manufacture of railway locomotives and rolling stock
+30300|C|Manufacture of air and spacecraft and related machinery
+30400|C|Manufacture of military fighting vehicles
+30910|C|Manufacture of motorcycles
+30920|C|Manufacture of bicycles and invalid carriages
+30990|C|Manufacture of other transport equipments n.e.c.
+31001|C|Manufacture of wooden and cane furniture
+31002|C|Manufacture of metal furniture
+31003|C|Manufacture of mattress
+31009|C|Manufacture of other furniture, except of stone, concrete or ceramic
+32110|C|Manufacture of jewellery and related articles
+32120|C|Manufacture of imitation jewellery and related articles
+32200|C|Manufacture of musical instruments
+32300|C|Manufacture of sports goods
+32400|C|Manufacture of games and toys
+32500|C|Manufacture of medical and dental instrument and supplies
+32901|C|Manufacture of stationery
+32909|C|Other manufacturing n.e.c.
+33110|C|Repair of fabricated metal products
+33120|C|Repair and maintenance of industrial machinery and equipment
+33131|C|Repair and maintenance of the measuring, testing, navigating and control equipment
+33132|C|Repair and maintenance of irradiation, electro medical and electrotherapeutic equipment
+33133|C|Repair of optical instruments and photographic equipment
+33140|C|Repair and maintenance of electrical equipment except domestic appliances
+33150|C|Repair and maintenance of transport equipment except motorcycles and bicycles
+33190|C|Repair and maintenance of other equipment n.e.c.
+33200|C|Installation of industrial machinery and equipment
+35101|D|Operation of generation facilities that produce electric energy
+35102|D|Operation of transmission, distribution and sales of electricity
+35201|D|Manufacture of gaseous fuels with a specified calorific value, by purification, blending and other processes from gases of various types including natural gas
+35202|D|Transportation, distribution and supply of gaseous fuels of all kinds through a system of mains
+35203|D|Sale of gas to the user through mains
+35301|D|Production, collection and distribution of steam and hot water for heating, power and other purposes
+35302|D|Production and distribution of cooled air, chilled water for cooling purposes
+35303|D|Production of ice, including ice for food and non-food (e.g. cooling) purposes
+36001|E|Purification and distribution of water for water supply purposes
+36002|E|Desalting of sea or ground water to produce water as the principal product of interest
+37000|E|Sewerage and similar activities
+38111|E|Collection of non-hazardous solid waste (i.e. garbage) within a local area
+38112|E|Collection of recyclable materials
+38113|E|Collection of refuse in litter-bins in public places
+38114|E|Collection of construction and demolition waste
+38115|E|Operation of waste transfer stations for non-hazardous waste
+38121|E|Collection of hazardous waste
+38122|E|Operation of waste transfer stations for hazardous waste
+38210|E|Treatment and disposal of non-hazardous waste
+38220|E|Treatment and disposal of hazardous waste
+38301|E|Mechanical crushing of metal waste
+38302|E|Dismantling of automobiles, computers, televisions and other equipment for material recover
+38303|E|Reclaiming of rubber such as used tires to produce secondary raw material
+38304|E|Reuse of rubber products
+38309|E|Materials recovery n.e.c.
+39000|E|Remediation activities and other waste management services
+41001|F|Residential buildings
+41002|F|Non-residential buildings
+41003|F|Assembly and erection of prefabricated constructions on the site
+41009|F|Construction of buildings n.e.c.
+42101|F|Construction of motorways, streets, roads, other vehicular and pedestrian ways
+42102|F|Surface work on streets, roads, highways, bridges or tunnels
+42103|F|Construction of bridges, including those for elevated highways
+42104|F|Construction of tunnels
+42105|F|Construction of railways and subways
+42106|F|Construction of airfield/airports runways
+42109|F|Construction of roads and railways n.e.c.
+42201|F|Long-distance pipelines, communication and power lines
+42202|F|Urban pipelines, urban communication and power lines; ancillary urban works
+42203|F|Water main and line construction
+42204|F|Reservoirs
+42205|F|Construction of irrigation systems (canals)
+42206|F|Construction of sewer systems (including repair) and sewage disposal plants
+42207|F|Construction of power plants
+42209|F|Construction of utility projects n.e.c.
+42901|F|Construction of refineries
+42902|F|Construction of waterways, harbour and river works, pleasure ports (marinas), locks
+42903|F|Construction of dams and dykes
+42904|F|Dredging of waterways
+42905|F|Outdoor sports facilities
+42906|F|Land subdivision with land improvement
+42909|F|Construction of other engineering projects n.e.c.
+43110|F|Demolition or wrecking of buildings and other structures
+43121|F|Clearing of building sites
+43122|F|Earth moving
+43123|F|Drilling, boring and core sampling for construction, geophysical, geological or similar purposes
+43124|F|Site preparation for mining
+43125|F|Drainage of agricultural or forestry land
+43126|F|Land reclamation work
+43129|F|Other site preparation activities n.e.c.
+43211|F|Electrical wiring and fittings
+43212|F|Telecommunications wiring
+43213|F|Computer network and cable television wiring
+43214|F|Satellite dishes
+43215|F|Lighting systems
+43216|F|Security systems
+43219|F|Electrical installation n.e.c.
+43221|F|Installation of heating systems (electric, gas and oil)
+43222|F|Installation of furnaces, cooling towers
+43223|F|Installation of non-electric solar energy collectors
+43224|F|Installation of plumbing and sanitary equipment
+43225|F|Installation of ventilation, refrigeration or air-conditioning equipment and ducts
+43226|F|Installation of gas fittings
+43227|F|Installation of fire and lawn sprinkler systems
+43228|F|Steam piping
+43229|F|Plumbing, heat and air-conditioning installation n.e.c.
+43291|F|Installation of elevators, escalators in buildings or other construction projects
+43292|F|Installation of automated and revolving doors in buildings or other construction projects
+43293|F|Installation of lighting conductors in buildings or other construction projects
+43294|F|Installation vacuum cleaning systems in buildings or other construction projects
+43295|F|Installation thermal, sound or vibration insulation in buildings or other construction projects
+43299|F|Other construction installation n.e.c.
+43301|F|Installation of doors, windows, door and window frames of wood or other materials, fitted kitchens, staircases, shop fittings and furniture
+43302|F|Laying, tiling, hanging or fitting in buildings or other construction projects of various types of materials
+43303|F|Interior and exterior painting of buildings
+43304|F|Painting of civil engineering structures
+43305|F|Installation of glass, mirrors
+43306|F|Interior completion
+43307|F|Cleaning of new buildings after construction
+43309|F|Other building completion and finishing work n.e.c.
+43901|F|Construction of foundations, including pile driving
+43902|F|Erection of non-self-manufactured steel elements
+43903|F|Scaffolds and work platform erecting and dismantling
+43904|F|Bricklaying and stone setting
+43905|F|Construction of outdoor swimming pools
+43906|F|Steam cleaning, sand blasting and similar activities for building exteriors
+43907|F|Renting of construction machinery and equipment with operator (e.g. cranes)
+43909|F|Other specialized construction activities, n.e.c.
+45101|G|Wholesale and retail of new motor vehicles
+45102|G|Wholesale and retail of used motor vehicles
+45103|G|Sale of industrial, commercial and agriculture vehicles - new
+45104|G|Sale of industrial, commercial and agriculture vehicles - used
+45105|G|Sale by commission agents
+45106|G|Car auctions
+45109|G|Sale of other motor vehicles n.e.c.
+45201|G|Maintenance and repair of motor vehicles
+45202|G|Spraying and painting
+45203|G|Washing and polishing (car wash)
+45204|G|Repair of motor vehicle seats
+45205|G|Installation of parts and accessories not as part of the manufacturing process
+45300|G|Wholesale and retail sale of all kinds of parts, components, supplies, tools and accessories for motor vehicles
+45401|G|Wholesale and retail sale of motorcycles
+45402|G|Wholesale and retail sale of parts and accessories for motorcycles
+45403|G|Repair and maintenance of motorcycles
+46100|G|Wholesale on a fee or contract basis
+46201|G|Wholesale of rubber
+46202|G|Wholesale of palm oil
+46203|G|Wholesale of lumber and timber
+46204|G|Wholesale of flowers and plants
+46205|G|Wholesale of livestock
+46209|G|Wholesale of agricultural raw material and live animal n.e.c.
+46311|G|Wholesale of meat, poultry and eggs
+46312|G|Wholesale of fish and other seafood
+46313|G|Wholesale of fruits
+46314|G|Wholesale of vegetables
+46319|G|Wholesale of meat, fish, fruits and vegetables n.e.c.
+46321|G|Wholesale of rice, other grains, flour and sugars
+46322|G|Wholesale of dairy products
+46323|G|Wholesale of confectionary
+46324|G|Wholesale of biscuits, cakes, breads and other bakery products
+46325|G|Wholesale of coffee, tea, cocoa and other beverages
+46326|G|Wholesale of beer, wine and spirits
+46327|G|Wholesale of tobacco, cigar, cigarettes
+46329|G|Wholesale of other foodstuffs
+46411|G|Wholesale of yarn and fabrics
+46412|G|Wholesale of household linen, towels, blankets
+46413|G|Wholesale of clothing
+46414|G|Wholesale of clothing accessories
+46415|G|Wholesale of fur articles
+46416|G|Wholesale of footwear
+46417|G|Wholesale of haberdashery
+46419|G|Wholesale of textiles, clothing n.e.c.
+46421|G|Wholesale of pharmaceutical and medical goods
+46422|G|Wholesale of perfumeries, cosmetics, soap and toiletries
+46431|G|Wholesale of bicycles and their parts and accessories
+46432|G|Wholesale of photographic and optical goods
+46433|G|Wholesale of leather goods and travel accessories
+46434|G|Wholesale of musical instruments, games and toys, sports goods
+46441|G|Wholesale of handicrafts and artificial flowers
+46442|G|Wholesale of cut flowers and plants
+46443|G|Wholesale of watches and clocks
+46444|G|Wholesale of jewellery
+46491|G|Wholesale of household furniture
+46492|G|Wholesale of household appliances
+46493|G|Wholesale of lighting equipment
+46494|G|Wholesale of household utensils and cutlery, crockery, glassware, chinaware and pottery
+46495|G|Wholesale of woodenware, wickerwork and corkware
+46496|G|Wholesale of electrical and electronic goods
+46497|G|Wholesale of stationery, books, magazines and newspapers
+46499|G|Wholesale of other household goods n.e.c.
+46510|G|Wholesale of computer hardware, software and peripherals
+46521|G|Wholesale of telephone and telecommunications equipment, cell phones, pagers
+46522|G|Wholesale of electronic components and wiring accessories
+46531|G|Wholesale of agricultural machinery, equipment and supplies
+46532|G|Wholesale of lawn mowers however operated
+46591|G|Wholesale of office machinery and business equipment, except computers and computer peripheral equipment
+46592|G|Wholesale of office furniture
+46593|G|Wholesale of computer-controlled machines tools
+46594|G|Wholesale of industrial machinery, equipment and supplies
+46595|G|Wholesale of construction and civil engineering machinery and equipment
+46596|G|Wholesale of lift escalators, air-conditioning, security and fire fighting equipment
+46599|G|Wholesale of other machinery for use in industry, trade and navigation and other services n.e.c.
+46611|G|Wholesale of petrol, diesel, lubricants
+46612|G|Wholesale of liquefied petroleum gas
+46619|G|Wholesale of other solid, liquid and gaseous fuels and related products n.e.c.
+46621|G|Wholesale of ferrous and non-ferrous metal ores and metals
+46622|G|Wholesale of ferrous and non-ferrous semi-finished metal ores and products n.e.c.
+46631|G|Wholesale of logs, sawn timber, plywood, veneer and related products
+46632|G|Wholesale of paints and varnish
+46633|G|Wholesale of construction materials
+46634|G|Wholesale of fittings and fixtures
+46635|G|Wholesale of hot water heaters
+46636|G|Wholesale of sanitary installation and equipment
+46637|G|Wholesale of tools
+46639|G|Wholesale of other construction materials, hardware, plumbing and heating equipment and supplies n.e.c.
+46691|G|Wholesale of industrial chemicals
+46692|G|Wholesale of fertilizers and agrochemical products
+46693|G|Wholesale of plastic materials in primary forms
+46694|G|Wholesale of rubber scrap
+46695|G|Wholesale of textile fibres
+46696|G|Wholesale of paper in bulk, packaging materials
+46697|G|Wholesale of precious stones
+46698|G|Wholesale of metal and non-metal waste and scrap and materials for recycling
+46699|G|Dismantling of automobiles, computer, televisions and other equipment to obtain and re-sell usable parts
+46901|G|Wholesale of aquarium fishes, pet birds and animals
+46902|G|Wholesale of animal/pet food
+46909|G|Wholesale of a variety of goods without any particular specialization n.e.c.
+47111|G|Provision stores
+47112|G|Supermarket
+47113|G|Mini market
+47114|G|Convenience stores
+47191|G|Department stores
+47192|G|Department stores and supermarket
+47193|G|Hypermarket
+47194|G|News agent and miscellaneous goods store
+47199|G|Other retail sale in non-specialized stores n.e.c.
+47211|G|Retail sale of rice, flour, other grains and sugars
+47212|G|Retail sale of fresh or preserved vegetables and fruits
+47213|G|Retail sale of dairy products and eggs
+47214|G|Retail sale of meat and meat products (including poultry)
+47215|G|Retail sale of fish, other seafood and products thereof
+47216|G|Retail sale of bakery products and sugar confectionery
+47217|G|Retail sale of mee, kuey teow, mee hoon, wantan skins and other food products made from flour or soya
+47219|G|Retail sale of other food products n.e.c.
+47221|G|Retail sale of beer, wine and spirits
+47222|G|Retail sale of tea, coffee, soft drinks, mineral water and other beverages
+47230|G|Retail sale of tobacco products in specialized store
+47300|G|Retail sale of automotive fuel in specialized stores
+47411|G|Retail sale of computers, computer equipment and supplies
+47412|G|Retail sale of video game consoles and non-customized software
+47413|G|Retail sale of telecommunication equipment
+47420|G|Retail sale of audio and video equipment in specialized store
+47510|G|Retail sale of textiles in specialized stores
+47520|G|Retail sale of construction materials, hardware, paints and glass
+47531|G|Retail sale of carpets and rugs
+47532|G|Retail sale of curtains and net curtains
+47533|G|Retail sale of wallpaper and floor coverings
+47591|G|Retail sale of household furniture
+47592|G|Retail sale of articles for lighting
+47593|G|Retail sale of household utensils and cutlery, crockery, glassware, chinaware and pottery
+47594|G|Retail sale of wood, cork goods and wickerwork goods
+47595|G|Retail sale of household appliances
+47596|G|Retail sale of musical instruments and scores
+47597|G|Retail sale of security systems
+47598|G|Retail sale of household articles and equipment n.e.c.
+47611|G|Retail sale of office supplies and equipment
+47612|G|Retail sale of books, newspapers and stationary
+47620|G|Retail sale of musical records, audio tapes, compact discs, cassettes, video tapes, VCDs and DVDs, blank tapes and discs
+47631|G|Retail sale of sports goods and equipments
+47632|G|Retail sale of fishing equipment
+47633|G|Retail sale of camping goods
+47634|G|Retail sale of boats and equipments
+47635|G|Retail sale of bicycles and related parts and accessories
+47640|G|Retail sale of games and toys, made of all materials
+47711|G|Retail sale of articles of clothing, articles of fur and clothing accessories
+47712|G|Retail sale of footwear
+47713|G|Retail sale of leather goods, accessories of leather and leather substitutes
+47721|G|Stores specialized in retail sale of pharmaceuticals, medical and orthopaedic goods
+47722|G|Stores specialized in retail sale of perfumery, cosmetic and toilet articles
+47731|G|Retail sale of photographic and precision equipment
+47732|G|Retail sale of watches and clocks
+47733|G|Retail sale of jewellery
+47734|G|Retail sale of flowers, plants, seeds, fertilizers
+47735|G|Retail sale of souvenirs, craftwork and religious articles
+47736|G|Retail sale of household fuel oil, cooking gas, coal and fuel wood
+47737|G|Retail sale of spectacles and other optical goods
+47738|G|Retail sale of aquarium fishes, pet animals and pet food
+47739|G|Other retail sale of new goods in specialized stores n.e.c.
+47741|G|Retail sale of second-hand books
+47742|G|Retail sale of second-hand electrical and electronic goods
+47743|G|Retail sale of antiques
+47744|G|Activities of auctioning houses (retail)
+47749|G|Retail sale of second-hand goods n.e.c.
+47810|G|Retail sale of food, beverages and tobacco products via stalls or markets
+47820|G|Retail sale of textiles, clothing and footwear via stalls or markets
+47891|G|Retail sale of carpets and rugs via stalls or markets
+47892|G|Retail sale of books via stalls or markets
+47893|G|Retail sale of games and toys via stalls or markets
+47894|G|Retail sale of household appliances and consumer electronics via stall or markets
+47895|G|Retail sale of music and video recordings via stall or markets
+47911|G|Retail sale of any kind of product by mail order
+47912|G|Retail sale of any kind of product over the Internet
+47913|G|Direct sale via television, radio and telephone
+47914|G|Internet retail auctions
+47991|G|Retail sale of any kind of product by direct sales or door-to-door sales persons
+47992|G|Retail sale of any kind of product through vending machines
+47999|G|Other retail sale not in stores, stalls or markets n.e.c.
+49110|H|Passenger transport by inter-urban railways
+49120|H|Freight transport by inter-urban, suburban and urban railways
+49211|H|City bus services
+49212|H|Urban and suburban railway passenger transport service
+49221|H|Express bus services
+49222|H|Employees bus services
+49223|H|School bus services
+49224|H|Taxi operation and limousine services
+49225|H|Rental of cars with driver
+49229|H|Other passenger land transport n.e.c.
+49230|H|Freight transport by road
+49300|H|Transport via pipeline
+50111|H|Operation of excursion, cruise or sightseeing boats
+50112|H|Operation of ferries, water taxis
+50113|H|Rental of pleasure boats with crew for sea and coastal water transport
+50121|H|Transport of freight overseas and coastal waters, whether scheduled or not
+50122|H|Transport by towing or pushing of barges, oil rigs
+50211|H|Transport of passenger via rivers, canals, lakes and other inland waterways
+50212|H|Rental of pleasure boats with crew for inland water transport
+50220|H|Transport of freight via rivers, canals, lakes and other inland waterways
+51101|H|Transport of passengers by air over regular routes and on regular schedules
+51102|H|Non-scheduled transport of passenger by air
+51103|H|Renting of air-transport equipment with operator for the purpose of passenger transportation
+51201|H|Transport freight by air over regular routes and on regular schedules
+51202|H|Non-scheduled transport of freight by air
+51203|H|Renting of air-transport equipment with operator for the purpose of freight transportation
+52100|H|Warehousing and storage services
+52211|H|Operation of terminal facilities
+52212|H|Towing and road side assistance
+52213|H|Operation of parking facilities for motor vehicles (parking lots)
+52214|H|Highway, bridge and tunnel operation services
+52219|H|Other service activities incidental to land transportation n.e.c.
+52221|H|Port, harbours and piers operation services
+52222|H|Vessel salvage and refloating services
+52229|H|Other service activities incidental to water transportation n.e.c.
+52231|H|Operation of terminal facilities
+52232|H|Airport and air-traffic-control activities
+52233|H|Ground service activities on airfields
+52234|H|Fire fighting and fire-prevention services at airports
+52239|H|Other service activities incidental to air transportation n.e.c.
+52241|H|Stevedoring services
+52249|H|Other cargo handling activities n.e.c.
+52291|H|Forwarding of freight
+52292|H|Brokerage for ship and aircraft space
+52299|H|Other transportation support activities n.e.c.
+53100|H|National postal services
+53200|H|Courier activities other than national post activities
+55101|I|Hotels and resort hotels
+55102|I|Motels
+55103|I|Apartment hotels
+55104|I|Chalets
+55105|I|Rest house/guest house
+55106|I|Bed and breakfast units
+55107|I|Hostels
+55108|I|Home stay
+55109|I|Other short term accommodation activities n.e.c.
+55200|I|Camping grounds, recreational vehicle parks and trailer parks
+55900|I|Other accommodation
+56101|I|Restaurants and restaurant cum night clubs
+56102|I|Cafeterias/canteens
+56103|I|Fast-food restaurants
+56104|I|Ice cream truck vendors and parlours
+56105|I|Mobile food carts
+56106|I|Food stalls/hawkers
+56107|I|Food or beverage, food and beverage preparation in market stalls/hawkers
+56210|I|Event/food caterers
+56290|I|Other food service activities
+56301|I|Pubs, bars, discotheques, coffee houses, cocktail lounges and karaoke
+56302|I|Coffee shops
+56303|I|Drink stalls/hawkers
+56304|I|Mobile beverage
+56309|I|Others drinking places n.e.c.
+58110|J|Publishing of books, brochures and other publications
+58120|J|Publishing of mailing lists, telephone book, other directories
+58130|J|Publishing of newspapers, journals, magazines and periodicals in print or electronic form
+58190|J|Publishing of catalogues, photos, engraving and postcards, greeting cards, forms, posters, reproduction of works of art, advertising material and other printed matter n.e.c.
+58201|J|Business and other applications
+58202|J|Computer games for all platforms
+58203|J|Operating systems
+59110|J|Motion picture, video and television programme production activities
+59120|J|Motion picture, video and television programme post-production activities
+59130|J|Motion picture, video and television programme distribution activities
+59140|J|Motion picture projection activities
+59200|J|Sound recording and music publishing activities
+60100|J|Radio broadcasting
+60200|J|Television programming and broadcasting activities
+61101|J|Wired telecommunications services
+61102|J|Internet access providers by the operator of the wired infrastructure
+61201|J|Wireless telecommunications services
+61202|J|Internet access providers by the operator of the wireless infrastructure
+61300|J|Satellite telecommunications services
+61901|J|Provision of Internet access over networks between the client and the ISP not owned or controlled by the ISP
+61902|J|Provision of telecommunications services over existing telecom connection
+61903|J|Telecommunications resellers
+61904|J|Provision of telecommunications services over existing telecom connections VOIP (Voice Over Internet Protocol) provision
+61905|J|Provision of specialized telecommunications applications
+61909|J|Other telecommunications activities n.e.c.
+62010|J|Computer programming activities
+62021|J|Computer consultancy
+62022|J|Computer facilities management activities
+62091|J|Information Communication Technology (ICT) system security
+62099|J|Other information technology service activities n.e.c.
+63111|J|Activities of providing infrastructure for hosting, data processing services and related activities
+63112|J|Data processing activities
+63120|J|Web portals
+63910|J|News syndicate and news agency activities
+63990|J|Other information service activities n.e.c.
+64110|K|Central banking
+64191|K|Commercial Banks
+64192|K|Islamic Banks
+64193|K|Offshore Banks
+64194|K|Investment Banks
+64195|K|Development financial institutions (with deposit taking functions)
+64199|K|Other monetary intermediation (with deposit taking functions) n.e.c.
+64200|K|Activities of holding companies
+64301|K|Venture capital companies
+64302|K|Unit trust fund excludes REITs
+64303|K|Property unit trust (REITs)
+64304|K|Other administration of trusts accounts
+64309|K|Trusts, funds and similar financial entities n.e.c.
+64910|K|Financial leasing activities
+64921|K|Development financial institutions (without deposit taking functions)
+64922|K|Credit card services
+64923|K|Licensed money lending activities
+64924|K|Pawnshops and pawnbrokers includes Ar-Rahnu
+64925|K|Co-operative with credits functions
+64929|K|Other credit granting n.e.c.
+64991|K|Factoring companies
+64992|K|Representative office of foreign banks
+64993|K|Nominee companies
+64999|K|Other financial service activities, except insurance/takaful and pension funding n.e.c.
+65111|K|Life insurance
+65112|K|Family takaful
+65121|K|General insurance
+65122|K|General takaful
+65123|K|Composite insurance
+65124|K|Offshore insurance
+65125|K|Offshore takaful
+65201|K|Life reinsurance
+65202|K|Family retakaful
+65203|K|General reinsurance
+65204|K|General retakaful
+65205|K|Composite retakaful
+65206|K|Offshore reinsurance
+65207|K|Offshore retakaful
+65301|K|Pension funding
+65302|K|Provident funding
+66111|K|Stock exchanges
+66112|K|Exchanges for commodity contracts
+66113|K|Securities exchange
+66114|K|Exchanges for commodity futures contracts
+66119|K|Administration of financial markets n.e.c.
+66121|K|Stock, share and bond brokers
+66122|K|Commodity brokers and dealers
+66123|K|Gold bullion dealers
+66124|K|Foreign exchange broker and dealers (Bureaux de change)
+66125|K|Money-changing services
+66129|K|Other financial and commodity futures brokers and dealers
+66191|K|Investment advisory services
+66192|K|Financial consultancy services
+66199|K|Activities auxiliary to finance n.e.c.
+66211|K|Insurance adjusting service
+66212|K|Takaful adjusting service
+66221|K|Insurance agents
+66222|K|Takaful agents
+66223|K|Insurance brokers
+66224|K|Takaful brokers
+66290|K|Other activities auxiliary to insurance, takaful and pension funding
+66301|K|Management of pension funds
+66302|K|Assets/portfolio management
+66303|K|Unit trust management companies
+68101|L|Buying, selling, renting and operating of self-owned or leased real estate - residential buildings
+68102|L|Buying, selling, renting and operating of self-owned or leased real estate - non-residential buildings
+68103|L|Buying, selling, renting and operating of self-owned or leased real estate - land
+68104|L|Development of building projects for own operation, i.e. for renting of space in these buildings
+68109|L|Real estate activities with own or leased property n.e.c.
+68201|L|Activities of real estate agents and brokers for buying, selling and renting of real estate
+68202|L|Management of real estate on a fee or contract basis
+68203|L|Appraisal services for real estate
+68209|L|Real estate activities on a fee or contract basis n.e.c.
+69100|M|Legal activities
+69200|M|Accounting, bookkeeping and auditing activities; tax consultancy
+70100|M|Activities of head offices
+70201|M|Business management consultancy services
+70202|M|Human resource consultancy services
+70203|M|Consultancy services in public relation and communications
+70209|M|Other management consultancy activities n.e.c
+71101|M|Architectural services
+71102|M|Engineering services
+71103|M|Land surveying services
+71109|M|Other architectural and engineering activities and related technical consultancy n.e.c.
+71200|M|Technical testing and analysis
+72101|M|Research and development on natural sciences
+72102|M|Research and development on engineering and technology
+72103|M|Research and development on medical sciences
+72104|M|Research and development on biotechnology
+72105|M|Research and development on agricultural sciences
+72106|M|Research and development on Information Communication Technology (ICT)
+72109|M|Research and development on other natural science and engineering n.e.c.
+72201|M|Research and development on social sciences
+72202|M|Research and development on humanities
+72209|M|Research and development of other social sciences and humanities n.e.c.
+73100|M|Advertising
+73200|M|Market research and public opinion polling
+74101|M|Activities of interior decorators
+74102|M|Services of graphic designers
+74103|M|Fashion design services
+74109|M|Specialized design activities n.e.c.
+74200|M|Photographic activities
+74901|M|Translation and interpretation activities
+74902|M|Business brokerage activities
+74903|M|Security consulting
+74904|M|Activities of quantity surveyors
+74905|M|Activities of consultants other than architecture, engineering and management consultants
+74909|M|Any other professional, scientific and technical activities n.e.c.
+75000|M|VETERINARY ACTIVITIES
+77101|N|Renting and operational leasing of passenger cars (without driver)
+77102|N|Renting and operational leasing of trucks, utility trailers and recreational vehicles
+77211|N|Renting and leasing of pleasure boats, canoes, sailboats
+77212|N|Renting and leasing of bicycles
+77213|N|Renting and leasing of beach chairs and umbrellas
+77219|N|Renting and leasing of other sports equipment n.e.c.
+77220|N|Renting of video tapes, records, CDs, DVDs
+77291|N|Renting and leasing of textiles, wearing apparel and footwear
+77292|N|Renting and leasing of furniture, pottery and glass, kitchen and tableware, electrical appliances and house wares
+77293|N|Renting and leasing of jewellery, musical instruments, scenery and costumes
+77294|N|Renting and leasing of books, journals and magazines
+77295|N|Renting and leasing of machinery and equipment used by amateurs or as a hobby
+77296|N|Renting of flowers and plants
+77297|N|Renting and leasing of electronic equipment for household use
+77299|N|Renting and leasing of other personal and household goods n.e.c.
+77301|N|Renting and operational leasing, without operator, of other machinery and equipment that are generally used as capital goods by industries
+77302|N|Renting and operational leasing of land-transport equipment (other than motor vehicles) without drivers
+77303|N|Renting and operational leasing of water-transport equipment without operator
+77304|N|Renting and operational leasing of air transport equipment without operator
+77305|N|Renting and operational leasing of agricultural and forestry machinery and equipment without operator
+77306|N|Renting and operational leasing of construction and civil-engineering machinery and equipment without operator
+77307|N|Rental and operational leasing of office machinery and equipment without operator
+77309|N|Renting and leasing of other machinery, equipment and tangible goods n.e.c.
+77400|N|Leasing of intellectual property and similar products, except copyrighted works
+78100|N|Activities of employment placement agencies
+78200|N|Temporary employment agency activities
+78300|N|Provision of human resources for client businesses
+79110|N|Travel agency activities
+79120|N|Tour operator activities
+79900|N|Other reservation service and related activities
+80100|N|Private security activities
+80200|N|Security systems service activities
+80300|N|Investigation and detective activities
+81100|N|Combined facilities support activities
+81210|N|General cleaning of buildings
+81291|N|Cleaning of buildings of all types
+81292|N|Swimming pool cleaning and maintenance services
+81293|N|Cleaning of industrial machinery
+81294|N|Cleaning of trains, buses, planes
+81295|N|Cleaning of pest control services not in connection with agriculture
+81296|N|Disinfecting and exterminating activities
+81297|N|Cleaning of sea tankers
+81299|N|Other building and industrial cleaning activities, n.e.c.
+81300|N|Landscape care and maintenance service activities
+82110|N|Combined office administrative service activities
+82191|N|Document preparation, editing and/or proofreading
+82192|N|Typing, word processing or desktop publishing
+82193|N|Secretarial support services
+82194|N|Transcription of documents and other secretarial services
+82195|N|Provision of mailbox rental and other postal and mailing services
+82196|N|Photocopying, duplicating, blueprinting
+82199|N|Photocopying, document preparation and other specialized office support activities n.e.c.
+82200|N|Activities of call centres
+82301|N|Organization, promotions and/or management of event
+82302|N|Meeting, incentive, convention, exhibition (MICE)
+82910|N|Activities of collection agencies and credit bureaus
+82920|N|Packaging activities on a fee or contract basis, whether or not these involve an automated process
+82990|N|Other business support service activities n.e.c.
+84111|O|General (overall) public administration activities
+84112|O|Ancillary service activities for the government as a whole
+84121|O|Administrative educational services
+84122|O|Administrative health care services
+84123|O|Administrative housing and local government services
+84124|O|Administrative recreational, cultural, arts and sports services
+84125|O|Administrative religious affairs services
+84126|O|Administrative welfare services
+84129|O|Other community and social affairs services
+84131|O|Domestic and international trade affairs
+84132|O|Agriculture and rural development affairs
+84133|O|Primary industries affairs
+84134|O|Public works affairs
+84135|O|Transport affairs
+84136|O|Energy, telecommunication and postal affairs
+84137|O|Tourism affairs
+84138|O|Human resource affairs
+84139|O|Other regulation of and contribution to more efficient operation of businesses n.e.c.
+84210|O|Foreign affairs
+84220|O|Military and civil defence services
+84231|O|Police service
+84232|O|Prison service
+84233|O|Immigration service
+84234|O|National registration service
+84235|O|Judiciary and legal service
+84236|O|Firefighting and fire prevention
+84239|O|Other public order and safety affairs related services
+84300|O|Compulsory social security activities e.g. SOCSO
+85101|P|Pre-primary education (Public)
+85102|P|Pre-primary education (Private)
+85103|P|Primary education (Public)
+85104|P|Primary education (Private)
+85211|P|General school secondary education (Public)
+85212|P|General school secondary education (Private)
+85221|P|Technical and vocational education below the level of higher education (Public)
+85222|P|Technical and vocational education below the level of higher education (Private)
+85301|P|College and university education (Public)
+85302|P|College and university education (Private)
+85411|P|Sports instruction
+85412|P|Martial arts instruction
+85419|P|Any other sports and recreation education n.e.c
+85421|P|Music and dancing school
+85429|P|Any other cultural education n.e.c.
+85491|P|Tuition centre
+85492|P|Driving school
+85493|P|Religious instruction
+85494|P|Computer training
+85499|P|Others education n.e.c
+85500|P|Educational support services for provision of non-instructional services
+86101|Q|Hospital activities
+86102|Q|Maternity home services (outside hospital)
+86201|Q|General medical services
+86202|Q|Specialized medical services
+86203|Q|Dental services
+86901|Q|Dialysis Centres
+86902|Q|Medical laboratories
+86903|Q|Physiotherapy and occupational therapy service
+86904|Q|Acupuncture services
+86905|Q|Herbalist and homeopathy services
+86906|Q|Ambulance services
+86909|Q|Other human health services n.e.c.
+87101|Q|Homes for the elderly with nursing care
+87102|Q|Nursing homes
+87103|Q|Palliative or hospices
+87201|Q|Drug rehabilitation centres
+87209|Q|Other residential care activities for mental retardation n.e.c.
+87300|Q|Residential care activities for the elderly and disabled
+87901|Q|Orphanages
+87902|Q|Welfare homes services
+87909|Q|Other residential care activities n.e.c.
+88101|Q|Day-care activities for the elderly or for handicapped adults
+88109|Q|Others social work activities without accommodation for the elderly and disabled
+88901|Q|Counselling service
+88902|Q|Child day-care activities
+88909|Q|Other social work activities without accommodation n.e.c.
+90001|R|Theatrical producer, singer group band and orchestra entertainment services
+90002|R|Operation of concert and theatre halls and other arts facilities
+90003|R|Activities of sculptors, painters, cartoonists, engravers, etchers
+90004|R|Activities of individual writers, for all subjects
+90005|R|Activities of independent journalists
+90006|R|Restoring of works of art such as painting
+90007|R|Activities of producers or entrepreneurs of arts live events, with or without facilities
+90009|R|Creative, arts and entertainment activities n.e.c.
+91011|R|Documentation and information activities of libraries of all kinds
+91012|R|Stock photo libraries and services
+91021|R|Operation of museums of all kinds
+91022|R|Operation of historical sites and buildings
+91031|R|Operation of botanical and zoological gardens
+91032|R|Operation of nature reserves, including wildlife preservation
+92000|R|GAMBLING AND BETTING ACTIVITIES
+93111|R|Football, hockey, cricket, baseball, badminton, futsal, paintball
+93112|R|Racetracks for auto
+93113|R|Equestrian clubs
+93114|R|Swimming pools and stadiums, ice-skating arenas
+93115|R|Track and field stadium
+93116|R|Golf courses
+93117|R|Bowling centre
+93118|R|Fitness centres
+93119|R|Organization and operation of outdoor or indoor sports events for professionals or amateurs by organizations with own facilities
+93120|R|The operation of sports clubs such as football club, bowling club, swimming club
+93191|R|Activities of producers or promoters of sports events, with or without facilities
+93192|R|Activities of sports leagues and regulating bodies
+93193|R|Activities of related to promotion of sporting events
+93199|R|Other sports activities n.e.c.
+93210|R|Activities of amusement parks and theme parks
+93291|R|Activities of recreation parks and beaches
+93292|R|Operation of recreational transport facilities
+93293|R|Renting of leisure and pleasure equipment as an integral part of recreational facilities
+93294|R|Operation of fairs and shows of a recreational nature
+93295|R|Operation of discotheques and dance floors
+93296|R|Activities of producers or entrepreneurs of live events other than arts or sports events, with or without facilities
+93297|R|Cyber Cafe/Internet Centre
+93299|R|Any other amusement and recreation activities n.e.c.
+94110|S|Activities of business and employers membership organizations
+94120|S|Activities of professional membership organizations
+94200|S|Activities of trade unions
+94910|S|Activities of religious organizations
+94920|S|Activities of political organizations
+94990|S|Activities of other membership organizations n.e.c.
+95111|S|Repair of electronic equipment
+95112|S|Repair and maintenance of computer terminals
+95113|S|Repair and maintenance of hand-held computers (PDA's)
+95121|S|Repair and maintenance of cordless telephones
+95122|S|Repair and maintenance of cellular phones
+95123|S|Repair and maintenance of carrier equipment modems
+95124|S|Repair and maintenance of fax machines
+95125|S|Repair and maintenance of communications transmission equipment
+95126|S|Repair and maintenance of two-way radios
+95127|S|Repair and maintenance of commercial TV and video cameras
+95211|S|Repair and maintenance of television, radio receivers
+95212|S|Repair and maintenance of VCR/DVD/VCD
+95213|S|Repair and maintenance of CD players
+95214|S|Repair and maintenance of household-type video cameras
+95221|S|Repair and servicing of household appliances
+95222|S|Repair and servicing of home and garden equipment
+95230|S|Repair of footwear and leather goods
+95240|S|Repair of furniture and home furnishings
+95291|S|Repair of bicycles
+95292|S|Repair and alteration of clothing
+95293|S|Repair and alteration of jewellery
+95294|S|Repair of watches, clocks and their parts
+95295|S|Repair of sporting goods
+95296|S|Repair of musical instruments
+95299|S|Repair of other personal and household goods n.e.c.
+96011|S|Laundering and dry-cleaning, pressing
+96012|S|Carpet and rug shampooing, and drapery and curtain cleaning, whether on clients' premises or not
+96013|S|Provision of linens, work uniforms and related items by laundries
+96014|S|Diaper supply services
+96020|S|Hairdressing and other beauty treatment
+96031|S|Preparing the dead for burial or cremation and embalming and morticians' services
+96032|S|Providing burial or cremation services
+96033|S|Rental of equipped space in funeral parlours
+96034|S|Rental or sale of graves
+96035|S|Maintenance of graves and mausoleums
+96091|S|Activities of sauna, steam baths, massage salons
+96092|S|Astrological and spiritualists' activities
+96093|S|Social activities such as escort services, dating services, services of marriage bureaux
+96094|S|Pet care services
+96095|S|Genealogical organizations
+96096|S|Shoe shiners, porters, valet car parkers
+96097|S|Concession operation of coin-operated personal service machines
+96099|S|Other service activities n.e.c.
+97000|T|Activities of households as employers of domestic personnel
+98100|T|Undifferentiated goods-producing activities of private households for own use
+98200|T|Undifferentiated service-producing activities of private households for own use
+99000|U|Activities of extraterritorial organization and bodies

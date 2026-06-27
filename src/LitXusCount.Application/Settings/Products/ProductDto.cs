@@ -8,7 +8,7 @@ public record ProductDto(
     long? CategoryId,
     string? CategoryName,
     string? Description,
-    
+
     long? SalesCogsAccountId,
     string? SalesCogsAccountName,
     long? SalesRevenueAccountId,
@@ -17,9 +17,11 @@ public record ProductDto(
     string? PurchaseCostAccountName,
     long? PurchaseAccountId,
     string? PurchaseAccountName,
-    
+
     string? SalesTaxCode,
     string? PurchaseTaxCode,
+    string? DefaultLhdnClassificationCode,
+    string? DefaultLhdnTaxTypeCode,
     long? DefaultSupplierId,
     string? DefaultSupplierName,
     long? MainUnitOfMeasureId,
@@ -61,6 +63,8 @@ public record ProductUpsertDto(
     long? PurchaseAccountId,
     string? SalesTaxCode,
     string? PurchaseTaxCode,
+    string? DefaultLhdnClassificationCode,
+    string? DefaultLhdnTaxTypeCode,
     long? DefaultSupplierId,
     long? MainUnitOfMeasureId,
     long? AltUnitOfMeasureId,

@@ -54,6 +54,8 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
         invoice.PurchaseOrderNumber = request.PurchaseOrderNumber?.Trim();
         invoice.Notes = request.Notes?.Trim();
         invoice.CurrencyId = request.CurrencyId;
+        if (!string.IsNullOrWhiteSpace(request.InvoiceTypeCode))
+            invoice.InvoiceTypeCode = request.InvoiceTypeCode.Trim();
         invoice.ModifiedAt = DateTime.UtcNow;
         await db.SaveChangesAsync(ct);
 
@@ -186,9 +188,6 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
 
     private async Task<int> NextNumberAsync(SalesInvoiceCategory category, CancellationToken ct)
     {
-        // Pessimistic lock via raw SQL FOR UPDATE to prevent duplicate numbers
-        // under concurrent requests. The InvoiceSequences row is the single
-        // source of truth per category; created on first use.
         var seq = await db.InvoiceSequences
             .FromSqlRaw(
                 "SELECT * FROM \"InvoiceSequences\" WHERE \"Category\" = {0} FOR UPDATE",
@@ -197,7 +196,7 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
 
         if (seq is null)
         {
-            seq = new Domain.Entities.InvoiceSequence { Category = category, LastNumber = 0 };
+            seq = new Domain.Entities.InvoiceSequence { Category = (int)category, LastNumber = 0 };
             db.InvoiceSequences.Add(seq);
         }
 
@@ -209,5 +208,6 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
         new(x.Id, x.CustomerId, x.Customer?.Name ?? string.Empty, x.Category, x.InvoiceNo,
             x.SubTotal, x.DiscountAmount, x.VATAmount, x.GrandTotal,
             x.PaidAmount, x.DueAmount, x.PaymentStatus,
-            x.PurchaseOrderNumber, x.Notes, x.CurrencyId, x.IsActive, x.CreatedAt);
+            x.PurchaseOrderNumber, x.Notes, x.CurrencyId, x.IsActive, x.CreatedAt,
+            x.InvoiceTypeCode);
 }

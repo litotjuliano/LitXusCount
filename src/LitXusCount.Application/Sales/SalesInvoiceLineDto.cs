@@ -13,7 +13,10 @@ public record SalesInvoiceLineDto(
     decimal ItemDiscountAmount,
     decimal TotalAmount,
     bool IsReturn,
-    bool IsActive
+    bool IsActive,
+    string? ClassificationCode,
+    string? TaxTypeCode,
+    string? UnitCode
 );
 
 public record SalesInvoiceLineCreateDto(
@@ -22,5 +25,7 @@ public record SalesInvoiceLineCreateDto(
     decimal Quantity,
     decimal UnitPrice,
     decimal ItemVAT,
-    decimal ItemDiscount
+    decimal ItemDiscount,
+    string? ClassificationCode = null,
+    string? TaxTypeCode = null
 );

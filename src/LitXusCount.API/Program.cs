@@ -116,7 +116,8 @@ using (var migrationScope = app.Services.CreateScope())
         await masterDb.SaveChangesAsync();
     }
 
-    // Run ApplicationDbContext migrations for all active tenant databases
+    // Run migrations + reference data seeding for all active tenant databases
+    var seedLogger = migrationScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     var tenants = await masterDb.Tenants.Where(t => t.IsActive).ToListAsync();
     foreach (var tenant in tenants)
     {
@@ -125,6 +126,8 @@ using (var migrationScope = app.Services.CreateScope())
             .Options;
         await using var tenantDb = new ApplicationDbContext(options);
         await tenantDb.Database.MigrateAsync();
+        try { await SystemSettingsSeeder.SeedReferenceDataAsync(tenantDb); }
+        catch (Exception ex) { seedLogger.LogError(ex, "Reference data seeder failed for tenant {Slug}", tenant.Slug); }
     }
 }
 
@@ -230,7 +233,7 @@ if (seedDemoData)
             .Options;
         await using var tenantDb = new ApplicationDbContext(tenantOptions);
         var encryptor = scope.ServiceProvider.GetRequiredService<IEmailConfigEncryptor>();
-        await SystemSettingsSeeder.SeedAsync(tenantDb, encryptor);
+        await SystemSettingsSeeder.SeedDemoDataAsync(tenantDb, encryptor);
     }
 }
 

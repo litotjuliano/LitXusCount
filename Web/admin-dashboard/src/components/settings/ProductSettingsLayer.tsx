@@ -1,10 +1,13 @@
 import { useState, type FormEvent } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Modal } from "react-bootstrap";
 import { useProductSettings } from "../../hook/useProductSettings";
 import { usePermissions } from "../../hook/usePermissions";
 import { Permissions } from "../../api/permissions";
 import type { ProductItem } from "../../api/settings/products";
+import { lhdnClassificationCodesApi } from "../../api/settings/lhdnClassificationCodes";
+import { lhdnTaxTypesApi } from "../../api/settings/lhdnTaxTypes";
 import { extractErrorMessage } from "./extractErrorMessage";
 import PaginatedTable from "./PaginatedTable";
 
@@ -14,6 +17,7 @@ interface FormState {
   salesCogsAccountId: number | ""; salesRevenueAccountId: number | "";
   purchaseCostAccountId: number | ""; purchaseAccountId: number | "";
   salesTaxCode: string; purchaseTaxCode: string;
+  defaultLhdnClassificationCode: string; defaultLhdnTaxTypeCode: string;
   defaultSupplierId: number | ""; mainUnitOfMeasureId: number | ""; altUnitOfMeasureId: number | "";
   conversionFactor: number; shelfLifeDays: number;
   unitCostPrice: number; unitSellingPrice: number;
@@ -27,7 +31,8 @@ interface FormState {
 const emptyForm: FormState = {
   code: "", code2: "", parentProductCode: "", categoryId: "", description: "",
   salesCogsAccountId: "", salesRevenueAccountId: "", purchaseCostAccountId: "", purchaseAccountId: "",
-  salesTaxCode: "", purchaseTaxCode: "", defaultSupplierId: "", mainUnitOfMeasureId: "", altUnitOfMeasureId: "",
+  salesTaxCode: "", purchaseTaxCode: "", defaultLhdnClassificationCode: "", defaultLhdnTaxTypeCode: "",
+  defaultSupplierId: "", mainUnitOfMeasureId: "", altUnitOfMeasureId: "",
   conversionFactor: 1, shelfLifeDays: 0,
   unitCostPrice: 0, unitSellingPrice: 0, unitSellingPrice2: 0, minSalesQty2: 0, unitSellingPrice3: 0, minSalesQty3: 0,
   promoCode: "", promoFromDate: "", promoToDate: "",
@@ -37,6 +42,8 @@ const emptyForm: FormState = {
 
 const ProductSettingsLayer = () => {
   const { pagedQuery, glAccountsQuery, suppliersQuery, categoriesQuery, uomQuery, createMutation, editMutation, deleteMutation } = useProductSettings();
+  const classificationCodesQuery = useQuery({ queryKey: ["settings", "lhdn-classification-codes", "all-active"], queryFn: lhdnClassificationCodesApi.listAllActive });
+  const taxTypesQuery = useQuery({ queryKey: ["settings", "lhdn-tax-types", "all-active"], queryFn: lhdnTaxTypesApi.listAllActive });
   const { hasPermission } = usePermissions();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -51,6 +58,8 @@ const ProductSettingsLayer = () => {
   const suppliers = suppliersQuery.data ?? [];
   const categories = categoriesQuery.data ?? [];
   const uoms = uomQuery.data ?? [];
+  const classificationCodes = classificationCodesQuery.data ?? [];
+  const taxTypes = taxTypesQuery.data ?? [];
 
   const n = (v: string) => v || null;
   const ni = (v: number | "") => v === "" ? null : Number(v);
@@ -67,6 +76,8 @@ const ProductSettingsLayer = () => {
       salesCogsAccountId: item.salesCogsAccountId ?? "", salesRevenueAccountId: item.salesRevenueAccountId ?? "",
       purchaseCostAccountId: item.purchaseCostAccountId ?? "", purchaseAccountId: item.purchaseAccountId ?? "",
       salesTaxCode: item.salesTaxCode ?? "", purchaseTaxCode: item.purchaseTaxCode ?? "",
+      defaultLhdnClassificationCode: item.defaultLhdnClassificationCode ?? "",
+      defaultLhdnTaxTypeCode: item.defaultLhdnTaxTypeCode ?? "",
       defaultSupplierId: item.defaultSupplierId ?? "", mainUnitOfMeasureId: item.mainUnitOfMeasureId ?? "", altUnitOfMeasureId: item.altUnitOfMeasureId ?? "",
       conversionFactor: item.conversionFactor, shelfLifeDays: item.shelfLifeDays,
       unitCostPrice: item.unitCostPrice, unitSellingPrice: item.unitSellingPrice,
@@ -88,6 +99,8 @@ const ProductSettingsLayer = () => {
     salesCogsAccountId: ni(form.salesCogsAccountId), salesRevenueAccountId: ni(form.salesRevenueAccountId),
     purchaseCostAccountId: ni(form.purchaseCostAccountId), purchaseAccountId: ni(form.purchaseAccountId),
     salesTaxCode: n(form.salesTaxCode), purchaseTaxCode: n(form.purchaseTaxCode),
+    defaultLhdnClassificationCode: n(form.defaultLhdnClassificationCode),
+    defaultLhdnTaxTypeCode: n(form.defaultLhdnTaxTypeCode),
     defaultSupplierId: ni(form.defaultSupplierId), mainUnitOfMeasureId: ni(form.mainUnitOfMeasureId), altUnitOfMeasureId: ni(form.altUnitOfMeasureId),
     conversionFactor: form.conversionFactor, shelfLifeDays: form.shelfLifeDays,
     unitCostPrice: form.unitCostPrice, unitSellingPrice: form.unitSellingPrice,
@@ -171,6 +184,22 @@ const ProductSettingsLayer = () => {
               </div>
               <div className='col-md-2'><label className='form-label'>Conv. Factor</label><input type='number' className='form-control' step='0.0001' value={form.conversionFactor} onChange={(e) => f("conversionFactor", parseFloat(e.target.value) || 1)} /></div>
               <div className='col-md-2'><label className='form-label'>Shelf Life (days)</label><input type='number' className='form-control' value={form.shelfLifeDays} onChange={(e) => f("shelfLifeDays", parseInt(e.target.value) || 0)} /></div>
+
+              <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>LHDN Defaults (MyInvois)</p></div>
+              <div className='col-md-6'>
+                <label className='form-label'>Classification Code</label>
+                <select className='form-select' value={form.defaultLhdnClassificationCode} onChange={(e) => f("defaultLhdnClassificationCode", e.target.value)}>
+                  <option value=''>— None —</option>
+                  {classificationCodes.map(c => <option key={c.id} value={c.code}>{c.code} — {c.description}</option>)}
+                </select>
+              </div>
+              <div className='col-md-6'>
+                <label className='form-label'>Tax Type</label>
+                <select className='form-select' value={form.defaultLhdnTaxTypeCode} onChange={(e) => f("defaultLhdnTaxTypeCode", e.target.value)}>
+                  <option value=''>— None —</option>
+                  {taxTypes.map(t => <option key={t.id} value={t.code}>{t.code} — {t.description}</option>)}
+                </select>
+              </div>
 
               <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>Pricing</p></div>
               <div className='col-md-4'><label className='form-label'>Cost Price</label><input type='number' className='form-control' step='0.0001' value={form.unitCostPrice} onChange={(e) => f("unitCostPrice", parseFloat(e.target.value) || 0)} /></div>

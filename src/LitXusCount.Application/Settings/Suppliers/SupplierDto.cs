@@ -21,7 +21,11 @@ public record SupplierDto(
     int PaymentTermsDays,
     long? DefaultCurrencyId,
     string? DefaultCurrencyCode,
-    bool IsActive);
+    bool IsActive,
+    string? Tin,
+    string? RegistrationType,
+    string? RegistrationNumber,
+    string? SSTRegistrationNumber);
 
 public record SupplierUpsertDto(
     string Code,
@@ -39,4 +43,8 @@ public record SupplierUpsertDto(
     string? Email,
     string? ContactPerson,
     int PaymentTermsDays,
-    long? DefaultCurrencyId);
+    long? DefaultCurrencyId,
+    string? Tin,
+    string? RegistrationType,
+    string? RegistrationNumber,
+    string? SSTRegistrationNumber);

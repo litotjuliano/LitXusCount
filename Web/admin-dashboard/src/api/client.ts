@@ -10,6 +10,10 @@ apiClient.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  const activeTenantId = authStorage.getActiveTenantId();
+  if (activeTenantId) {
+    config.headers['X-Tenant-Id'] = activeTenantId;
+  }
   return config;
 });
 

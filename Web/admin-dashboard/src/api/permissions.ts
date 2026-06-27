@@ -32,11 +32,8 @@ export const Permissions = {
       Edit: "Settings.EmailConfig.Edit",
       Delete: "Settings.EmailConfig.Delete",
     },
-    PaymentType: {
-      View: "Settings.PaymentType.View",
-      Create: "Settings.PaymentType.Create",
-      Edit: "Settings.PaymentType.Edit",
-      Delete: "Settings.PaymentType.Delete",
+    PaymentCode: {
+      View: "Settings.PaymentCode.View",
     },
     PaymentStatus: {
       View: "Settings.PaymentStatus.View",
@@ -58,9 +55,6 @@ export const Permissions = {
     },
     UnitOfMeasure: {
       View: "Settings.UnitOfMeasure.View",
-      Create: "Settings.UnitOfMeasure.Create",
-      Edit: "Settings.UnitOfMeasure.Edit",
-      Delete: "Settings.UnitOfMeasure.Delete",
     },
     GlAccount: {
       View: "Settings.GlAccount.View",
@@ -85,6 +79,27 @@ export const Permissions = {
       Create: "Settings.Product.Create",
       Edit: "Settings.Product.Edit",
       Delete: "Settings.Product.Delete",
+    },
+    LhdnClassificationCode: {
+      View: "Settings.LhdnClassificationCode.View",
+    },
+    LhdnCountry: {
+      View: "Settings.LhdnCountry.View",
+    },
+    LhdnStateCode: {
+      View: "Settings.LhdnStateCode.View",
+    },
+    LhdnTaxType: {
+      View: "Settings.LhdnTaxType.View",
+    },
+    LhdnMsicCode: {
+      View: "Settings.LhdnMsicCode.View",
+    },
+    LhdnCurrencyCode: {
+      View: "Settings.LhdnCurrencyCode.View",
+    },
+    LhdnEInvoiceType: {
+      View: "Settings.LhdnEInvoiceType.View",
     },
   },
   Accounts: {

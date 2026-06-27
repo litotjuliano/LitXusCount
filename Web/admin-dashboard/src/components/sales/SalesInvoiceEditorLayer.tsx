@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSalesInvoiceDetail, useSalesInvoices } from "../../hook/useSalesInvoices";
 import { useSalesInvoiceLines } from "../../hook/useSalesInvoiceLines";
 import { useSalesPayments } from "../../hook/useSalesPayments";
@@ -10,6 +10,8 @@ import { productsApi } from "../../api/settings/products";
 import { accountsApi } from "../../api/accounts/accounts";
 import { extractErrorMessage } from "../settings/extractErrorMessage";
 import type { SalesInvoiceCategory } from "../../api/sales/salesInvoices";
+import { LHDN_EINVOICE_TYPES } from "../../api/settings/lhdnEInvoiceTypes";
+import { paymentCodesApi } from "../../api/settings/paymentCodes";
 
 const CATEGORY_LABELS: Record<number, string> = { 1: "Regular", 2: "Draft", 3: "Quote", 4: "Manual" };
 const STATUS_LABELS: Record<number, string> = { 0: "Unpaid", 1: "Partial", 2: "Paid" };
@@ -30,20 +32,22 @@ interface PaymentFormState {
 }
 
 const emptyLine: LineFormState = { productId: "", quantity: "", unitPrice: "", itemVAT: "0", itemDiscount: "0" };
-const emptyPayment: PaymentFormState = { accAccountId: "", modeOfPayment: "Cash", amount: "", referenceNo: "" };
+const emptyPayment: PaymentFormState = { accAccountId: "", modeOfPayment: "", amount: "", referenceNo: "" };
 
 const SalesInvoiceEditorLayer = () => {
   const { id } = useParams<{ id: string }>();
   const invoiceId = Number(id);
+  const navigate = useNavigate();
   const { hasPermission } = usePermissions();
 
   const { data: invoice, isLoading } = useSalesInvoiceDetail(invoiceId);
-  const { promoteMutation } = useSalesInvoices();
+  const { promoteMutation, updateMutation } = useSalesInvoices();
   const { linesQuery, addMutation: addLineMutation, removeMutation: removeLineMutation } = useSalesInvoiceLines(invoiceId);
   const { paymentsQuery, recordMutation, deleteMutation: deletePaymentMutation } = useSalesPayments(invoiceId);
 
   const productsQuery = useQuery({ queryKey: ["settings", "products", "all-active"], queryFn: productsApi.listAllActive });
   const accountsQuery = useQuery({ queryKey: ["accounts", "all-active"], queryFn: accountsApi.listAllActive });
+  const paymentCodesQuery = useQuery({ queryKey: ["settings", "payment-codes", "all-active"], queryFn: paymentCodesApi.listAllActive });
 
   const canEdit = hasPermission(Permissions.Sales.Invoice.Edit);
   const canManage = hasPermission(Permissions.Sales.Invoice.Manage);
@@ -53,6 +57,11 @@ const SalesInvoiceEditorLayer = () => {
   const [lineError, setLineError] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [promoteError, setPromoteError] = useState<string | null>(null);
+  const [typeCode, setTypeCode] = useState<string>("01");
+
+  useEffect(() => {
+    if (invoice?.invoiceTypeCode) setTypeCode(invoice.invoiceTypeCode);
+  }, [invoice?.invoiceTypeCode]);
 
   const products = productsQuery.data ?? [];
   const accounts = accountsQuery.data ?? [];
@@ -115,6 +124,25 @@ const SalesInvoiceEditorLayer = () => {
     }
   };
 
+  const handleTypeCodeChange = async (code: string) => {
+    if (!invoice) return;
+    setTypeCode(code);
+    try {
+      await updateMutation.mutateAsync({
+        id: invoiceId,
+        dto: {
+          customerId: invoice.customerId,
+          currencyId: invoice.currencyId,
+          notes: invoice.notes ?? null,
+          invoiceTypeCode: code,
+        },
+      });
+    } catch {
+      // revert on failure
+      setTypeCode(invoice.invoiceTypeCode ?? "01");
+    }
+  };
+
   if (isLoading) return <div className='card p-24'><div className='spinner-border' /></div>;
   if (!invoice) return <div className='card p-24 text-danger'>Invoice not found.</div>;
 
@@ -130,12 +158,38 @@ const SalesInvoiceEditorLayer = () => {
             </div>
             <span className='badge bg-info bg-opacity-25 text-info'>{CATEGORY_LABELS[invoice.category]}</span>
             <span className='badge bg-secondary-focus text-secondary-600'>{STATUS_LABELS[invoice.paymentStatus]}</span>
-            <div className='ms-auto text-end'>
-              <div className='text-muted small'>Grand Total</div>
-              <div className='fs-5 fw-bold'>{invoice.grandTotal.toFixed(2)}</div>
-              {invoice.dueAmount > 0 && (
-                <div className='text-danger small'>Due: {invoice.dueAmount.toFixed(2)}</div>
-              )}
+            {canEdit ? (
+              <select
+                className='form-select form-select-sm'
+                style={{ width: 'auto' }}
+                value={typeCode}
+                onChange={e => handleTypeCodeChange(e.target.value)}
+                disabled={updateMutation.isPending}
+              >
+                {LHDN_EINVOICE_TYPES.map(t => (
+                  <option key={t.code} value={t.code}>{t.code} — {t.description}</option>
+                ))}
+              </select>
+            ) : (
+              <span className='badge bg-light text-dark fw-semibold'>
+                {typeCode} — {LHDN_EINVOICE_TYPES.find(t => t.code === typeCode)?.description ?? typeCode}
+              </span>
+            )}
+            <div className='ms-auto text-end d-flex flex-column align-items-end gap-1'>
+              <div>
+                <div className='text-muted small'>Grand Total</div>
+                <div className='fs-5 fw-bold'>{invoice.grandTotal.toFixed(2)}</div>
+                {invoice.dueAmount > 0 && (
+                  <div className='text-danger small'>Due: {invoice.dueAmount.toFixed(2)}</div>
+                )}
+              </div>
+              <button
+                type='button'
+                className='btn btn-sm btn-outline-secondary'
+                onClick={() => navigate(`/sales/invoices/${invoiceId}/view`)}
+              >
+                View / Print
+              </button>
             </div>
           </div>
 
@@ -205,14 +259,15 @@ const SalesInvoiceEditorLayer = () => {
                 <th className='text-end'>Disc%</th>
                 <th className='text-end'>VAT%</th>
                 <th className='text-end'>Total</th>
+                <th>LHDN</th>
                 {canEdit && <th />}
               </tr>
             </thead>
             <tbody>
               {linesQuery.isLoading ? (
-                <tr><td colSpan={7} className='text-center'><span className='spinner-border spinner-border-sm' /></td></tr>
+                <tr><td colSpan={8} className='text-center'><span className='spinner-border spinner-border-sm' /></td></tr>
               ) : lines.length === 0 ? (
-                <tr><td colSpan={7} className='text-center text-muted'>No lines yet.</td></tr>
+                <tr><td colSpan={8} className='text-center text-muted'>No lines yet.</td></tr>
               ) : lines.map(line => (
                 <tr key={line.id}>
                   <td>{line.itemName}</td>
@@ -221,6 +276,13 @@ const SalesInvoiceEditorLayer = () => {
                   <td className='text-end'>{line.itemDiscount}%</td>
                   <td className='text-end'>{line.itemVat}%</td>
                   <td className='text-end'>{line.totalAmount.toFixed(2)}</td>
+                  <td>
+                    <div className='d-flex flex-wrap gap-1'>
+                      {line.classificationCode && <span className='badge bg-info bg-opacity-15 text-info border border-info border-opacity-25' style={{fontSize:10}}>{line.classificationCode}</span>}
+                      {line.taxTypeCode && <span className='badge bg-success bg-opacity-15 text-success border border-success border-opacity-25' style={{fontSize:10}}>{line.taxTypeCode}</span>}
+                      {line.unitCode && <span className='badge bg-secondary bg-opacity-15 text-secondary border border-secondary border-opacity-25' style={{fontSize:10}}>{line.unitCode}</span>}
+                    </div>
+                  </td>
                   {canEdit && (
                     <td>
                       <button type='button' className='btn btn-sm btn-outline-danger text-danger'
@@ -237,6 +299,7 @@ const SalesInvoiceEditorLayer = () => {
                 <tr className='fw-bold'>
                   <td colSpan={5} className='text-end'>Grand Total</td>
                   <td className='text-end'>{invoice.grandTotal.toFixed(2)}</td>
+                  <td />
                   {canEdit && <td />}
                 </tr>
               </tfoot>
@@ -264,8 +327,9 @@ const SalesInvoiceEditorLayer = () => {
                 <div className='col-md-2'>
                   <select className='form-select form-select-sm' value={paymentForm.modeOfPayment}
                     onChange={e => setPaymentForm(f => ({ ...f, modeOfPayment: e.target.value }))}>
-                    {["Cash", "Bank", "POS", "Mobile-Banking", "Credit Card", "Debit Card"].map(m => (
-                      <option key={m} value={m}>{m}</option>
+                    <option value=''>— Select —</option>
+                    {(paymentCodesQuery.data ?? []).map(m => (
+                      <option key={m.code} value={m.code}>{m.code} — {m.name}</option>
                     ))}
                   </select>
                 </div>

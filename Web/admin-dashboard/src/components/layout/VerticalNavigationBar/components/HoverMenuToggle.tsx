@@ -8,7 +8,7 @@ const HoverMenuToggle = () => {
   const { width } = useViewPort()
 
   useEffect(() => {
-    if (width <= 1140 && size !== 'hidden') changeMenuSize('hidden')
+    if (width <= 767 && size !== 'hidden') changeMenuSize('hidden')
   }, [width])
 
   const handleHoverMenu = () => {

@@ -45,7 +45,8 @@ public static class DependencyInjection
     {
         // ── Master Database (Identity + Tenant registry) ──────────────────────
         services.AddDbContext<MasterDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+                   .ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)));
 
         // ── Tenant Connection Cache (singleton — used to invalidate cached CS) ──
         services.AddMemoryCache();
@@ -110,7 +111,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrencyService, CurrencyService>();
         services.AddScoped<IVatPercentageService, VatPercentageService>();
         services.AddScoped<IEmailConfigService, EmailConfigService>();
-        services.AddScoped<IPaymentTypeService, PaymentTypeService>();
+        services.AddScoped<IPaymentCodeService, PaymentCodeService>();
         services.AddScoped<IPaymentStatusService, PaymentStatusService>();
         services.AddScoped<ICustomerTypeService, CustomerTypeService>();
         services.AddScoped<ICategoryService, CategoryService>();

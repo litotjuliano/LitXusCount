@@ -24,7 +24,7 @@ public class MasterDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Tenant>(entity =>
         {
             entity.Property(x => x.Name).HasMaxLength(256).IsRequired();
-            entity.Property(x => x.Slug).HasMaxLength(64).IsRequired();
+            entity.Property(x => x.Slug).HasMaxLength(50).IsRequired();
             entity.Property(x => x.ConnectionString).IsRequired();
             entity.HasIndex(x => x.Slug).IsUnique();
         });

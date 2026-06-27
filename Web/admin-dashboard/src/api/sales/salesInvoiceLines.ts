@@ -14,6 +14,9 @@ export interface SalesInvoiceLineItem {
   totalAmount: number
   isReturn: boolean
   isActive: boolean
+  classificationCode: string | null
+  taxTypeCode: string | null
+  unitCode: string | null
 }
 
 export interface SalesInvoiceLineCreateDto {
@@ -23,6 +26,8 @@ export interface SalesInvoiceLineCreateDto {
   unitPrice: number
   itemVAT: number
   itemDiscount: number
+  classificationCode?: string | null
+  taxTypeCode?: string | null
 }
 
 export const salesInvoiceLinesApi = {

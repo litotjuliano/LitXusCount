@@ -22,7 +22,12 @@ public class Supplier : AuditableEntity
     public string? ContactPerson { get; set; }
     
     public int PaymentTermsDays { get; set; }
-    
+
     public long? DefaultCurrencyId { get; set; }
     public Currency? DefaultCurrency { get; set; }
+
+    public string? TIN { get; set; }
+    public string? RegistrationType { get; set; }
+    public string? RegistrationNumber { get; set; }
+    public string? SSTRegistrationNumber { get; set; }
 }

@@ -66,7 +66,11 @@ internal sealed class SupplierService(ApplicationDbContext db) : ISupplierServic
                 x.PaymentTermsDays,
                 x.DefaultCurrencyId,
                 x.DefaultCurrency != null ? x.DefaultCurrency.Code : null,
-                x.IsActive))
+                x.IsActive,
+                x.TIN,
+                x.RegistrationType,
+                x.RegistrationNumber,
+                x.SSTRegistrationNumber))
             .ToListAsync(ct);
 
         return new PagedResult<SupplierDto>(items, totalCount, query.EffectivePage, query.EffectivePageSize);
@@ -100,7 +104,11 @@ internal sealed class SupplierService(ApplicationDbContext db) : ISupplierServic
                 x.PaymentTermsDays,
                 x.DefaultCurrencyId,
                 x.DefaultCurrency != null ? x.DefaultCurrency.Code : null,
-                x.IsActive))
+                x.IsActive,
+                x.TIN,
+                x.RegistrationType,
+                x.RegistrationNumber,
+                x.SSTRegistrationNumber))
             .ToListAsync(ct);
 
     public async Task<SupplierDto?> GetAsync(long id, CancellationToken ct = default)
@@ -153,6 +161,10 @@ internal sealed class SupplierService(ApplicationDbContext db) : ISupplierServic
             ContactPerson = request.ContactPerson,
             PaymentTermsDays = request.PaymentTermsDays,
             DefaultCurrencyId = request.DefaultCurrencyId,
+            TIN = request.Tin,
+            RegistrationType = request.RegistrationType,
+            RegistrationNumber = request.RegistrationNumber,
+            SSTRegistrationNumber = request.SSTRegistrationNumber,
             IsActive = true,
             CreatedAt = DateTime.UtcNow,
         };
@@ -215,6 +227,10 @@ internal sealed class SupplierService(ApplicationDbContext db) : ISupplierServic
         entity.PaymentTermsDays = request.PaymentTermsDays;
         entity.DefaultCurrencyId = request.DefaultCurrencyId;
         entity.DefaultCurrency = currency;
+        entity.TIN = request.Tin;
+        entity.RegistrationType = request.RegistrationType;
+        entity.RegistrationNumber = request.RegistrationNumber;
+        entity.SSTRegistrationNumber = request.SSTRegistrationNumber;
         entity.ModifiedAt = DateTime.UtcNow;
 
         await db.SaveChangesAsync(ct);
@@ -264,5 +280,9 @@ internal sealed class SupplierService(ApplicationDbContext db) : ISupplierServic
             x.PaymentTermsDays,
             x.DefaultCurrencyId,
             x.DefaultCurrency != null ? x.DefaultCurrency.Code : null,
-            x.IsActive);
+            x.IsActive,
+            x.TIN,
+            x.RegistrationType,
+            x.RegistrationNumber,
+            x.SSTRegistrationNumber);
 }

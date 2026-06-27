@@ -4,7 +4,7 @@ using LitXusCount.Infrastructure.Persistence;
 
 namespace LitXusCount.Infrastructure.Settings.Lookups;
 
-internal sealed class PaymentTypeService(ApplicationDbContext db) : LookupServiceBase<PaymentType>(db), IPaymentTypeService;
+internal sealed class PaymentCodeService(ApplicationDbContext db) : LookupServiceBase<PaymentCode>(db), IPaymentCodeService;
 
 internal sealed class PaymentStatusService(ApplicationDbContext db) : LookupServiceBase<PaymentStatus>(db), IPaymentStatusService;
 

@@ -15,10 +15,10 @@ interface FormState {
   adminPassword: string;
 }
 
-const emptyForm: FormState = { name: "", slug: "", contactEmail: "", notes: "", adminEmail: "", adminPassword: "" };
+const emptyForm: FormState = { name: "", slug: "", contactEmail: "", notes: "", adminEmail: "", adminPassword: "Admin@123" };
 
 const slugify = (value: string) =>
-  value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").substring(0, 50).replace(/-$/, "");
 
 const TenantManagementLayer = () => {
   const { pagedQuery, createMutation, editMutation, toggleActiveMutation } = useTenants();
@@ -29,6 +29,12 @@ const TenantManagementLayer = () => {
 
   const isSaving = createMutation.isPending || editMutation.isPending;
   const n = (v: string) => v.trim() || null;
+
+  const errorLower = error?.toLowerCase() ?? "";
+  const slugError    = errorLower.includes("slug") ? error : null;
+  const passwordError = errorLower.includes("password") ? error : null;
+  const emailError   = (errorLower.includes("email") || errorLower.includes("user")) && !slugError && !passwordError ? error : null;
+  const generalError = !slugError && !passwordError && !emailError ? error : null;
 
   const openAdd = () => {
     setForm(emptyForm);
@@ -89,13 +95,18 @@ const TenantManagementLayer = () => {
               <div className='col-md-6'>
                 <label className='form-label'>Slug <span className='text-danger'>*</span></label>
                 <input
-                  type='text' className='form-control font-monospace'
+                  type='text' className={`form-control font-monospace${slugError ? " is-invalid" : ""}`}
                   value={form.slug}
                   onChange={(e) => setForm((p) => ({ ...p, slug: slugify(e.target.value) }))}
-                  pattern="[a-z0-9\-]+"
+                  pattern="[a-z0-9][a-z0-9\-]*[a-z0-9]"
+                  maxLength={50}
                   required
                 />
-                <div className='form-text'>Lowercase, hyphens only. Used as DB name: <code>litxuscount_{form.slug || "..."}</code></div>
+                <div className='form-text d-flex justify-content-between'>
+                  <span>DB: <code>litxuscount_{form.slug.replace(/-/g, '_') || "..."}</code></span>
+                  <span className={form.slug.length > 45 ? "text-warning" : "text-muted"}>{50 - form.slug.length} chars left</span>
+                </div>
+                {slugError && <div className='invalid-feedback d-block'>{slugError}</div>}
               </div>
               <div className='col-12'>
                 <label className='form-label'>Contact Email</label>
@@ -111,12 +122,14 @@ const TenantManagementLayer = () => {
                   <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>Initial Admin Account</p></div>
                   <div className='col-md-6'>
                     <label className='form-label'>Admin Email</label>
-                    <input type='email' className='form-control' value={form.adminEmail} onChange={(e) => setForm((p) => ({ ...p, adminEmail: e.target.value }))} placeholder='admin@company.com' />
+                    <input type='email' className={`form-control${emailError ? " is-invalid" : ""}`} value={form.adminEmail} onChange={(e) => setForm((p) => ({ ...p, adminEmail: e.target.value }))} placeholder='admin@company.com' />
                     <div className='form-text'>Leave blank to set up later.</div>
+                    {emailError && <div className='invalid-feedback d-block'>{emailError}</div>}
                   </div>
                   <div className='col-md-6'>
                     <label className='form-label'>Admin Password</label>
-                    <input type='password' className='form-control' value={form.adminPassword} onChange={(e) => setForm((p) => ({ ...p, adminPassword: e.target.value }))} />
+                    <input type='password' className={`form-control${passwordError ? " is-invalid" : ""}`} value={form.adminPassword} onChange={(e) => setForm((p) => ({ ...p, adminPassword: e.target.value }))} />
+                    {passwordError && <div className='invalid-feedback d-block'>{passwordError}</div>}
                   </div>
                 </>
               ) : (
@@ -124,17 +137,19 @@ const TenantManagementLayer = () => {
                   <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>Reset Admin Password</p></div>
                   <div className='col-md-6'>
                     <label className='form-label'>Admin Email</label>
-                    <input type='email' className='form-control' value={form.adminEmail} onChange={(e) => setForm((p) => ({ ...p, adminEmail: e.target.value }))} placeholder='admin@company.com' />
+                    <input type='email' className={`form-control${emailError ? " is-invalid" : ""}`} value={form.adminEmail} onChange={(e) => setForm((p) => ({ ...p, adminEmail: e.target.value }))} placeholder='admin@company.com' />
+                    {emailError && <div className='invalid-feedback d-block'>{emailError}</div>}
                   </div>
                   <div className='col-md-6'>
                     <label className='form-label'>New Password</label>
-                    <input type='password' className='form-control' value={form.adminPassword} onChange={(e) => setForm((p) => ({ ...p, adminPassword: e.target.value }))} />
+                    <input type='password' className={`form-control${passwordError ? " is-invalid" : ""}`} value={form.adminPassword} onChange={(e) => setForm((p) => ({ ...p, adminPassword: e.target.value }))} />
                     <div className='form-text'>Leave blank to keep current password.</div>
+                    {passwordError && <div className='invalid-feedback d-block'>{passwordError}</div>}
                   </div>
                 </>
               )}
             </div>
-            {error && <div className='text-danger small mt-3'>{error}</div>}
+            {generalError && <div className='alert alert-danger py-2 small mt-3' style={{ whiteSpace: 'pre-line' }}>{generalError}</div>}
           </Modal.Body>
           <Modal.Footer>
             <button type='button' className='btn btn-outline-secondary' onClick={closeModal}>Cancel</button>

@@ -14,6 +14,7 @@ interface FormState {
   city: string; state: string; country: string;
   phone: string; fax: string; email: string; contactPerson: string;
   paymentTermsDays: number; defaultCurrencyId: number | "";
+  tin: string; registrationType: string; registrationNumber: string; sSTRegistrationNumber: string;
 }
 
 const emptyForm: FormState = {
@@ -22,6 +23,7 @@ const emptyForm: FormState = {
   city: "", state: "", country: "",
   phone: "", fax: "", email: "", contactPerson: "",
   paymentTermsDays: 0, defaultCurrencyId: "",
+  tin: "", registrationType: "", registrationNumber: "", sSTRegistrationNumber: "",
 };
 
 const SupplierSettingsLayer = () => {
@@ -51,6 +53,8 @@ const SupplierSettingsLayer = () => {
       addressCode: item.addressCode ?? "", city: item.city ?? "", state: item.state ?? "", country: item.country ?? "",
       phone: item.phone ?? "", fax: item.fax ?? "", email: item.email ?? "", contactPerson: item.contactPerson ?? "",
       paymentTermsDays: item.paymentTermsDays, defaultCurrencyId: item.defaultCurrencyId ?? "",
+      tin: item.tin ?? "", registrationType: item.registrationType ?? "",
+      registrationNumber: item.registrationNumber ?? "", sSTRegistrationNumber: item.sSTRegistrationNumber ?? "",
     });
     setError(null);
     setShowModal(true);
@@ -65,6 +69,8 @@ const SupplierSettingsLayer = () => {
     phone: n(form.phone), fax: n(form.fax), email: n(form.email), contactPerson: n(form.contactPerson),
     paymentTermsDays: form.paymentTermsDays,
     defaultCurrencyId: form.defaultCurrencyId === "" ? null : Number(form.defaultCurrencyId),
+    tin: n(form.tin), registrationType: n(form.registrationType),
+    registrationNumber: n(form.registrationNumber), sSTRegistrationNumber: n(form.sSTRegistrationNumber),
   });
 
   const handleSubmit = (e: FormEvent) => {
@@ -115,6 +121,22 @@ const SupplierSettingsLayer = () => {
               <div className='col-md-4'><label className='form-label'>Email</label><input type='email' className='form-control' value={form.email} onChange={(e) => f("email", e.target.value)} /></div>
               <div className='col-md-4'><label className='form-label'>Contact Person</label><input type='text' className='form-control' value={form.contactPerson} onChange={(e) => f("contactPerson", e.target.value)} /></div>
               <div className='col-md-4'><label className='form-label'>Payment Terms (days)</label><input type='number' className='form-control' value={form.paymentTermsDays} onChange={(e) => setForm({ ...form, paymentTermsDays: parseInt(e.target.value) || 0 })} /></div>
+
+              <div className='col-12'><p className='small text-muted fw-semibold mb-0 border-bottom pb-1'>LHDN / Tax Identity</p></div>
+              <div className='col-md-4'><label className='form-label'>TIN (Tax Identification Number)</label><input type='text' className='form-control' placeholder='e.g. C12345678900' value={form.tin} onChange={(e) => f("tin", e.target.value)} /></div>
+              <div className='col-md-3'>
+                <label className='form-label'>Registration Type</label>
+                <select className='form-select' value={form.registrationType} onChange={(e) => f("registrationType", e.target.value)}>
+                  <option value=''>— Select —</option>
+                  <option value='BRN'>BRN — Business Reg.</option>
+                  <option value='NRIC'>NRIC — MyKad / IC</option>
+                  <option value='PASSPORT'>PASSPORT</option>
+                  <option value='ARMY'>ARMY — Police/Army IC</option>
+                  <option value='TIN'>TIN</option>
+                </select>
+              </div>
+              <div className='col-md-3'><label className='form-label'>Registration Number</label><input type='text' className='form-control' placeholder='e.g. 202301012345' value={form.registrationNumber} onChange={(e) => f("registrationNumber", e.target.value)} /></div>
+              <div className='col-md-4'><label className='form-label'>SST Registration Number</label><input type='text' className='form-control' placeholder='e.g. W10-1234-12345678' value={form.sSTRegistrationNumber} onChange={(e) => f("sSTRegistrationNumber", e.target.value)} /></div>
             </div>
             {error && <div className='text-danger small mt-3'>{error}</div>}
           </form>
