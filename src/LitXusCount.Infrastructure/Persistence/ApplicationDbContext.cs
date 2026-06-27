@@ -27,6 +27,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<Product> Products => Set<Product>();
 
+    public DbSet<TaxCode> TaxCodes => Set<TaxCode>();
+    public DbSet<EInvoiceSubmission> EInvoiceSubmissions => Set<EInvoiceSubmission>();
+    public DbSet<EInvoiceValidationError> EInvoiceValidationErrors => Set<EInvoiceValidationError>();
+    public DbSet<TenantReportTemplate> TenantReportTemplates => Set<TenantReportTemplate>();
+    public DbSet<InvoiceSequence> InvoiceSequences => Set<InvoiceSequence>();
     public DbSet<SalesInvoice> SalesInvoices => Set<SalesInvoice>();
     public DbSet<SalesInvoiceLine> SalesInvoiceLines => Set<SalesInvoiceLine>();
     public DbSet<SalesPaymentRecord> SalesPaymentRecords => Set<SalesPaymentRecord>();
@@ -52,6 +57,7 @@ public class ApplicationDbContext : DbContext
         builder.Entity<VatPercentage>(entity =>
         {
             entity.Property(x => x.Name).IsRequired();
+            entity.Property(x => x.Percentage).HasPrecision(8, 4);
         });
 
         builder.Entity<PaymentType>(entity =>
@@ -144,10 +150,51 @@ public class ApplicationDbContext : DbContext
             entity.HasOne(x => x.AltUnitOfMeasure).WithMany().HasForeignKey(x => x.AltUnitOfMeasureId).OnDelete(DeleteBehavior.Restrict);
         });
 
+        // ── E-Invoice audit trail ─────────────────────────────────────────────
+        builder.Entity<EInvoiceSubmission>(entity =>
+        {
+            entity.HasOne(x => x.SalesInvoice).WithMany().HasForeignKey(x => x.SalesInvoiceId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasIndex(x => x.SalesInvoiceId);
+        });
+
+        builder.Entity<EInvoiceValidationError>(entity =>
+        {
+            entity.Property(x => x.ErrorCode).HasMaxLength(64).IsRequired();
+            entity.Property(x => x.ErrorMessage).HasMaxLength(512).IsRequired();
+            entity.Property(x => x.PropertyPath).HasMaxLength(512);
+            entity.HasOne(x => x.EInvoiceSubmission).WithMany(x => x.ValidationErrors)
+                .HasForeignKey(x => x.EInvoiceSubmissionId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // ── TaxCode (LHDN tax type codes 01–07, tenant-scoped) ───────────────
+        builder.Entity<TaxCode>(entity =>
+        {
+            entity.Property(x => x.Code).HasMaxLength(2).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            entity.Property(x => x.Rate).HasPrecision(8, 4);
+            entity.HasIndex(x => x.Code).IsUnique().HasFilter("\"IsActive\" = true");
+        });
+
+        // ── Tenant report template overrides ─────────────────────────────────
+        builder.Entity<TenantReportTemplate>(entity =>
+        {
+            entity.Property(x => x.DocumentType).HasMaxLength(64).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            entity.HasIndex(x => new { x.DocumentType, x.IsDefault })
+                .HasFilter("\"IsDefault\" = true AND \"IsActive\" = true");
+        });
+
+        // ── Invoice sequences (serialised number generation per category) ────
+        builder.Entity<InvoiceSequence>(entity =>
+        {
+            entity.HasKey(x => x.Category);
+        });
+
         // ── Sales ────────────────────────────────────────────────────────────
         builder.Entity<SalesInvoice>(entity =>
         {
             entity.Property(x => x.InvoiceNo).HasMaxLength(64).IsRequired();
+            entity.HasIndex(x => x.InvoiceNo).IsUnique().HasFilter("\"IsActive\" = true");
             entity.Property(x => x.SubTotal).HasPrecision(18, 4);
             entity.Property(x => x.DiscountAmount).HasPrecision(18, 4);
             entity.Property(x => x.VATAmount).HasPrecision(18, 4);

@@ -54,9 +54,9 @@ public class SalesInvoicesController(ISalesInvoiceService salesInvoiceService) :
 
     [HttpPatch("{id:long}/promote")]
     [Authorize(Policy = Permissions.Sales.Invoice.Manage)]
-    public async Task<IActionResult> Promote(long id, [FromQuery] SalesInvoiceCategory targetCategory, CancellationToken ct)
+    public async Task<IActionResult> Promote(long id, [FromBody] SalesInvoicePromoteDto dto, CancellationToken ct)
     {
-        var result = await salesInvoiceService.PromoteAsync(id, targetCategory, ct);
+        var result = await salesInvoiceService.PromoteAsync(id, dto.TargetCategory, ct);
         return result.Succeeded ? Ok(result.Value) : BadRequest(result.Error);
     }
 

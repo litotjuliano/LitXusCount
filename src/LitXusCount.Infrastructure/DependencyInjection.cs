@@ -67,7 +67,14 @@ public static class DependencyInjection
             if (tenantCtx.ConnectionString is { } cs)
                 optionsBuilder.UseNpgsql(cs);
             else
-                optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+                // No tenant resolved — do not fall back to the master DB.
+                // Controllers will receive a 400/403 before hitting the DB;
+                // if somehow a service is called without a tenant context it
+                // will fail fast here rather than silently querying wrong data.
+                throw new InvalidOperationException(
+                    "No tenant connection string is available for this request. " +
+                    "Ensure the request carries a valid JWT with a tenant_id claim " +
+                    "and that the tenant is active.");
 
             return new ApplicationDbContext(optionsBuilder.Options);
         });

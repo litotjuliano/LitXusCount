@@ -70,6 +70,9 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
         if (invoice is null)
             return ServiceResult<SalesInvoiceDto>.Failure("Invoice not found.");
 
+        if (invoice.Category != SalesInvoiceCategory.Draft)
+            return ServiceResult<SalesInvoiceDto>.Failure("Only Draft invoices can be promoted.");
+
         var nextNum = await NextNumberAsync(targetCategory, ct);
         var prefix = targetCategory switch
         {
@@ -81,6 +84,17 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
 
         invoice.Category = targetCategory;
         invoice.InvoiceNo = $"{prefix}-{nextNum}";
+        invoice.InvoiceIssueDate = DateOnly.FromDateTime(DateTime.UtcNow);
+        invoice.InvoiceIssueTime = TimeOnly.FromDateTime(DateTime.UtcNow);
+
+        // Snapshot buyer details so e-invoice can always be reconstructed
+        invoice.BuyerName = invoice.Customer.Name;
+        invoice.BuyerTIN = invoice.Customer.TIN;
+        invoice.BuyerRegistrationType = invoice.Customer.RegistrationType;
+        invoice.BuyerAddress = string.Join(", ",
+            new[] { invoice.Customer.Address1, invoice.Customer.City, invoice.Customer.State, invoice.Customer.Country }
+            .Where(s => !string.IsNullOrWhiteSpace(s)));
+
         invoice.ModifiedAt = DateTime.UtcNow;
         await db.SaveChangesAsync(ct);
 
@@ -116,7 +130,7 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
     public async Task<SalesInvoiceDto?> GetByIdAsync(long id, CancellationToken ct = default)
     {
         var entity = await db.SalesInvoices.Include(x => x.Customer)
-            .FirstOrDefaultAsync(x => x.Id == id, ct);
+            .FirstOrDefaultAsync(x => x.Id == id && x.IsActive, ct);
         return entity is null ? null : ToDto(entity);
     }
 
@@ -172,26 +186,23 @@ internal sealed class SalesInvoiceService(ApplicationDbContext db) : ISalesInvoi
 
     private async Task<int> NextNumberAsync(SalesInvoiceCategory category, CancellationToken ct)
     {
-        var prefix = category switch
+        // Pessimistic lock via raw SQL FOR UPDATE to prevent duplicate numbers
+        // under concurrent requests. The InvoiceSequences row is the single
+        // source of truth per category; created on first use.
+        var seq = await db.InvoiceSequences
+            .FromSqlRaw(
+                "SELECT * FROM \"InvoiceSequences\" WHERE \"Category\" = {0} FOR UPDATE",
+                (int)category)
+            .FirstOrDefaultAsync(ct);
+
+        if (seq is null)
         {
-            SalesInvoiceCategory.Draft   => "D-",
-            SalesInvoiceCategory.Regular => "INV-",
-            SalesInvoiceCategory.Quote   => "QT-",
-            SalesInvoiceCategory.Manual  => "M-",
-            _                            => "INV-",
-        };
+            seq = new Domain.Entities.InvoiceSequence { Category = category, LastNumber = 0 };
+            db.InvoiceSequences.Add(seq);
+        }
 
-        var max = await db.SalesInvoices
-            .Where(x => x.InvoiceNo.StartsWith(prefix))
-            .Select(x => x.InvoiceNo)
-            .ToListAsync(ct);
-
-        var maxNum = max
-            .Select(n => int.TryParse(n[prefix.Length..], out var v) ? v : 0)
-            .DefaultIfEmpty(0)
-            .Max();
-
-        return maxNum + 1;
+        seq.LastNumber++;
+        return seq.LastNumber;
     }
 
     private static SalesInvoiceDto ToDto(SalesInvoice x) =>

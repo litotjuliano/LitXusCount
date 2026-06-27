@@ -3,6 +3,7 @@ using System;
 using LitXusCount.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LitXusCount.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260627012915_BugFixes_InvoiceSequence_InvoiceNoIndex_VatDecimal")]
+    partial class BugFixes_InvoiceSequence_InvoiceNoIndex_VatDecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -348,12 +351,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Property<string>("LogoUrl")
                         .HasColumnType("text");
 
-                    b.Property<string>("MSICCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MSICDescription")
-                        .HasColumnType("text");
-
                     b.Property<string>("Mobile")
                         .HasColumnType("text");
 
@@ -361,15 +358,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MyInvoisClientId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MyInvoisClientSecret")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MyInvoisEnvironment")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -383,15 +371,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("QuoteNumberPrefix")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RegistrationType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SSTRegistrationNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TIN")
                         .HasColumnType("text");
 
                     b.Property<string>("TermsAndConditions")
@@ -590,19 +569,7 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Property<string>("Phone2")
                         .HasColumnType("text");
 
-                    b.Property<string>("RegistrationNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RegistrationType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SSTRegistrationNumber")
-                        .HasColumnType("text");
-
                     b.Property<string>("State")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TIN")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -653,80 +620,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasFilter("\"IsActive\" = true");
 
                     b.ToTable("CustomerTypes");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.EInvoiceSubmission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("RawResponseJson")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("RespondedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ResponseLongId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResponseStatus")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResponseUUID")
-                        .HasColumnType("text");
-
-                    b.Property<long>("SalesInvoiceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("SubmissionUid")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SalesInvoiceId");
-
-                    b.ToTable("EInvoiceSubmissions");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.EInvoiceValidationError", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("EInvoiceSubmissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ErrorCode")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<string>("ErrorMessage")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.Property<string>("PropertyPath")
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.Property<string>("Target")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EInvoiceSubmissionId");
-
-                    b.ToTable("EInvoiceValidationErrors");
                 });
 
             modelBuilder.Entity("LitXusCount.Domain.Entities.EmailConfig", b =>
@@ -1112,9 +1005,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("text");
 
-                    b.Property<string>("OriginalEInvoiceUUID")
-                        .HasColumnType("text");
-
                     b.Property<long>("SalesInvoiceId")
                         .HasColumnType("bigint");
 
@@ -1135,24 +1025,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateOnly?>("BillingPeriodEnd")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("BillingPeriodStart")
-                        .HasColumnType("date");
-
-                    b.Property<string>("BuyerAddress")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BuyerName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BuyerRegistrationType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BuyerTIN")
-                        .HasColumnType("text");
 
                     b.Property<int>("Category")
                         .HasColumnType("integer");
@@ -1177,53 +1049,16 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
 
-                    b.Property<DateTime?>("EInvoiceDateTimeSubmitted")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("EInvoiceDateTimeValidated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("EInvoiceLongId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("EInvoiceStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EInvoiceSubmissionUid")
-                        .HasColumnType("text");
-
-                    b.Property<string>("EInvoiceUUID")
-                        .HasColumnType("text");
-
-                    b.Property<decimal?>("FxRate")
-                        .HasColumnType("numeric");
-
                     b.Property<decimal>("GrandTotal")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
-
-                    b.Property<decimal?>("GrandTotalMyr")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateOnly?>("InvoiceIssueDate")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly?>("InvoiceIssueTime")
-                        .HasColumnType("time without time zone");
 
                     b.Property<string>("InvoiceNo")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("InvoiceTypeCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsConsolidated")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("ModifiedAt")
@@ -1233,9 +1068,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OriginalInvoiceUUID")
                         .HasColumnType("text");
 
                     b.Property<decimal>("PaidAmount")
@@ -1280,9 +1112,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ClassificationCode")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1333,21 +1162,9 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Property<long>("SalesInvoiceId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal?>("TaxExemptionAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("TaxExemptionReason")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TaxTypeCode")
-                        .HasColumnType("text");
-
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
-
-                    b.Property<string>("UnitCode")
-                        .HasColumnType("text");
 
                     b.Property<decimal>("UnitPrice")
                         .HasPrecision(18, 4)
@@ -1499,109 +1316,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.HasIndex("GlAccountId");
 
                     b.ToTable("Suppliers");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.TaxCode", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("character varying(2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsExempt")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<decimal>("Rate")
-                        .HasPrecision(8, 4)
-                        .HasColumnType("numeric(8,4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique()
-                        .HasFilter("\"IsActive\" = true");
-
-                    b.ToTable("TaxCodes");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.TenantReportTemplate", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("BodyHtml")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DocumentType")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentType", "IsDefault")
-                        .HasFilter("\"IsDefault\" = true AND \"IsActive\" = true");
-
-                    b.ToTable("TenantReportTemplates");
                 });
 
             modelBuilder.Entity("LitXusCount.Domain.Entities.UnitOfMeasure", b =>
@@ -1769,28 +1483,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Navigation("GlAccount");
                 });
 
-            modelBuilder.Entity("LitXusCount.Domain.Entities.EInvoiceSubmission", b =>
-                {
-                    b.HasOne("LitXusCount.Domain.Entities.SalesInvoice", "SalesInvoice")
-                        .WithMany()
-                        .HasForeignKey("SalesInvoiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("SalesInvoice");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.EInvoiceValidationError", b =>
-                {
-                    b.HasOne("LitXusCount.Domain.Entities.EInvoiceSubmission", "EInvoiceSubmission")
-                        .WithMany("ValidationErrors")
-                        .HasForeignKey("EInvoiceSubmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EInvoiceSubmission");
-                });
-
             modelBuilder.Entity("LitXusCount.Domain.Entities.GlAccount", b =>
                 {
                     b.HasOne("LitXusCount.Domain.Entities.GlAccount", "Parent")
@@ -1943,11 +1635,6 @@ namespace LitXusCount.Infrastructure.Persistence.Migrations
                     b.Navigation("DefaultCurrency");
 
                     b.Navigation("GlAccount");
-                });
-
-            modelBuilder.Entity("LitXusCount.Domain.Entities.EInvoiceSubmission", b =>
-                {
-                    b.Navigation("ValidationErrors");
                 });
 
             modelBuilder.Entity("LitXusCount.Domain.Entities.SalesInvoice", b =>

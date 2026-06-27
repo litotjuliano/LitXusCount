@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Text;
 using LitXusCount.Application.Auth;
 using LitXusCount.Application.Authorization;
+using LitXusCount.API.Middleware;
 using LitXusCount.Application.Settings.EmailConfigs;
 using LitXusCount.Domain.Entities;
 using LitXusCount.Infrastructure;
@@ -86,6 +87,7 @@ app.UseStaticFiles();
 app.UseCors(FrontendCorsPolicy);
 
 app.UseAuthentication();
+app.UseMiddleware<TenantGuardMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

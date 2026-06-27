@@ -12,6 +12,7 @@ internal sealed class TenantContext : ITenantContext
     public long? CurrentTenantId { get; }
     public bool IsSuperAdmin { get; }
     public string? ConnectionString { get; }
+    public bool IsDeactivated { get; }
 
     public TenantContext(
         IHttpContextAccessor accessor,
@@ -35,6 +36,9 @@ internal sealed class TenantContext : ITenantContext
             if (cs is not null)
                 cache.Set(cacheKey, cs, TimeSpan.FromMinutes(10));
         }
+
+        if (cs is null && CurrentTenantId.HasValue)
+            IsDeactivated = true;
 
         ConnectionString = cs;
     }

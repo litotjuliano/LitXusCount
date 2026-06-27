@@ -22,6 +22,9 @@ internal sealed class SalesPaymentService(ApplicationDbContext db, IAccAccountSe
         if (invoice is null)
             return ServiceResult<SalesPaymentRecordDto>.Failure("Invoice not found.");
 
+        if (invoice.PaidAmount + request.Amount > invoice.GrandTotal)
+            return ServiceResult<SalesPaymentRecordDto>.Failure("Payment exceeds invoice total.");
+
         var account = await db.AccAccounts.FirstOrDefaultAsync(x => x.Id == request.AccAccountId && x.IsActive, ct);
         if (account is null)
             return ServiceResult<SalesPaymentRecordDto>.Failure("Account not found or inactive.");

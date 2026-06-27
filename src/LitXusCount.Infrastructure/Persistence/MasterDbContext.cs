@@ -15,6 +15,7 @@ public class MasterDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Tenant> Tenants => Set<Tenant>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<ReportTemplate> ReportTemplates => Set<ReportTemplate>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,6 +34,14 @@ public class MasterDbContext : IdentityDbContext<ApplicationUser>
             entity.HasKey(x => x.Id);
             entity.Property(x => x.Token).HasMaxLength(512).IsRequired();
             entity.HasIndex(x => x.Token).IsUnique();
+        });
+
+        builder.Entity<ReportTemplate>(entity =>
+        {
+            entity.Property(x => x.DocumentType).HasMaxLength(64).IsRequired();
+            entity.Property(x => x.Name).HasMaxLength(128).IsRequired();
+            entity.HasIndex(x => new { x.DocumentType, x.IsDefault })
+                .HasFilter("\"IsDefault\" = true AND \"IsActive\" = true");
         });
     }
 }

@@ -22,6 +22,16 @@ public class CompanyInfo
     public string? CompanyRegistrationNumber { get; set; }
     public string? VatRegistrationNumber { get; set; }
 
+    // LHDN MyInvois e-invoicing fields
+    public string? TIN { get; set; }
+    public string? RegistrationType { get; set; }
+    public string? SSTRegistrationNumber { get; set; }
+    public string? MSICCode { get; set; }
+    public string? MSICDescription { get; set; }
+    public string? MyInvoisClientId { get; set; }
+    public string? MyInvoisClientSecret { get; set; }
+    public string? MyInvoisEnvironment { get; set; }
+
     public string? InvoiceNumberPrefix { get; set; }
     public string? QuoteNumberPrefix { get; set; }
     public string? TermsAndConditions { get; set; }

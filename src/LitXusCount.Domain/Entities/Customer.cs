@@ -36,4 +36,10 @@ public class Customer : AuditableEntity
     public int PaymentTermsDays { get; set; }
     public decimal CreditLimit { get; set; }
     public bool IsLocked { get; set; }
+
+    // LHDN buyer identity (required for B2B e-invoicing; B2C >= RM10,000)
+    public string? TIN { get; set; }
+    public string? RegistrationType { get; set; }
+    public string? RegistrationNumber { get; set; }
+    public string? SSTRegistrationNumber { get; set; }
 }

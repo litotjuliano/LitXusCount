@@ -9,4 +9,5 @@ public class ReturnLog : AuditableEntity
     public long CustomerId { get; set; }
     public string? TranType { get; set; }
     public string? Note { get; set; }
+    public string? OriginalEInvoiceUUID { get; set; }
 }

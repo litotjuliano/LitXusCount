@@ -1,5 +1,6 @@
 using LitXusCount.Application.Settings.EmailConfigs;
 using LitXusCount.Domain.Entities;
+using LitXusCount.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace LitXusCount.Infrastructure.Persistence.Seeding;
@@ -15,13 +16,27 @@ public static class SystemSettingsSeeder
 
         var now = DateTime.UtcNow;
 
+        // ── LHDN TaxCodes (seeded once; immutable reference data) ────────────
+        if (!await db.TaxCodes.AnyAsync(ct))
+        {
+            db.TaxCodes.AddRange(
+                new TaxCode { Code = "01", Name = "Sales Tax",               Description = "Malaysian Sales Tax (SST)",           Rate = 10.0m, IsExempt = false, IsDefault = false, IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "02", Name = "Service Tax",             Description = "Malaysian Service Tax (SST)",          Rate = 6.0m,  IsExempt = false, IsDefault = true,  IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "03", Name = "Tourism Tax",             Description = "Tourism Tax",                          Rate = 10.0m, IsExempt = false, IsDefault = false, IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "04", Name = "High-Value Goods Tax",    Description = "High-Value Goods Tax (HVGT)",          Rate = 5.0m,  IsExempt = false, IsDefault = false, IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "05", Name = "Tax Exemption (NA)",      Description = "Not applicable / exempt",              Rate = 0.0m,  IsExempt = true,  IsDefault = false, IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "06", Name = "Zero-Rated (ATO)",        Description = "Approved Trader / Zero-rated",         Rate = 0.0m,  IsExempt = true,  IsDefault = false, IsActive = true, CreatedAt = now },
+                new TaxCode { Code = "07", Name = "Exemption (EP)",          Description = "Exemption by special order (EP)",      Rate = 0.0m,  IsExempt = true,  IsDefault = false, IsActive = true, CreatedAt = now });
+            await db.SaveChangesAsync(ct);
+        }
+
         var myr = new Currency { Name = "Ringgit Malaysia", Code = "MYR", Symbol = "RM", Country = "Malaysia", Description = "Ringgit Malaysia", IsDefault = true, IsActive = true, CreatedAt = now };
         var usd = new Currency { Name = "US Dollar", Code = "USD", Symbol = "$", Country = "United States", Description = "US Dollar", IsDefault = false, IsActive = true, CreatedAt = now };
         var sgd = new Currency { Name = "SGD Singapore", Code = "SGD", Symbol = "SGD", Country = "Singapore", Description = "SGD Singapore", IsDefault = false, IsActive = true, CreatedAt = now };
         db.Currencies.AddRange(myr, usd, sgd);
 
         var vatPercentages = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50 }
-            .Select(p => new VatPercentage { Name = $"VAT: {p}%", Percentage = p, IsDefault = p == 5, IsActive = true, CreatedAt = now })
+            .Select(p => new VatPercentage { Name = $"VAT: {p}%", Percentage = (decimal)p, IsDefault = p == 5, IsActive = true, CreatedAt = now })
             .ToList();
         db.VatPercentages.AddRange(vatPercentages);
         var defaultVat = vatPercentages.Single(v => v.IsDefault);
@@ -110,11 +125,12 @@ public static class SystemSettingsSeeder
 
         var glAccounts = new[]
         {
-            new GlAccount { Code = "11000", Name = "Accounts Receivable", AccountType = GlAccountType.Asset, IsActive = true, CreatedAt = now },
-            new GlAccount { Code = "21000", Name = "Accounts Payable", AccountType = GlAccountType.Liability, IsActive = true, CreatedAt = now },
-            new GlAccount { Code = "41000", Name = "Sales Revenue", AccountType = GlAccountType.Revenue, IsActive = true, CreatedAt = now },
-            new GlAccount { Code = "51000", Name = "Cost of Goods Sold", AccountType = GlAccountType.Cogs, IsActive = true, CreatedAt = now },
-            new GlAccount { Code = "52000", Name = "Purchase Cost Account", AccountType = GlAccountType.Expense, IsActive = true, CreatedAt = now }
+            new GlAccount { Code = "11000", Name = "Accounts Receivable",  AccountType = GlAccountType.Asset,     IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "21000", Name = "Accounts Payable",     AccountType = GlAccountType.Liability, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "22000", Name = "Tax Payable (Output)", AccountType = GlAccountType.Liability, IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "41000", Name = "Sales Revenue",        AccountType = GlAccountType.Revenue,   IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "51000", Name = "Cost of Goods Sold",   AccountType = GlAccountType.Cogs,      IsActive = true, CreatedAt = now },
+            new GlAccount { Code = "52000", Name = "Purchase Cost Account", AccountType = GlAccountType.Expense,  IsActive = true, CreatedAt = now }
         };
         db.GlAccounts.AddRange(glAccounts);
         await db.SaveChangesAsync(ct);

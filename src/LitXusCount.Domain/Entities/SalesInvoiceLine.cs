@@ -19,4 +19,11 @@ public class SalesInvoiceLine : AuditableEntity
     public decimal TotalAmount { get; set; }
 
     public bool IsReturn { get; set; }
+
+    // ── LHDN UBL line-level fields ────────────────────────────────────────────
+    public string? ClassificationCode { get; set; }
+    public string? TaxTypeCode { get; set; }
+    public string? TaxExemptionReason { get; set; }
+    public decimal? TaxExemptionAmount { get; set; }
+    public string? UnitCode { get; set; }
 }

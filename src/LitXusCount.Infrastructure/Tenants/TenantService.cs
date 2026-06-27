@@ -1,9 +1,11 @@
 using LitXusCount.Application.Authorization;
 using LitXusCount.Application.Common;
+using LitXusCount.Application.Settings.EmailConfigs;
 using LitXusCount.Application.Tenants;
 using LitXusCount.Domain.Entities;
 using LitXusCount.Infrastructure.Identity;
 using LitXusCount.Infrastructure.Persistence;
+using LitXusCount.Infrastructure.Persistence.Seeding;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +18,8 @@ internal sealed class TenantService(
     IConfiguration configuration,
     ITenantConnectionCache connectionCache,
     UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager) : ITenantService
+    RoleManager<IdentityRole> roleManager,
+    IEmailConfigEncryptor emailConfigEncryptor) : ITenantService
 {
     public async Task<PagedResult<TenantDto>> ListAsync(PagedQuery query, CancellationToken ct = default)
     {
@@ -48,7 +51,7 @@ internal sealed class TenantService(
 
     public async Task<TenantDto?> GetAsync(long id, CancellationToken ct = default)
     {
-        var entity = await masterDb.Tenants.FirstOrDefaultAsync(x => x.Id == id, ct);
+        var entity = await masterDb.Tenants.FirstOrDefaultAsync(x => x.Id == id && x.IsActive, ct);
         return entity is null ? null : ToDto(entity);
     }
 
@@ -169,6 +172,7 @@ internal sealed class TenantService(
             .Options;
         await using var tenantDb = new ApplicationDbContext(options);
         await tenantDb.Database.MigrateAsync(ct);
+        await SystemSettingsSeeder.SeedAsync(tenantDb, emailConfigEncryptor, ct);
     }
 
     private string BuildTenantConnectionString(string slug)

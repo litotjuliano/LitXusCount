@@ -1,5 +1,6 @@
 using LitXusCount.Application.Authorization;
 using LitXusCount.Application.Settings.Company;
+using LitXusCount.Application.Tenants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace LitXusCount.API.Controllers.Settings;
 [ApiController]
 [Authorize]
 [Route("api/settings/company-info")]
-public class CompanyInfoController(ICompanyInfoService service, IWebHostEnvironment env) : ControllerBase
+public class CompanyInfoController(ICompanyInfoService service, IWebHostEnvironment env, ITenantContext tenantContext) : ControllerBase
 {
     private static readonly string[] AllowedImageTypes = ["image/png", "image/jpeg", "image/gif", "image/webp"];
     private const long MaxLogoBytes = 5 * 1024 * 1024; // 5 MB
@@ -35,8 +36,10 @@ public class CompanyInfoController(ICompanyInfoService service, IWebHostEnvironm
         if (file.Length > MaxLogoBytes)
             return BadRequest("File exceeds 5 MB limit.");
 
-        var uploadsDir = Path.Combine(env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"),
-            "uploads", "logos");
+        var tenantId = tenantContext.CurrentTenantId?.ToString() ?? "shared";
+        var uploadsDir = Path.Combine(
+            env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"),
+            "uploads", "logos", tenantId);
         Directory.CreateDirectory(uploadsDir);
 
         var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
@@ -46,6 +49,6 @@ public class CompanyInfoController(ICompanyInfoService service, IWebHostEnvironm
         await using var stream = System.IO.File.Create(filePath);
         await file.CopyToAsync(stream, ct);
 
-        return Ok(new { url = $"/uploads/logos/{fileName}" });
+        return Ok(new { url = $"/uploads/logos/{tenantId}/{fileName}" });
     }
 }
